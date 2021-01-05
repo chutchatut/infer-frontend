@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { get_color } from "../../../assets/color";
-import Canvas from "../../../components/Canvas/Canvas";
+import { get_color } from "../../assets/color";
+import Canvas from "../../components/Canvas/Canvas";
 
 const canvas = (props) => {
   const [polys, setPolys] = useState([]);
