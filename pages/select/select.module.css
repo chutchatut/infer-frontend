@@ -1,0 +1,73 @@
+.ImageGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-content: space-around;
+  justify-items: center;
+  margin-top: 10vh;
+}
+
+.Image {
+  margin-top: 3vh;
+  width: 30vw;
+  height: 30vh;
+  object-fit: cover;
+}
+
+.TopLabel {
+  position: absolute;
+  width: 20vw;
+  height: 8vh;
+  left: 40vw;
+  top: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #add8e6;
+}
+
+.Home {
+  position: absolute;
+  top: 1vh;
+  left: 1vh;
+}
+
+.Navigation {
+  position: absolute;
+  display: flex;
+  bottom: 2vh;
+  right: 2vh;
+  align-items: center;
+  padding: 5px;
+  font-size: 3vw;
+  font-weight: 100;
+}
+
+.Navigation > div {
+  margin: 1.5vw;
+}
+
+.arrowLeft {
+  width: 0;
+  height: 0;
+  border-top: 2vh solid transparent;
+  border-bottom: 2vh solid transparent;
+  border-right: 3.5vh solid rgba(85,85,85,0.7);
+}
+
+.arrowRight {
+  width: 0;
+  height: 0;
+  border-top: 2vh solid transparent;
+  border-bottom: 2vh solid transparent;
+  border-left: 3.5vh solid rgba(85,85,85,0.7);
+}
+
+/* .SideBar {
+  background-color: #eee;
+}
+
+.NavBar {
+  grid-column: 1/3;
+  background-color: #ccc;
+} */

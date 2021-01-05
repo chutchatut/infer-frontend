@@ -1,0 +1,21 @@
+.DropDown {
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto;
+  color: #525252;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 42px;
+  margin: 5%;
+}
+
+.DropDown select {
+  font-size: 20px;
+}
+
+@media (min-width: 1080px) {
+  .DropDown select {
+    width: 864px;
+  }
+}

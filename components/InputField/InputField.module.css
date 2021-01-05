@@ -1,0 +1,23 @@
+.InputField {
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto;
+  color: #525252;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 42px;
+  margin: 5%;
+}
+
+.InputField input {
+  width: 60vw;
+  height: 54px;
+  font-size: 20px;
+}
+
+@media (min-width: 1080px) {
+    .InputField input {
+        width: 648px;
+    }
+}

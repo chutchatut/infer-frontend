@@ -1,0 +1,17 @@
+.Button {
+  border-radius: 20px;
+  background-color: rgb(173, 216, 230);
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 42px;
+  color: #525252;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-width: 0;
+}
+
+.Button:hover, .Button:focus {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
