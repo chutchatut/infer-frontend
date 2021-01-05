@@ -34,7 +34,7 @@ const Select = () => {
   const goForward = () => {
     if (page < NUMBER_OF_PAGES) setPage(page + 1);
   };
-  console.log(`Page: ${page}`);
+  
   return (
     <Fragment>
       <div className={styles.Home}>

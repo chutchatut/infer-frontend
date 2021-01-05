@@ -32,6 +32,7 @@ const Canvas = (props) => {
     context.lineCap = "round";
     context.lineWidth = 1.5;
     for (let poly of props.polys) {
+      if (!poly.points.length) continue;
       // Fill poly
       context.beginPath();
       context.fillStyle = `rgba(${poly.color}, ${
@@ -54,6 +55,7 @@ const Canvas = (props) => {
 
     // Draw points
     for (let poly of props.polys) {
+      if (!poly.points.length) continue;
       for (let point of poly.points) {
         context.beginPath();
         // Somehow the circle isn't working
