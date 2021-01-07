@@ -1,21 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./DropDown.module.css";
+import { Menu, Dropdown, Button, message } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
 const DropDown = (props) => {
-  const width = props.width ? props.width : "80vw";
-  const height = props.height ? props.height : "54px";
+  const handleMenuClick = (event) => {
+    message.info(`Click on ${props.options[event.key]}.`);
+    props.setSelectedItem(props.options[event.key]);
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      {props.options.map((option, i) => (
+        <Menu.Item key={i}>{option}</Menu.Item>
+      ))}
+    </Menu>
+  );
+
   return (
     <div className={style.DropDown}>
       {props.text}
-      <select
-        style={{ width: width, height: height }}
-        onChange={props.onChange}
-        multiple={props.multiple}
-      >
-        {props.options.map((option) => (
-          <option>{option}</option>
-        ))}
-      </select>
+      <Dropdown overlay={menu}>
+        <Button>
+          {props.selectedItem ? props.selectedItem : props.text}
+          <DownOutlined />
+        </Button>
+      </Dropdown>
     </div>
   );
 };

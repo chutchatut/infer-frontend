@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { get_color } from "../../assets/color";
 import Canvas from "../../components/Canvas/Canvas";
-import Button from "../../components/Button/Button";
+import { Button } from "antd";
 import styles from "./canvas.module.css";
 
 const canvas = (props) => {
   const [polys, setPolys] = useState([]);
+  // const [selectedPoint, setSelectedPoint] = useState(null);
   const randomColorGenerator = get_color();
 
   const addPoint = (x, y) => {
@@ -20,7 +21,7 @@ const canvas = (props) => {
   };
 
   const onMouseUp = () => {
-    // console.log(`Mouse up`);
+    // setSelectedPoint(null);
   };
 
   const onMouseDown = ({ nativeEvent }) => {
@@ -39,7 +40,7 @@ const canvas = (props) => {
   };
 
   const onKeyDown = (event) => {
-    console.log(`KeyDown ${event.key}`);
+    // console.log(`KeyDown ${event.key}`);
   };
 
   const addPolygon = () => {

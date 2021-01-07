@@ -1,9 +1,10 @@
-import "../styles/globals.css";
+// import "../styles/globals.css";
 import * as actions from "../store/actions";
 import { useRouter } from "next/router";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
 import store from "../store/store";
+import "antd/dist/antd.css";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();

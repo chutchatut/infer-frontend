@@ -1,53 +1,101 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../../components/Button/Button";
-import InputField from "../../components/InputField/InputField";
-import style from "./login.module.css";
+// import Button from "../../components/Button/Button";
+import styles from "./login.module.css";
 import * as action from "../../store/actions";
-import Loading from "../../components/Loading/Loading";
 import { useRouter } from "next/router";
+import { Form, Input, Button, Checkbox, message } from "antd";
+import Layout from "antd/lib/layout/layout";
+
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 8,
+  },
+};
+
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
+  },
+};
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const token = useSelector((state) => state.auth.token);
   const loading = useSelector((state) => state.auth.loading);
+  const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
 
-  const submit = (event) => {
-    event.preventDefault();
-    dispatch(action.authInit(username, password));
+  const onFinish = (values) => {
+    const { username, password, remember } = values;
+    dispatch(action.authInit(username, password, remember));
   };
 
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  useEffect(() => {
+    if (token && !loading) router.replace("app");
+  }, [token, loading]);
+
+  useEffect(() => {
+    if (error)
+      message.error(`Authentication failed with the following error: ${error}`);
+  }, [error]);
+
   return (
-    <form onSubmit={submit} className={style.Login}>
-      <div className={style.Username}>
-        <InputField
-          text="Username"
-          placeholder="username"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          type="text"
-        />
-      </div>
-      <div className={style.Password}>
-        <InputField
-          text="Password"
-          placeholder="********"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          type="password"
-        />
-      </div>
-      <div className={style.LoginButton}>
-        {token || loading ? (
-          <Loading redirect_to="app" loading={!token} />
-        ) : (
-          <Button>Login</Button>
-        )}
-      </div>
-    </form>
+    <div className={styles.Layout}>
+      <Form
+        {...layout}
+        name="basic"
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <Form.Item
+          label="Username"
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit" loading={loading}>
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 

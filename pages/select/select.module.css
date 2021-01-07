@@ -23,14 +23,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #add8e6;
+  background-color: #eee;
 }
 
-.Home {
-  position: absolute;
-  top: 1vh;
-  left: 1vh;
-}
 
 .Navigation {
   position: absolute;

@@ -19,7 +19,7 @@ export const authLogout = () => {
   return { type: actionTypes.AUTH_LOGOUT };
 };
 
-export const authInit = (username, password) => async (dispatch) => {
+export const authInit = (username, password, remember) => async (dispatch) => {
   dispatch({ type: actionTypes.AUTH_INIT });
   try {
     // const response = await axios.post("/auth", {
@@ -28,10 +28,11 @@ export const authInit = (username, password) => async (dispatch) => {
     // });
 
     // For testing
+    // throw new Error("Lmao");
     setTimeout(() => {
       const response = "lmao";
-      localStorage.setItem("Token", response);
       dispatch(authSuccess(response));
+      if (remember) localStorage.setItem("Token", response);
     }, 2000);
   } catch (error) {
     dispatch(authFail(error));

@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
-import Button from "../../components/Button/Button";
+// import Button from "../../components/Button/Button";
+import { Button } from "antd";
+import { HomeOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import styles from "./select.module.css";
+import Home from "../../components/Home/Home";
 
 const Select = () => {
   const [page, setPage] = useState(1);
@@ -34,16 +37,12 @@ const Select = () => {
   const goForward = () => {
     if (page < NUMBER_OF_PAGES) setPage(page + 1);
   };
-  
+
   return (
     <Fragment>
-      <div className={styles.Home}>
-        <Button width="13vw" height="6vh" onClick={() => router.push("app")}>
-          Home
-        </Button>
-      </div>
+      <Home />
       <div className={styles.TopLabel}>
-        <strong>Images</strong>
+        <h1>Images</h1>
       </div>
       <div className={styles.ImageGrid}>
         {img_list.slice(6 * page - 6, 6 * page).map((url, i) => (
@@ -55,9 +54,11 @@ const Select = () => {
         ))}
       </div>
       <div className={styles.Navigation}>
-        <div className={styles.arrowLeft} onClick={goBack} />
+        <LeftOutlined onClick={goBack} />
+        &ensp;
         {`Page ${page}/${NUMBER_OF_PAGES}`}
-        <div className={styles.arrowRight} onClick={goForward} />
+        &ensp;
+        <RightOutlined onClick={goForward} />
       </div>
     </Fragment>
   );

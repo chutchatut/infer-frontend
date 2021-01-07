@@ -22,3 +22,8 @@
 .LoginButton {
   margin-top: 10vh;
 }
+
+.Layout {
+  /* display: flex; */
+  margin-top: 20vh;
+}

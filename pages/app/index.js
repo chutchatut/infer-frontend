@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
-import Button from "../../components/Button/Button";
+// import Button from "../../components/Button/Button";
+import { Button } from "antd";
 import style from "./app.module.css";
 
 const App = () => {
@@ -9,7 +10,9 @@ const App = () => {
   return (
     <Fragment>
       <div className={style.Logout}>
-        <Button onClick={() => router.push("logout")}>Logout</Button>
+        <Button danger onClick={() => router.push("logout")}>
+          Logout
+        </Button>
       </div>
       <div className={style.Nav}>
         <Button onClick={() => router.push("infer")}>Inference</Button>

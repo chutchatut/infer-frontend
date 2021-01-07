@@ -1,30 +1,25 @@
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
-import Button from "../../components/Button/Button";
+import { Button, Checkbox, CheckboxGroup } from "antd";
 import DropDown from "../../components/DropDown/DropDown";
 import styles from "./edit.module.css";
+import Home from "../../components/Home/Home";
+import { SaveOutlined } from "@ant-design/icons";
 
 const Edit = () => {
   const router = useRouter();
+  const options = ["Pnuemonia", "COVID-19"];
   const onChange = (event) => {
-    const options = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    );
-    console.log(options);
+    console.log(event);
   };
 
   return (
     <Fragment>
-      <div className={styles.Home}>
-        <Button width="13vw" height="6vh" onClick={() => router.push("app")}>
-          Home
-        </Button>
-      </div>
+      <Home />
       <div className={styles.Layout}>
         <div className={styles.Preview}>
           <p>
-            <strong>C:\folder\images\example.dicom</strong>
+            <h2>C:\folder\images\example.dicom</h2>
           </p>
           <img src="https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg" />
         </div>
@@ -40,16 +35,13 @@ const Edit = () => {
         </div>
         <div className={styles.Prediction}>
           <div className={styles.Head}>Prediction</div>
-          <DropDown
-            width="100%"
-            height="100%"
-            onChange={onChange}
-            options={["Pnuemonia", "COVID-19"]}
-            multiple
-          />
-        </div>
-        <div className={styles.Save}>
-          <Button>Save</Button>
+          <Checkbox.Group options={options} onChange={onChange} />
+          <div className={styles.Save}>
+            <Button type="primary">
+              <SaveOutlined />
+              Save
+            </Button>
+          </div>
         </div>
       </div>
     </Fragment>
