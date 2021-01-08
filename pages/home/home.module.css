@@ -1,0 +1,7 @@
+.Layout {
+  display: flex;
+}
+
+.Layout > div {
+  margin-right: 10px;
+}

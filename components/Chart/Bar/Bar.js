@@ -49,7 +49,7 @@ const Bar = (props) => {
   }, [colors]);
 
   return (
-    <div className={styles.Layout} style={{ height: "30vh", width: "30vw" }}>
+    <div className={styles.Layout} style={{ height: "300px", width: "300px" }}>
       <canvas ref={canvasRef} />
     </div>
   );
