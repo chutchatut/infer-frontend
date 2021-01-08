@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: "/app",
+        destination: "/login",
         permanent: true,
       },
     ];

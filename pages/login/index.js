@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
 import * as action from "../../store/actions";
 import { useRouter } from "next/router";
-import { Form, Input, Button, Checkbox, message } from "antd";
-import Layout from "antd/lib/layout/layout";
+import { Form, Input, Button, Checkbox, message, Divider } from "antd";
 
 const layout = {
   labelCol: {
     span: 8,
   },
   wrapperCol: {
-    span: 8,
+    span: 16,
   },
 };
 
@@ -40,7 +39,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (token && !loading) router.replace("app");
+    if (token && !loading) {
+      message.success("Successfully logged in");
+      router.replace("home");
+    }
   }, [token, loading]);
 
   useEffect(() => {
@@ -50,51 +52,57 @@ const Login = () => {
 
   return (
     <div className={styles.Layout}>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: "Please input your username!",
-            },
-          ]}
+      <div className={styles.Login}>
+        <div className={styles.Head}>
+          <div>logo</div>
+          <h2>Name</h2>
+        </div>
+        <Form
+          {...layout}
+          name="basic"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Input />
-        </Form.Item>
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+          <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit" loading={loading}>
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };

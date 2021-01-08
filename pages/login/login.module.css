@@ -1,29 +1,22 @@
-.Login {
+.Layout {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: 100vh;
+}
+
+.Login {
+  padding: 4vh 4vh 2vh 4vh;
+  border: solid #eee 2px;
+  border-radius: 10px;
+}
+
+.Head {
+  display: flex;
+  margin-bottom: 2vh;
   justify-content: center;
 }
 
-.Username {
-  /* position: absolute;
-  left: 30%;
-  top: 25%; */
-  margin-top: 10vh;
-}
-
-.Password {
-  /* position: absolute;
-  left: 30%;
-  top: 40%;
-  width: 500px; */
-}
-
-.LoginButton {
-  margin-top: 10vh;
-}
-
-.Layout {
-  /* display: flex; */
-  margin-top: 20vh;
+.Head > {
+  margin: 1vh;
 }

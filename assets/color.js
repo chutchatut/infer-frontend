@@ -84,7 +84,7 @@ const getRandomInt = (max) => {
 Generator function use to dispatch colors without clashing
 syntax:
   const generator = get_color()
-  const color = get_color.next().value
+  const color = generator.next().value
 */
 
 export function* get_color() {

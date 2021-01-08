@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 import { Button, Checkbox, Table } from "antd";
-import styles from "./edit.module.css";
-import { SaveOutlined } from "@ant-design/icons";
+import styles from "./view.module.css";
+import { EditOutlined } from "@ant-design/icons";
 
 const columns = [
   { title: "Name", dataIndex: "name" },
@@ -23,19 +23,10 @@ const Edit = () => {
     confidence: confidence[key],
   }));
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const onSelectChange = (selectedRowKeys) => {
-    console.log(
-      `SelectedRowKeys changed: ${selectedRowKeys.map(
-        (key) => Object.keys(confidence)[key]
-      )}`
-    );
-    setSelectedRowKeys(selectedRowKeys);
-  };
-
   //For testing
-  const [loading, setLoading] = useState(false);
-  const imgPath = "/path/to/image.dicom"
+  const imgPath = "/path/to/image.dicom";
+
+  const router = useRouter();
 
   return (
     <Fragment>
@@ -47,22 +38,13 @@ const Edit = () => {
           </p>
         </div>
         <div className={styles.Pred}>
-          <Table
-            columns={columns}
-            dataSource={confidence_array}
-            rowSelection={{
-              type: "radio",
-              selectedRowKeys,
-              onChange: onSelectChange,
-            }}
-          />
+          <Table columns={columns} dataSource={confidence_array} />
           <Button
-            icon={<SaveOutlined />}
-            onClick={() => setLoading(true)}
+            icon={<EditOutlined />}
+            onClick={router.push.bind(this, "edit")}
             type="primary"
-            loading={loading}
           >
-            Save
+            Edit
           </Button>
         </div>
       </div>

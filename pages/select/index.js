@@ -5,7 +5,6 @@ import React, { Fragment, useState } from "react";
 import { Button } from "antd";
 import { HomeOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import styles from "./select.module.css";
-import Home from "../../components/Home/Home";
 
 const Select = () => {
   const [page, setPage] = useState(1);
@@ -40,10 +39,6 @@ const Select = () => {
 
   return (
     <Fragment>
-      <Home />
-      <div className={styles.TopLabel}>
-        <h1>Images</h1>
-      </div>
       <div className={styles.ImageGrid}>
         {img_list.slice(6 * page - 6, 6 * page).map((url, i) => (
           <img
