@@ -99,3 +99,26 @@ export function* get_color() {
     for (let color of DEFAULT_COLOR) yield color;
   }
 }
+
+const CHART_COLOR = [
+  "47, 126, 216",
+  "13, 35, 58",
+  "139, 188, 33",
+  "145, 0, 0",
+  "26, 173, 206",
+  "73, 41, 112",
+  "242, 143, 67",
+  "119, 161, 229",
+  "196, 37, 37",
+  "166, 201, 106",
+];
+
+export function* get_chart_color() {
+  while (true) {
+    for (let i = 0; i < CHART_COLOR.length; ++i) {
+      const j = getRandomInt(CHART_COLOR.length);
+      [CHART_COLOR[i], CHART_COLOR[j]] = [CHART_COLOR[j], CHART_COLOR[i]];
+    }
+    for (let color of CHART_COLOR) yield color;
+  }
+}

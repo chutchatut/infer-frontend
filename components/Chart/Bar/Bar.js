@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { get_color } from "../../../assets/color";
+import { get_chart_color } from "../../../assets/color";
 import Chart from "chart.js";
 import styles from "./Bar.module.css";
 
@@ -8,7 +8,7 @@ const Bar = (props) => {
   const [colors, setColors] = useState(null);
   useEffect(() => {
     if (colors) return;
-    const randomColorGenerator = get_color();
+    const randomColorGenerator = get_chart_color();
     setColors(
       Object.keys(props.data).map(() => randomColorGenerator.next().value)
     );
@@ -26,14 +26,17 @@ const Bar = (props) => {
           {
             label: props.label,
             data: Object.values(props.data),
-            backgroundColor: colors.map((color) => `rgba(${color},0.3)`),
-            borderColor: colors.map((color) => `rgba(${color},0.5)`),
+            backgroundColor: colors.map((color) => `rgba(${color}, 0.5)`),
+            borderColor: colors.map((color) => `rgba(${color}, 1)`),
             borderWidth: 2,
           },
         ],
       },
       options: {
         // aspectRatio: 1,
+        legend: {
+          display: false,
+        },
         maintainAspectRatio: false,
         scales: {
           yAxes: [
