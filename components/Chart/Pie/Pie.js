@@ -27,7 +27,7 @@ const Pie = (props) => {
             label: props.label,
             data: Object.values(props.data),
             backgroundColor: colors.map((color) => `rgba(${color}, 0.5)`),
-            borderColor: colors.map((color) => `rgba(${color}, 1)`),
+            borderColor: colors.map((color) => `rgba(${color}, 0.6)`),
             borderWidth: 2,
           },
         ],
