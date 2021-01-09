@@ -10,8 +10,10 @@ const newDiagnosis = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
+    console.log(form);
     console.log("Received values of form:", values);
   };
+
   const pipelines = [
     { label: "COVID-19 + Pnuemonia", value: "covid_19_pnuemonia" },
   ];
@@ -20,9 +22,6 @@ const newDiagnosis = () => {
     <div className={styles.Layout}>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Upload files" key="1">
-          <div style={{ marginTop: "10px" }}>
-            <ImgUpload />
-          </div>
           <div style={{ width: "500px", paddingTop: "20px" }}>
             <Form
               form={form}
@@ -30,6 +29,13 @@ const newDiagnosis = () => {
               onFinish={onFinish}
               autoComplete="off"
             >
+              <Form.Item
+                name="image"
+                label="Images"
+                rules={[{ required: true, message: "Missing image" }]}
+              >
+                <ImgUpload />
+              </Form.Item>
               <Form.Item
                 name="pipeline"
                 label="Pipeline"
@@ -45,7 +51,7 @@ const newDiagnosis = () => {
             </Form>
           </div>
         </TabPane>
-        <TabPane tab="Select from local files" key="2">
+        <TabPane tab="Select from remote files" key="2">
           Content of Tab Pane 2
         </TabPane>
       </Tabs>

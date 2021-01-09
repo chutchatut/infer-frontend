@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 import { Button, Checkbox, Table } from "antd";
 import styles from "./edit.module.css";
@@ -35,7 +34,7 @@ const Edit = () => {
 
   //For testing
   const [loading, setLoading] = useState(false);
-  const imgPath = "/path/to/image.dicom"
+  const imgPath = "/path/to/image.dicom";
 
   return (
     <Fragment>
@@ -61,6 +60,7 @@ const Edit = () => {
             onClick={() => setLoading(true)}
             type="primary"
             loading={loading}
+            disabled={selectedRowKeys.length === 0}
           >
             Save
           </Button>
