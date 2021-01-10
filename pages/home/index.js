@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Pie from "../../components/Chart/Pie/Pie";
 import Bar from "../../components/Chart/Bar/Bar";
 import { Statistic, Card, Space } from "antd";

@@ -8,7 +8,7 @@ const Pie = (props) => {
   const [colors, setColors] = useState(null);
   useEffect(() => {
     if (colors) return;
-    const randomColorGenerator = get_chart_color();
+    const randomColorGenerator = get_chart_color(2);
     setColors(
       Object.keys(props.data).map(() => randomColorGenerator.next().value)
     );

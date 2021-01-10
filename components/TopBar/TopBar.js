@@ -10,22 +10,10 @@ const TopBar = () => {
   let projects = useSelector((state) => state.project.projects);
   const loading = useSelector((state) => state.project.loading);
   const currentProject = useSelector((state) => state.project.currentProject);
+
   const dispatch = useDispatch();
 
-  // Fetch pipelines when init the browser
-  useEffect(() => {
-    if (!projects) dispatch(actions.fetchProjects());
-  }, []);
-
-  // Show fetch projects loading indicator
-  // const [hideLoading, setHideLoading] = useState(() => {});
-  // useEffect(() => {
-  //   if (loading)
-  //     setHideLoading(() => message.loading("Loading projects...", 0));
-  //   else if (pipelines && !loading) hideLoading();
-  // }, [pipelines, loading]);
-
-  let projectsMenu;
+  let projectsMenu= <Menu />;
   if (projects) {
     projectsMenu = (
       <Menu>
@@ -36,7 +24,7 @@ const TopBar = () => {
             }}
             key={i}
           >
-            {project}
+            {project.name}
           </Menu.Item>
         ))}
       </Menu>
@@ -50,7 +38,7 @@ const TopBar = () => {
       ) : (
         <Dropdown overlay={projectsMenu} trigger={["click"]}>
           <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-            {currentProject ? currentProject : "Select a project"}
+            {currentProject ? currentProject.name : "Select a project"}
             &ensp;
             <DownOutlined />
           </a>

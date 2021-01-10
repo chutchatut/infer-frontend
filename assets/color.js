@@ -100,6 +100,12 @@ export function* get_color() {
   }
 }
 
+const hash = (i) => (i >> 16) ^ ((i & 0xffff) * (2e7 + 3));
+
+const psuedo_random = (val, seed, max) => {
+  return hash(val + seed) % max;
+};
+
 const CHART_COLOR = [
   "47, 126, 216",
   "13, 35, 58",
@@ -113,12 +119,13 @@ const CHART_COLOR = [
   "166, 201, 106",
 ];
 
-export function* get_chart_color() {
+export function* get_chart_color(seed) {
+  let colors = [...CHART_COLOR]
+  for (let i = 0; i < colors.length; ++i) {
+    const j = psuedo_random(i, seed, colors.length);
+    [colors[i], colors[j]] = [colors[j], colors[i]];
+  }
   while (true) {
-    for (let i = 0; i < CHART_COLOR.length; ++i) {
-      const j = getRandomInt(CHART_COLOR.length);
-      [CHART_COLOR[i], CHART_COLOR[j]] = [CHART_COLOR[j], CHART_COLOR[i]];
-    }
-    for (let color of CHART_COLOR) yield color;
+    for (let color of colors) yield color;
   }
 }

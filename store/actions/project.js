@@ -18,10 +18,8 @@ export const fetchProjectsFail = (error) => {
 export const fetchProjects = () => async (dispatch) => {
   dispatch({ type: actionTypes.FETCH_PROJECTS_INIT });
   try {
-    //   const pipelines = await axios.get('/pipeline')
-    const projects = ["COVID-19"];
-    //For testing
-    setTimeout(() => dispatch(fetchProjectsSuccess(projects)), 2000);
+    const projects = await axios.get("/api/project");
+    dispatch(fetchProjectsSuccess(projects.data));
   } catch (error) {
     dispatch(fetchProjectsFail(error));
   }
