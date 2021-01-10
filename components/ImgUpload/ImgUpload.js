@@ -1,21 +1,7 @@
 import React, { useState } from "react";
 import { Upload } from "antd";
 
-const ImgUpload = () => {
-  const [fileList, setFileList] = useState([
-    // {
-    //   uid: "-1",
-    //   name: "image.png",
-    //   status: "done",
-    //   url:
-    //     "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    // },
-  ]);
-
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
-
+const ImgUpload = (props) => {  
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -33,14 +19,17 @@ const ImgUpload = () => {
 
   return (
     <Upload
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
       listType="picture-card"
-      fileList={fileList}
-      onChange={onChange}
+      fileList={props.fileList}
+      onChange={props.onChange}
       onPreview={onPreview}
+      customRequest={({ file, onSuccess }) => {
+        //TODO implement upload logic
+        onSuccess({ uid: 1 });
+      }}
     >
-      {/* {fileList.length < 5 && "+ Upload"} */}
-      + Upload
+      {/* {fileList.length < 5 && "+ Upload"} */}+ Upload
     </Upload>
   );
 };

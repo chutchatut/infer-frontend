@@ -5,6 +5,13 @@ import styles from "./newDiagnosis.module.css";
 import { Form, Button, Select } from "antd";
 
 const { TabPane } = Tabs;
+const normFile = (e) => {
+  console.log('Upload event:', e);
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e && e.fileList;
+};
 
 const newDiagnosis = () => {
   const [form] = Form.useForm();
@@ -15,7 +22,8 @@ const newDiagnosis = () => {
   };
 
   const pipelines = [
-    { label: "COVID-19 + Pnuemonia", value: "covid_19_pnuemonia" },
+    { label: "COVID-19 + Pnuemonia V1", value: "covid_19_pnuemonia_v1" },
+    { label: "COVID-19 + Pnuemonia V2", value: "covid_19_pnuemonia_v2" },
   ];
 
   return (
@@ -30,9 +38,12 @@ const newDiagnosis = () => {
               autoComplete="off"
             >
               <Form.Item
-                name="image"
+                name="images"
                 label="Images"
+                getValueFromEvent={normFile}
                 rules={[{ required: true, message: "Missing image" }]}
+                valuePropName="fileList"
+                
               >
                 <ImgUpload />
               </Form.Item>
