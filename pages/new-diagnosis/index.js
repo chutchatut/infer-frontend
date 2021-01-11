@@ -7,34 +7,23 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const { TabPane } = Tabs;
-const normFile = (e) => {
-  console.log("Upload event:", e);
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e && e.fileList;
-};
 
 const newDiagnosis = () => {
   const [form] = Form.useForm();
   const [pipelines, setPipelines] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const currentProject = useSelector((state) => state.project.currentProject);
 
   const onFinish = (values) => {
-    console.log(form);
     console.log("Received values of form:", values);
   };
-
-  // const pipelines = [
-  //   { label: "COVID-19 + Pnuemonia V1", value: "covid_19_pnuemonia_v1" },
-  //   { label: "COVID-19 + Pnuemonia V2", value: "covid_19_pnuemonia_v2" },
-  // ];
 
   useEffect(async () => {
     if (!currentProject) return;
     const projectData = await axios.get(`/api/project/${currentProject.id}`);
-    console.log(projectData.data);
+    setPipelines(projectData.data.project.pipelines);
+    setLoading(false);
   }, [currentProject]);
 
   return (
@@ -51,7 +40,7 @@ const newDiagnosis = () => {
               <Form.Item
                 name="images"
                 label="Images"
-                getValueFromEvent={normFile}
+                getValueFromEvent={e=>e.fileList}
                 rules={[{ required: true, message: "Missing image" }]}
                 valuePropName="fileList"
               >
@@ -62,7 +51,29 @@ const newDiagnosis = () => {
                 label="Pipeline"
                 rules={[{ required: true, message: "Missing pipeline" }]}
               >
-                <Select options={pipelines} />
+                <Select
+                  disabled={
+                    loading || pipelines.length === 0 || !currentProject
+                  }
+                  placeholder={
+                    currentProject
+                      ? loading
+                        ? "Loading please wait"
+                        : pipelines.length === 0
+                        ? "This project contain no pipeline"
+                        : "Select a pipeline"
+                      : "To proceed, please select a project"
+                  }
+                >
+                  {pipelines.map((pipeline) => (
+                    <Select.Option
+                      value={pipeline.pipeline_id}
+                      key={pipeline.pipeline_id}
+                    >
+                      {pipeline.name}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
               <Form.Item>
                 <Button type="primary" htmlType="submit">

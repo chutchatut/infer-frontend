@@ -37,10 +37,10 @@ const Home = () => {
               {project.description}
             </Descriptions.Item>
             <Descriptions.Item label="Pipelines" span="8">
-              {project.pipeline ? (
-                <ul>
-                  {project.pipeline.map((pipe) => (
-                    <li>{pipe}</li>
+              {project.pipelines ? (
+                <ul style={{ listStyleType: "disc", paddingLeft: "15px" }}>
+                  {project.pipelines.map((pipeline) => (
+                    <li key={pipeline.pipeline_id}>{pipeline.name}</li>
                   ))}
                 </ul>
               ) : (
