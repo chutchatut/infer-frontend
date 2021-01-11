@@ -10,29 +10,28 @@ const Menu = (props) => {
   const { Header, Content, Footer, Sider } = Layout;
   const curPath = router.pathname.replace("/", "");
   return (
-      <Layout style={{ height: "100vh" }}>
-        <Header className="header">
-          <TopBar />
-        </Header>
-        <Content style={{ padding: "0 2vw" }}>
-          <Layout
+    <Layout style={{ height: "100vh" }}>
+      <Header className="header">
+        <TopBar />
+      </Header>
+      <Layout>
+        <Sider width={200} className="site-layout-background">
+          <NavMenu curPath={curPath} />
+        </Sider>
+        <Layout style={{ padding: "0 24px 24px" }}>
+          <Content
             className="site-layout-background"
-            style={{ padding: "24px 0" }}
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+            }}
           >
-            <Sider className="site-layout-background" width={200}>
-              <NavMenu curPath={curPath} />
-            </Sider>
-            <Content
-              style={{
-                padding: "0 24px",
-                minHeight: 280,
-              }}
-            >
-              {props.children}
-            </Content>
-          </Layout>
-        </Content>
+            {props.children}
+          </Content>
+        </Layout>
       </Layout>
+    </Layout>
   );
 };
 

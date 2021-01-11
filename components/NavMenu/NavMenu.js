@@ -17,7 +17,7 @@ const NavMenu = (props) => {
       mode="inline"
       defaultSelectedKeys={[props.curPath]}
       defaultOpenKeys={["diag"]}
-      style={{ height: "100%" }}
+      style={{ height: "100%", borderRight: 0 }}
     >
       <Menu.Item
         key="home"
