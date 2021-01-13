@@ -20,15 +20,16 @@ import { Upload } from "antd";
 const ImgUpload = (props) => {
   return (
     <Upload
-      accept=".dcm"
+      accept={[".dcm", ".png"]}
       listType="picture-card"
       fileList={props.fileList}
       onChange={props.onChange}
       // onPreview={onPreview}
       beforeUpload={() => false}
       showUploadList={{ showPreviewIcon: false }}
+      maxCount={1}
     >
-      + Upload
+      {(!props.fileList || props.fileList.length < 1) && "+ Upload"}
     </Upload>
   );
 };

@@ -13,6 +13,8 @@ const columns = [
   },
 ];
 
+// TODO add note
+
 const Edit = () => {
   //For testing
   const confidence = { Normal: 0.0195, Pnuemonia: 0.0482, "COVID-19": 0.9323 };
@@ -50,7 +52,7 @@ const Edit = () => {
             columns={columns}
             dataSource={confidence_array}
             rowSelection={{
-              type: "radio",
+//               type: "radio",
               selectedRowKeys,
               onChange: onSelectChange,
             }}

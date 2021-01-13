@@ -47,7 +47,7 @@ const Login = () => {
 
   useEffect(() => {
     if (error)
-      message.error(`Authentication failed with the following error: ${error}`);
+      message.error(`Authentication failed with the following error: ${error}`, 5);
   }, [error]);
 
   return (

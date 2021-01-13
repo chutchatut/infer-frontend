@@ -4,6 +4,8 @@ import Canvas from "../../components/Canvas/Canvas";
 import { Button } from "antd";
 import styles from "./canvas.module.css";
 
+// TODO use labelme as resource
+
 const canvas = (props) => {
   const [polys, setPolys] = useState([]);
   // const [selectedPoint, setSelectedPoint] = useState(null);
