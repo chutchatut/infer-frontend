@@ -1,1 +1,1 @@
-export default const name = "DeepMed"
+export default "DeepMed"

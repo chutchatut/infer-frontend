@@ -5,6 +5,7 @@ import styles from "./login.module.css";
 import * as action from "../../store/actions";
 import { useRouter } from "next/router";
 import { Form, Input, Button, Checkbox, message, Divider } from "antd";
+import systemName from '../../assets/name'
 
 const layout = {
   labelCol: {
@@ -55,7 +56,7 @@ const Login = () => {
       <div className={styles.Login}>
         <div className={styles.Head}>
           <div>logo</div>
-          <h2>Name</h2>
+          <h2>{systemName}</h2>
         </div>
         <Form
           {...layout}

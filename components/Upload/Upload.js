@@ -1,16 +1,36 @@
 import { Button, DatePicker, Form, Input, InputNumber } from "antd";
+import axios from "axios";
 import React, { Fragment, useState } from "react";
 import ImgUpload from "./ImgUpload/ImgUpload";
+
+// const getFile = async (file) => {
+//   let src = file.url;
+//   if (!src) {
+//     return await new Promise((resolve) => {
+//       const reader = new FileReader();
+//       reader.readAsDataURL(file.originFileObj);
+//       // reader.readAsArrayBuffer(file.originFileObj);
+//       // reader.readAsText(file.originFileObj)
+//       reader.onload = () => resolve(reader.result);
+//     });
+//   }
+// };
 
 const Upload = () => {
   const [form] = Form.useForm();
   const [filetype, setFiletype] = useState(null);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log("Received values of form:", values);
-  };
+    // const imgData = await getFile(values.images[0]);
+    const formData = new FormData();
+    formData.append("name", "test");
+    formData.append("data", values.images[0].originFileObj);
 
-  console.log(filetype);
+    axios.post("/api/image/", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  };
 
   return (
     <div style={{ width: "500px", paddingTop: "20px" }}>
@@ -39,7 +59,9 @@ const Upload = () => {
             <Form.Item
               label="Patient's name"
               name="patient_name"
-              rules={[{ required: true, message: "Please input patient's name" }]}
+              rules={[
+                { required: true, message: "Please input patient's name" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -53,7 +75,9 @@ const Upload = () => {
             <Form.Item
               label="Patient's Age"
               name="patient_age"
-              rules={[{ required: true, message: "Please input patient's age" }]}
+              rules={[
+                { required: true, message: "Please input patient's age" },
+              ]}
             >
               <InputNumber />
             </Form.Item>
@@ -67,7 +91,9 @@ const Upload = () => {
             <Form.Item
               label="Clinician's name"
               name="clinician_name"
-              rules={[{ required: true, message: "Please input clinician's name" }]}
+              rules={[
+                { required: true, message: "Please input clinician's name" },
+              ]}
             >
               <Input />
             </Form.Item>

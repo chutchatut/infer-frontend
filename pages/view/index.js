@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 import { Button, Checkbox, Table } from "antd";
-import styles from "./view.module.css";
 import { EditOutlined } from "@ant-design/icons";
+import ClassificationViewer from "../../hoc/ClassificationViewer/ClassificationViewer";
 
 const columns = [
   { title: "Name", dataIndex: "name" },
@@ -29,26 +29,21 @@ const Edit = () => {
   const router = useRouter();
 
   return (
-    <Fragment>
-      <div className={styles.Layout}>
-        <div className={styles.Preview}>
-          <img src="https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg" />
-          <p>
-            <h2>{imgPath}</h2>
-          </p>
-        </div>
-        <div className={styles.Pred}>
-          <Table columns={columns} dataSource={confidence_array} />
-          <Button
-            icon={<EditOutlined />}
-            onClick={router.push.bind(this, "edit")}
-            type="primary"
-          >
-            Edit
-          </Button>
-        </div>
-      </div>
-    </Fragment>
+    <ClassificationViewer
+      src={[
+        "https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg",
+      ]}
+      path="https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg"
+    >
+      <Table columns={columns} dataSource={confidence_array} />
+      <Button
+        icon={<EditOutlined />}
+        onClick={router.push.bind(this, "edit")}
+        type="primary"
+      >
+        Edit
+      </Button>
+    </ClassificationViewer>
   );
 };
 

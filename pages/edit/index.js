@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Button, Checkbox, Table } from "antd";
 import styles from "./edit.module.css";
 import { SaveOutlined } from "@ant-design/icons";
+import ClassificationViewer from "../../hoc/ClassificationViewer/ClassificationViewer";
 
 const columns = [
   { title: "Name", dataIndex: "name" },
@@ -36,39 +37,33 @@ const Edit = () => {
 
   //For testing
   const [loading, setLoading] = useState(false);
-  const imgPath = "/path/to/image.dicom";
 
   return (
-    <Fragment>
-      <div className={styles.Layout}>
-        <div className={styles.Preview}>
-          <img src="https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg" />
-          <p>
-            <h2>{imgPath}</h2>
-          </p>
-        </div>
-        <div className={styles.Pred}>
-          <Table
-            columns={columns}
-            dataSource={confidence_array}
-            rowSelection={{
-//               type: "radio",
-              selectedRowKeys,
-              onChange: onSelectChange,
-            }}
-          />
-          <Button
-            icon={<SaveOutlined />}
-            onClick={() => setLoading(true)}
-            type="primary"
-            loading={loading}
-            disabled={selectedRowKeys.length === 0}
-          >
-            Save
-          </Button>
-        </div>
-      </div>
-    </Fragment>
+    <ClassificationViewer
+      src={[
+        "https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg",
+      ]}
+      path="https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg"
+    >
+      <Table
+        columns={columns}
+        dataSource={confidence_array}
+        rowSelection={{
+          //               type: "radio",
+          selectedRowKeys,
+          onChange: onSelectChange,
+        }}
+      />
+      <Button
+        icon={<SaveOutlined />}
+        onClick={() => setLoading(true)}
+        type="primary"
+        loading={loading}
+        disabled={selectedRowKeys.length === 0}
+      >
+        Save
+      </Button>
+    </ClassificationViewer>
   );
 };
 
