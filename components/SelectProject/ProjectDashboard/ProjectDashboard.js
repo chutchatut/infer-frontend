@@ -1,8 +1,17 @@
-import { Statistic, Card, Space, message, Descriptions } from "antd";
+import {
+  Statistic,
+  Card,
+  Space,
+  message,
+  Descriptions,
+  Typography,
+} from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Bar from "../../Chart/Bar/Bar";
 import Pie from "../../Chart/Pie/Pie";
+
+const { Paragraph } = Typography;
 
 const ProjectDashboard = (props) => {
   const predClasses = { Normal: 15, "COVID-19": 10, Pnuemonia: 5 };
@@ -35,8 +44,16 @@ const ProjectDashboard = (props) => {
             <Descriptions.Item label="Task" span="8">
               {props.project.task}
             </Descriptions.Item>
-            <Descriptions.Item label="Description" span="8">
-              {props.project.description}
+            <Descriptions.Item
+              label="Description"
+              span="8"
+              key={props.project.name}
+            >
+              <Paragraph
+                ellipsis={{ rows: 3, expandable: true, symbol: "more" }}
+              >
+                {props.project.description}
+              </Paragraph>
             </Descriptions.Item>
             <Descriptions.Item label="Pipelines" span="8">
               {project && project.pipelines && project.pipelines.length ? (
