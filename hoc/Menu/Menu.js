@@ -22,7 +22,7 @@ const Menu = (props) => {
           <Content
             className="site-layout-background"
             style={{
-              padding: 24,
+              padding: 14,
               margin: 0,
               minHeight: 280,
             }}

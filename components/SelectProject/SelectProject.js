@@ -19,7 +19,7 @@ const SelectProject = (props) => {
   return (
     <Fragment>
       <Space wrap size="middle">
-        {projects.map((project) => (
+        {projects.map((project, i) => (
           <Card
             style={{
               width: "300px",
@@ -27,14 +27,22 @@ const SelectProject = (props) => {
             }}
             hoverable
             onClick={setProjectOnModal.bind(this, project)}
+            key={i}
+            cover={
+              <img
+                alt="Project cover"
+                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              />
+            }
           >
-            <Descriptions title={project.name} key={project.id}>
+            <Card.Meta title={project.name} description={project.task} />
+            {/* <Descriptions title={project.name} key={project.id}>
               <Descriptions.Item>
                 <Paragraph ellipsis={{ rows: 6, expandable: false }}>
                   {project.description}
                 </Paragraph>
               </Descriptions.Item>
-            </Descriptions>
+            </Descriptions> */}
           </Card>
         ))}
       </Space>
@@ -47,10 +55,12 @@ const SelectProject = (props) => {
           setProjectOnModal(null);
         }}
         okText="Select this project"
-        width="800px"
-        height="500px"
+        width="850px"
+        // height="800px"
       >
-        <ProjectDashboard project={projectOnModal} />
+        <div style={{width:'800px', height: '500px', overflow: 'auto'}}>
+          <ProjectDashboard project={projectOnModal} />
+        </div>
       </Modal>
     </Fragment>
   );

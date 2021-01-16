@@ -33,7 +33,7 @@ const Edit = () => {
       src={[
         "https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg",
       ]}
-      path="https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg"
+      path="/path/to/image"
     >
       <Table columns={columns} dataSource={confidence_array} />
       <Button

@@ -32,9 +32,8 @@ const ProjectDashboard = (props) => {
             <Descriptions.Item label="Name" span="8">
               {props.project.name}
             </Descriptions.Item>
-            <Descriptions.Item label="Type" span="8">
-              {/*TODO CHANGE THIS LATER*/}
-              Segmentation
+            <Descriptions.Item label="Task" span="8">
+              {props.project.task}
             </Descriptions.Item>
             <Descriptions.Item label="Description" span="8">
               {props.project.description}
@@ -56,20 +55,21 @@ const ProjectDashboard = (props) => {
       <Card style={{ height: "380px", width: "350px" }}>
         <Statistic
           title="Predicted Classes"
-          value=" "
-          prefix={
+          formatter={() => (
             <Pie
               data={predClasses}
+              seed={2}
               label="# of images in each predicted classes"
             />
-          }
+          )}
         />
       </Card>
       <Card style={{ height: "380px", width: "350px" }}>
         <Statistic
           title="Image Classes"
-          value=" "
-          prefix={<Bar data={imgClasses} label="# of images" />}
+          formatter={() => (
+            <Bar seed={3} data={imgClasses} label="# of images" />
+          )}
         />
       </Card>
     </Space>

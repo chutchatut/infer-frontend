@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { Button, Checkbox, Table } from "antd";
+import { Button, Checkbox, Space, Table } from "antd";
 import styles from "./edit.module.css";
 import { SaveOutlined } from "@ant-design/icons";
 import ClassificationViewer from "../../hoc/ClassificationViewer/ClassificationViewer";
+import TextArea from "antd/lib/input/TextArea";
 
 const columns = [
   { title: "Name", dataIndex: "name" },
@@ -35,6 +36,8 @@ const Edit = () => {
     setSelectedRowKeys(selectedRowKeys);
   };
 
+  const [note, setNote] = useState("");
+
   //For testing
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +46,7 @@ const Edit = () => {
       src={[
         "https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg",
       ]}
-      path="https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg"
+      path="/path/to/image"
     >
       <Table
         columns={columns}
@@ -54,15 +57,22 @@ const Edit = () => {
           onChange: onSelectChange,
         }}
       />
-      <Button
-        icon={<SaveOutlined />}
-        onClick={() => setLoading(true)}
-        type="primary"
-        loading={loading}
-        disabled={selectedRowKeys.length === 0}
-      >
-        Save
-      </Button>
+      <Space direction="vertical">
+        <TextArea
+          placeholder="Note"
+          value={note}
+          onChange={(event) => setNote(event.target.value)}
+        />
+        <Button
+          icon={<SaveOutlined />}
+          onClick={() => setLoading(true)}
+          type="primary"
+          loading={loading}
+          disabled={selectedRowKeys.length === 0}
+        >
+          Save
+        </Button>
+      </Space>
     </ClassificationViewer>
   );
 };

@@ -22,17 +22,20 @@ const Canvas = (props) => {
     // Draw background
     const background = await loadImg(props.background);
 
-    canvas.height = background.height;
-    canvas.width = background.width;
-    context.drawImage(background, 0, 0);
+    // canvas.height = background.height;
+    // canvas.width = background.width;
+    canvas.height = 600;
+    canvas.width = 500;
+    // TODO dynamic scaling
+    context.drawImage(background, 0, 0, 500, 600);
 
-    context.font = "30px Arial";
+    // context.font = "30px Arial";
 
     // Draw poly
     context.lineCap = "round";
     context.lineWidth = 1.5;
     for (let poly of props.polys) {
-      if (!poly.points.length) continue;
+      if (!poly.points.length || !poly.visibility) continue;
       // Fill poly
       context.beginPath();
       context.fillStyle = `rgba(${poly.color}, ${
@@ -48,26 +51,34 @@ const Canvas = (props) => {
         context.strokeStyle = `rgba(${poly.color}, 0.5)`;
         context.closePath();
         context.stroke();
-        context.fillStyle = `rgb(${poly.color})`;
-        context.fillText(poly.label, poly.points[0][0], poly.points[0][1]);
+        // Write text label
+        // context.fillStyle = `rgb(${poly.color})`;
+        // context.fillText(poly.label, poly.points[0][0], poly.points[0][1]);
       }
     }
 
     // Draw points
-    for (let poly of props.polys) {
-      if (!poly.points.length) continue;
-      for (let point of poly.points) {
-        context.beginPath();
-        // Somehow the circle isn't working
-        // context.arc(point[0], point[1], 3, 0, 2 * Math.pi);
-        context.fillStyle = poly.selected
-          ? `rgb(${poly.color})`
-          : `rgba(${poly.color}, 0.5)`;
-        context.fillRect(point[0] - 5, point[1] - 5, 10, 10);
-        context.stroke();
-      }
-    }
+    // for (let poly of props.polys) {
+    //   if (!poly.points.length) continue;
+    //   for (let point of poly.points) {
+    //     context.beginPath();
+    //     // Somehow the circle isn't working
+    //     // context.arc(point[0], point[1], 3, 0, 2 * Math.pi);
+    //     context.fillStyle = poly.selected
+    //       ? `rgb(${poly.color})`
+    //       : `rgba(${poly.color}, 0.5)`;
+    //     context.fillRect(point[0] - 5, point[1] - 5, 10, 10);
+    //     context.stroke();
+    //   }
+    // }
   }, [props.polys]);
+
+  // useEffect(() => {
+  //   canvasRef.current.addEventListener("mousedown", (e) => {
+  //     props.mousedown(e);
+  //     e.preventDefault();
+  //   });
+  // }, []);
 
   return <canvas ref={canvasRef} {...props.config} />;
 };
