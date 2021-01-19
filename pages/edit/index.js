@@ -4,14 +4,17 @@ import styles from "./edit.module.css";
 import { SaveOutlined } from "@ant-design/icons";
 import ClassificationViewer from "../../hoc/ClassificationViewer/ClassificationViewer";
 import TextArea from "antd/lib/input/TextArea";
+import MyTable from "../../components/MyTable/MyTable";
 
 const columns = [
   { title: "Name", dataIndex: "name" },
   {
     title: "Confidence",
     dataIndex: "confidence",
-    defaultSortOrder: "descend",
-    sorter: (a, b) => a.confidence - b.confidence,
+    sortable: true,
+    config: {
+      defaultSortOrder: "descend",
+    },
   },
 ];
 
@@ -48,14 +51,11 @@ const Edit = () => {
       ]}
       path="/path/to/image"
     >
-      <Table
+      <MyTable
         columns={columns}
-        dataSource={confidence_array}
-        rowSelection={{
-          //               type: "radio",
-          selectedRowKeys,
-          onChange: onSelectChange,
-        }}
+        data={confidence_array}
+        selectionType="checkbox"
+        onSelectChange={onSelectChange}
       />
       <Space direction="vertical">
         <TextArea

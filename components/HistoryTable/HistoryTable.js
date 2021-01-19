@@ -9,7 +9,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
-import axios from "axios";
+import MyTable from "../MyTable/MyTable";
 
 const statuses = [
   {
@@ -29,121 +29,18 @@ const statuses = [
   },
 ];
 
-const sortableConfig = (fieldName) => ({
-  sorter: (a, b) => {
-    // TODO remove this
-    console.log(typeof a[fieldName]);
-    if (typeof a[fieldName] === "string")
-      return a[fieldName].localeCompare(b[fieldName]);
-    if (typeof a[fieldName] === "number") return a[fieldName] - b[fieldName];
-  },
-  sortDirections: ["descend", "ascend"],
-});
-
-const { Column } = Table;
-
 const HistoryTable = (props) => {
-  // Use to highlight the input
-  let searchRef = {};
-
-  // Use to highlight search matches
-  const [searchTexts, setSearchTexts] = useState({});
-  const setSearchTextsWField = (fieldName, value) => {
-    console.log(fieldName, value);
-    const newSearchTexts = { ...searchTexts };
-    newSearchTexts[fieldName] = value;
-    setSearchTexts(newSearchTexts);
-  };
-
-  const searchableConfig = (fieldName) => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-    }) => (
-      <div style={{ padding: 8 }}>
-        <Input
-          ref={(ref) => (searchRef[fieldName] = ref)}
-          value={selectedKeys}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => {
-            confirm();
-            setSearchTextsWField(fieldName, selectedKeys[0]);
-          }}
-          style={{ width: 188, marginBottom: 8, display: "block" }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => {
-              confirm();
-              setSearchTextsWField(fieldName, selectedKeys[0]);
-            }}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => {
-              clearFilters();
-              setSearchTextsWField(fieldName, "");
-            }}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered) => (
-      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[fieldName]
-        ? record[fieldName]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
-        : "",
-    onFilterDropdownVisibleChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchRef[fieldName].select(), 100);
-      }
-    },
-    render: (text) => (
-      <Highlighter
-        highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-        searchWords={[searchTexts[fieldName]]}
-        autoEscape
-        textToHighlight={text}
-      />
-    ),
-  });
-
-  return (
-    <Table
-      dataSource={props.data}
-      pagination={{ pageSize: 50 }}
-      scroll={{ x: 300, y: 300 }}
-    >
-      <Column
-        title="Status"
-        dataIndex="status"
-        key="status"
-        filters={statuses}
-        onFilter={(value, record) => record.status === value}
-        sorter={(a, b) =>
+  const columns = [
+    {
+      title: "Status",
+      dataIndex: "status",
+      config: {
+        filter: (value, record) => record.status === value,
+        sorter: (a, b) =>
           statuses.findIndex((el) => el.value === a.status) -
-          statuses.findIndex((el) => el.value === b.status)
-        }
-        sortDirections={["ascend", "descend"]}
-        render={(text) => {
+          statuses.findIndex((el) => el.value === b.status),
+        sortDirections: ["ascend", "descend"],
+        render: (text) => {
           const status_style = statuses.find((el) => el.value === text);
           return (
             <Fragment>
@@ -151,35 +48,26 @@ const HistoryTable = (props) => {
               {status_style.text}
             </Fragment>
           );
-        }}
-        fixed="left"
-      />
-      <Column
-        title="Patient's HN"
-        dataIndex="HN"
-        key="HN"
-        {...sortableConfig("HN")}
-        {...searchableConfig("HN")}
-      />
-      <Column
-        title="Patient's name"
-        dataIndex="patient_name"
-        key="patient_name"
-        {...sortableConfig("patient_name")}
-        {...searchableConfig("patient_name")}
-      />
-      <Column
-        title="Patient's age"
-        dataIndex="age"
-        key="age"
-        {...sortableConfig("age")}
-        // Cannot make number searchable
-        // {...searchableConfig("age")}
-      />
-      <Column
-        title="Action"
-        key="action"
-        render={(text, record) => (
+        },
+        fixed: "left",
+      },
+    },
+    {
+      title: "Patient's HN",
+      dataIndex: "HN",
+      searchable: true,
+      sortable: true,
+    },
+    {
+      title: "Patient's age",
+      dataIndex: "age",
+      sortable: true,
+    },
+    {
+      title: "Action",
+      key: "action",
+      config: {
+        render: (text, record) => (
           <Space size="middle">
             <Link href={`view?id=${record.key}`}>
               <a>
@@ -204,10 +92,22 @@ const HistoryTable = (props) => {
               </a>
             </Popconfirm>
           </Space>
-        )}
-        fixed="right"
-      />
-    </Table>
+        ),
+        fixed: "right",
+      },
+    },
+  ];
+
+  return (
+    <MyTable
+      data={props.data}
+      config={{
+        dataSource: props.data,
+        pagination: { pageSize: 50 },
+        scroll: { x: 300, y: 300 },
+      }}
+      columns={columns}
+    />
   );
 };
 
