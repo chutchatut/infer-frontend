@@ -1,4 +1,5 @@
 import axios from "axios";
+import Head from "next/head";
 import React from "react";
 import { useSelector } from "react-redux";
 import HistoryTable from "../../components/HistoryTable/HistoryTable";
@@ -13,35 +14,40 @@ const data = [
   {
     key: "1",
     status: "in_progress",
-    filename: "0087bd3a-55a7-4045-b111-b018fa52d361.dcm",
+    HN: "3289563",
     patient_name: "Griselda Luczki",
+    age: 123,
     predicted_class: "",
   },
   {
     key: "2",
     status: "ai_annotated",
-    filename: "009eb222-eabc-4150-8121-d5a6d06b8ebf.dcm",
+    HN: "1234563",
     patient_name: "Santos Marrone",
+    age: 456,
     predicted_class: "normal",
   },
   {
     key: "3",
     status: "ai_annotated",
-    filename: "00a05408-8291-4231-886e-13763e103161.dcm",
+    HN: "4321363",
     patient_name: "Earle Hiller",
+    age: 12,
     predicted_class: "COVID-19",
   },
   {
     key: "4",
     status: "verified",
-    filename: "00aecb01-a116-45a2-956c-08d2fa55433f.dcm",
+    HN: "5321363",
+    age: 24,
     patient_name: "Enoch Salameh",
     predicted_class: "pnuemonia",
   },
   {
     key: "5",
     status: "verified",
-    filename: "01027bc3-dc40-4165-a6c3-d6be2cb7ca34.dcm",
+    HN: "1324563",
+    age: 80,
     patient_name: "Asia Defaber",
     predicted_class: "normal",
   },
@@ -50,14 +56,19 @@ const data = [
 const History = () => {
   const project = useSelector((state) => state.project.currentProject);
   return (
-    <HistoryTable
-      data={data}
-      onDeleteImage={(key) =>
-        axios.post(`/api/project/${project.id}/remove_dicom`, {
-          id: key,
-        })
-      }
-    />
+    <>
+      <Head>
+        <title>View history</title>
+      </Head>
+      <HistoryTable
+        data={data}
+        onDeleteImage={(key) =>
+          axios.post(`/api/project/${project.id}/remove_dicom`, {
+            id: key,
+          })
+        }
+      />
+    </>
   );
 };
 

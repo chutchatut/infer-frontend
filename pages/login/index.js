@@ -5,7 +5,8 @@ import styles from "./login.module.css";
 import * as action from "../../store/actions";
 import { useRouter } from "next/router";
 import { Form, Input, Button, Checkbox, message, Divider } from "antd";
-import systemName from '../../assets/name'
+import systemName from "../../assets/name";
+import Head from "next/head";
 
 const layout = {
   labelCol: {
@@ -48,63 +49,71 @@ const Login = () => {
 
   useEffect(() => {
     if (error)
-      message.error(`Authentication failed with the following error: ${error}`, 5);
+      message.error(
+        `Authentication failed with the following error: ${error}`,
+        5
+      );
   }, [error]);
 
   return (
-    <div className={styles.Layout}>
-      <div className={styles.Login}>
-        <div className={styles.Head}>
-          <div>logo</div>
-          <h2>{systemName}</h2>
+    <>
+      <Head>
+        <title>{systemName} login</title>
+      </Head>
+      <div className={styles.Layout}>
+        <div className={styles.Login}>
+          <div className={styles.Head}>
+            <div>logo</div>
+            <h2>{systemName}</h2>
+          </div>
+          <Form
+            {...layout}
+            name="basic"
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+
+            <Form.Item {...tailLayout}>
+              <Button type="primary" htmlType="submit" loading={loading}>
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </div>
-        <Form
-          {...layout}
-          name="basic"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit" loading={loading}>
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,1 +1,1 @@
-export default "DeepMed"
+export default 'DeepMed'

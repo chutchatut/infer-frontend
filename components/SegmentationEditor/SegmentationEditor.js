@@ -59,7 +59,7 @@ const SegmentationEditor = (props) => {
         points: [],
         color: randomColorGenerator.next().value,
         selected: true,
-        label: randomColorGenerator.next().value,
+        label: 'New Class',
         visibility: true,
       },
     ];

@@ -11,27 +11,8 @@ import {
 import Link from "next/link";
 import axios from "axios";
 
-const statuses = [
-  {
-    text: "In progress",
-    value: "in_progress",
-    color: "red",
-  },
-  {
-    text: "AI-Annotated",
-    value: "ai_annotated",
-    color: "yellow",
-  },
-  {
-    text: "Verified",
-    value: "verified",
-    color: "green",
-  },
-];
-
 const sortableConfig = (fieldName) => ({
   sorter: (a, b) => {
-    // TODO remove this
     console.log(typeof a[fieldName]);
     if (typeof a[fieldName] === "string")
       return a[fieldName].localeCompare(b[fieldName]);
@@ -42,9 +23,16 @@ const sortableConfig = (fieldName) => ({
 
 const { Column } = Table;
 
-const HistoryTable = (props) => {
+const ImageAddTable = (props) => {
   // Use to highlight the input
   let searchRef = {};
+
+  const [data, setData] = useState([
+    { filename: "test", key: 1 },
+    { filename: "test2", key: 2 },
+    { filename: "test3", key: 3 },
+    { filename: "test4", key: 4 },
+  ]);
 
   // Use to highlight search matches
   const [searchTexts, setSearchTexts] = useState({});
@@ -128,87 +116,19 @@ const HistoryTable = (props) => {
 
   return (
     <Table
-      dataSource={props.data}
+      dataSource={data}
       pagination={{ pageSize: 50 }}
       scroll={{ x: 300, y: 300 }}
     >
       <Column
-        title="Status"
-        dataIndex="status"
-        key="status"
-        filters={statuses}
-        onFilter={(value, record) => record.status === value}
-        sorter={(a, b) =>
-          statuses.findIndex((el) => el.value === a.status) -
-          statuses.findIndex((el) => el.value === b.status)
-        }
-        sortDirections={["ascend", "descend"]}
-        render={(text) => {
-          const status_style = statuses.find((el) => el.value === text);
-          return (
-            <Fragment>
-              <span style={{ color: status_style.color }}>● </span>
-              {status_style.text}
-            </Fragment>
-          );
-        }}
-        fixed="left"
-      />
-      <Column
-        title="Patient's HN"
-        dataIndex="HN"
-        key="HN"
-        {...sortableConfig("HN")}
-        {...searchableConfig("HN")}
-      />
-      <Column
-        title="Patient's name"
-        dataIndex="patient_name"
-        key="patient_name"
-        {...sortableConfig("patient_name")}
-        {...searchableConfig("patient_name")}
-      />
-      <Column
-        title="Patient's age"
-        dataIndex="age"
-        key="age"
-        {...sortableConfig("age")}
-        // Cannot make number searchable
-        // {...searchableConfig("age")}
-      />
-      <Column
-        title="Action"
-        key="action"
-        render={(text, record) => (
-          <Space size="middle">
-            <Link href={`view?id=${record.key}`}>
-              <a>
-                <EyeOutlined />
-              </a>
-            </Link>
-            <Link href={`edit?id=${record.key}`}>
-              <a>
-                <EditOutlined />
-              </a>
-            </Link>
-            <Popconfirm
-              placement="top"
-              icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-              title={"Are you sure to delete this image?"}
-              onConfirm={props.onDeleteImage.bind(this, record.key)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <a>
-                <DeleteOutlined />
-              </a>
-            </Popconfirm>
-          </Space>
-        )}
-        fixed="right"
+        title="Filename"
+        dataIndex="filename"
+        key="filename"
+        {...sortableConfig("filename")}
+        {...searchableConfig("filename")}
       />
     </Table>
   );
 };
 
-export default HistoryTable;
+export default ImageAddTable;
