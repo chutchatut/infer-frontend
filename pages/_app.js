@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import * as actions from "../store/actions";
+import { message } from "antd";
 import { useRouter } from "next/router";
 import { Provider } from "react-redux";
 import { useEffect } from "react";
@@ -32,6 +33,13 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </Provider>
     );
+  }
+
+  const currentProject = store.getState().project.currentProject;
+  if (router.pathname !== "/home" && !currentProject) {
+    // Redirect to home page if a project is not selected
+    message.info("Please select a project!");
+    router.replace("/home");
   }
 
   // Inject menu
