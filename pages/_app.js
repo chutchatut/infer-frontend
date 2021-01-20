@@ -35,15 +35,18 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  // useEffect(() => {
-  //   const currentProject = store.getState().project.currentProject;
-  //   if (router.pathname !== "/home" && !currentProject) {
-  //     // Redirect to home page if a project is not selected
-  //     // Make sure this code is behind login's return statement to avoid infinite loop
-  //     message.info("Please select a project!");
-  //     router.replace("/home");
-  //   }
-  // }, [router.pathname]);
+  useEffect(() => {
+    if (!store.getState().auth.token) return;
+    const currentProject = store.getState().project.currentProject;
+    if (localStorage.getItem("currentProjectID") && !currentProject) {
+      store.dispatch(actions.restoreCurrentProject());
+    } else if (router.pathname !== "/home" && !currentProject) {
+      // Redirect to home page if a project is not selected
+      // Make sure this code is behind login's return statement to avoid infinite loop
+      message.info("Please select a project!");
+      router.replace("/home");
+    }
+  }, [router.pathname, token]);
 
   // Inject menu
   return (

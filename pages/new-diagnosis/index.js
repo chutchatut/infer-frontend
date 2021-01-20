@@ -1,15 +1,18 @@
-import Head from "next/head";
 import React from "react";
+import Head from "next/head";
+import InferSelector from "../../components/InferSelector/InferSelector";
 
-const newDiagnosis = () => {
+const Upload = () => {
   return (
     <>
       <Head>
         <title>New diagnosis</title>
       </Head>
-      <p>New diagnosis</p>
+      <div style={{ minHeight: "280px", padding: "20px", background: "#fff" }}>
+        <InferSelector />
+      </div>
     </>
   );
 };
 
-export default newDiagnosis;
+export default Upload;

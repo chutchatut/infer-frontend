@@ -20,7 +20,6 @@ const Upload = () => {
       }
     } else if (filetype === "png") {
       // TODO implement this later
-      
     }
   };
 
@@ -40,7 +39,11 @@ const Upload = () => {
         onValuesChange={onValuesChange}
         autoComplete="off"
       >
-        <Form.Item name="filetype" label="Filetype">
+        <Form.Item
+          name="filetype"
+          label="Filetype"
+          rules={[{ required: true, message: "Missing filetype" }]}
+        >
           <Select>
             <Select.Option value="dcm">Dicom</Select.Option>
             <Select.Option value="png">png</Select.Option>{" "}
@@ -50,7 +53,7 @@ const Upload = () => {
           <Form.Item
             name="images"
             label="Images"
-            getValueFromEvent={(e) => e.fileList}
+            getValueFromEvent={(nextTargetKeys) => nextTargetKeys}
             rules={[{ required: true, message: "Missing image" }]}
             valuePropName="fileList"
           >

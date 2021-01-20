@@ -26,8 +26,19 @@ export const fetchProjects = () => async (dispatch) => {
 };
 
 export const setCurrentProject = (project) => {
+  localStorage.setItem("currentProjectID", project.id);
   return {
     type: actionTypes.SET_CURRENT_PROJECT,
     payload: project,
   };
+};
+
+export const restoreCurrentProject = () => async (dispatch) => {
+  const response = await axios.get(
+    `/api/project/${localStorage.getItem("currentProjectID")}/`
+  )
+  dispatch({
+    type: actionTypes.SET_CURRENT_PROJECT,
+    payload: response.data.project,
+  });
 };
