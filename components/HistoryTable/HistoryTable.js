@@ -1,6 +1,6 @@
 import React, { Fragment, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { Table, Tag, Space, Popconfirm, Input, Button } from "antd";
+import { Table, Tag, Space, Popconfirm, Input, Button, Popover } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -69,12 +69,22 @@ const HistoryTable = (props) => {
       config: {
         render: (text, record) => (
           <Space size="middle">
-            <Link href={`view?id=${record.key}`}>
-              <a>
-                <EyeOutlined />
-              </a>
+            <Link href={`viewer?id=${record.key}`}>
+              <Popover
+                placement="left"
+                content={
+                  <img
+                    src="https://i.ytimg.com/vi/C8NAYW-Z54o/maxresdefault.jpg"
+                    width="200"
+                  />
+                }
+              >
+                <a>
+                  <EyeOutlined />
+                </a>
+              </Popover>
             </Link>
-            <Link href={`edit?id=${record.key}`}>
+            <Link href={`viewer?id=${record.key}&edit=true`}>
               <a>
                 <EditOutlined />
               </a>

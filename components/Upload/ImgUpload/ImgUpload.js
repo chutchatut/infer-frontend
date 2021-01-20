@@ -18,18 +18,21 @@ import { Upload } from "antd";
 // };
 
 const ImgUpload = (props) => {
+  const maxCount =
+    props.filetype === "png" ? 1 : props.filetype === "dcm" ? 20 : 0;
+
   return (
     <Upload
-      accept={[".dcm", ".png"]}
+      accept={`.${props.filetype}`}
       listType="picture-card"
       fileList={props.fileList}
       onChange={props.onChange}
       // onPreview={onPreview}
       beforeUpload={() => false}
       showUploadList={{ showPreviewIcon: false }}
-      maxCount={1}
+      maxCount={maxCount}
     >
-      {(!props.fileList || props.fileList.length < 1) && "+ Upload"}
+      {(!props.fileList || props.fileList.length < maxCount) && "+ Upload"}
     </Upload>
   );
 };

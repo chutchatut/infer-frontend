@@ -119,6 +119,9 @@ const MyTable = (props) => {
               selectedRowKeys,
               onChange: onSelectChange,
               type: props.selectionType,
+              getCheckboxProps: (record) => ({
+                disabled: props.disableRowSelection,
+              }),
             }
           : null
       }

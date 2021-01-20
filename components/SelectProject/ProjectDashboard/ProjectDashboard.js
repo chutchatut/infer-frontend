@@ -38,15 +38,15 @@ const ProjectDashboard = (props) => {
       >
         <Space direction="vertical">
           <Descriptions title="Project Info">
-            <Descriptions.Item label="Name" span="8">
+            <Descriptions.Item label="Name" span="3">
               {props.project.name}
             </Descriptions.Item>
-            <Descriptions.Item label="Task" span="8">
+            <Descriptions.Item label="Task" span="3">
               {props.project.task}
             </Descriptions.Item>
             <Descriptions.Item
               label="Description"
-              span="8"
+              span="3"
               key={props.project.name}
             >
               <Paragraph
@@ -55,7 +55,7 @@ const ProjectDashboard = (props) => {
                 {props.project.description}
               </Paragraph>
             </Descriptions.Item>
-            <Descriptions.Item label="Pipelines" span="8">
+            <Descriptions.Item label="Pipelines" span="3">
               {project && project.pipelines && project.pipelines.length ? (
                 <ul style={{ listStyleType: "disc", paddingLeft: "15px" }}>
                   {project.pipelines.map((pipeline) => (

@@ -1,20 +1,7 @@
-import { Button, DatePicker, Form, Input, InputNumber } from "antd";
+import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
 import axios from "axios";
 import React, { Fragment, useState } from "react";
 import ImgUpload from "./ImgUpload/ImgUpload";
-
-// const getFile = async (file) => {
-//   let src = file.url;
-//   if (!src) {
-//     return await new Promise((resolve) => {
-//       const reader = new FileReader();
-//       reader.readAsDataURL(file.originFileObj);
-//       // reader.readAsArrayBuffer(file.originFileObj);
-//       // reader.readAsText(file.originFileObj)
-//       reader.onload = () => resolve(reader.result);
-//     });
-//   }
-// };
 
 const Upload = () => {
   const [form] = Form.useForm();
@@ -22,14 +9,26 @@ const Upload = () => {
 
   const onFinish = async (values) => {
     console.log("Received values of form:", values);
-    // const imgData = await getFile(values.images[0]);
-    const formData = new FormData();
-    formData.append("name", "test");
-    formData.append("data", values.images[0].originFileObj);
 
-    axios.post("/api/image/", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    if (filetype === "dcm") {
+      for (let image of values.images) {
+        const formData = new FormData();
+        formData.append("data", image.originFileObj);
+        axios.post("/api/image/", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      }
+    } else if (filetype === "png") {
+      // TODO implement this later
+      
+    }
+  };
+
+  const onValuesChange = (changedValues) => {
+    if (changedValues.filetype) {
+      setFiletype(changedValues.filetype);
+      form.resetFields(["images"]);
+    }
   };
 
   return (
@@ -38,22 +37,26 @@ const Upload = () => {
         form={form}
         name="dynamic_form_nest_item"
         onFinish={onFinish}
+        onValuesChange={onValuesChange}
         autoComplete="off"
       >
-        <Form.Item
-          name="images"
-          label="Images"
-          getValueFromEvent={(e) => {
-            setFiletype(
-              e.fileList[0] && e.fileList[0].name.split(".")[1].toLowerCase()
-            );
-            return e.fileList;
-          }}
-          rules={[{ required: true, message: "Missing image" }]}
-          valuePropName="fileList"
-        >
-          <ImgUpload />
+        <Form.Item name="filetype" label="Filetype">
+          <Select>
+            <Select.Option value="dcm">Dicom</Select.Option>
+            <Select.Option value="png">png</Select.Option>{" "}
+          </Select>
         </Form.Item>
+        {filetype && (
+          <Form.Item
+            name="images"
+            label="Images"
+            getValueFromEvent={(e) => e.fileList}
+            rules={[{ required: true, message: "Missing image" }]}
+            valuePropName="fileList"
+          >
+            <ImgUpload filetype={filetype} />
+          </Form.Item>
+        )}
         {filetype === "png" && (
           <Fragment>
             <Form.Item
@@ -73,7 +76,7 @@ const Upload = () => {
               <InputNumber />
             </Form.Item>
             <Form.Item
-              label="Patient's Age"
+              label="Patient's age"
               name="patient_age"
               rules={[
                 { required: true, message: "Please input patient's age" },
@@ -82,7 +85,7 @@ const Upload = () => {
               <InputNumber />
             </Form.Item>
             <Form.Item
-              label="Scan Date"
+              label="Scan date"
               name="scan_date"
               rules={[{ required: true, message: "Please input scan data" }]}
             >
