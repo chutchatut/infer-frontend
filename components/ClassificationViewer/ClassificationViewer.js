@@ -46,7 +46,7 @@ const ClassificationViewer = (props) => {
         </div>
         <div className={styles.Pred}>
           <Space direction="vertical">
-            <Select style={{width: '240px'}}>
+            <Select style={{ width: "240px" }} defaultOpen>
               {/* {pipelines.map((pipeline) => (
               <Select.Option>{pipeline.name}</Select.Option>
             ))} */}
