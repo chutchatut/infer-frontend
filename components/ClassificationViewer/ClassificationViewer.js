@@ -42,7 +42,7 @@ const ClassificationViewer = (props) => {
   // TODO load img from props.id
   return (
     <Fragment>
-      <div className={styles.Layout}>
+      <Space style={{ background: "#fff", padding: "10px" }}>
         <div className={styles.Preview}>
           <Space>
             <Image
@@ -56,8 +56,8 @@ const ClassificationViewer = (props) => {
           </Space>
           <h2>{props.path}</h2>
         </div>
-        <div className={styles.Pred}>
-          <Space direction="vertical">
+        <Space direction="vertical">
+          <Space direction="vertical" size='large'>
             <Select style={{ width: "240px" }} defaultOpen>
               {/* {pipelines.map((pipeline) => (
               <Select.Option>{pipeline.name}</Select.Option>
@@ -98,8 +98,8 @@ const ClassificationViewer = (props) => {
               Edit
             </Button>
           )}
-        </div>
-      </div>
+        </Space>
+      </Space>
     </Fragment>
   );
 };

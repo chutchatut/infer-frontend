@@ -74,7 +74,7 @@ const HistoryTable = (props) => {
                 placement="left"
                 content={
                   <img
-                    src="https://i.ytimg.com/vi/C8NAYW-Z54o/maxresdefault.jpg"
+                    src="https://www.warrenphotographic.co.uk/photography/bigs/37974-Tabby-cat-portrait-white-background.jpg"
                     width="200"
                   />
                 }
