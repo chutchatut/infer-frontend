@@ -30,6 +30,8 @@ const SelectProject = (props) => {
               <img
                 alt="Project cover"
                 src="http://www.reportingday.com/wp-content/uploads/2018/06/Cat-HD-Pics.jpg"
+                height="170px"
+                style={{ objectFit: "cover" }}
               />
             }
           >
