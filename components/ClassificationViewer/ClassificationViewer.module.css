@@ -10,12 +10,6 @@
   text-align: center;
 }
 
-.Preview img {
-  max-width: 40vw;
-  height: auto;
-  margin: 2vh;
-}
-
 .Pred {
   margin: 2vw;
   display: flex;

@@ -7,8 +7,6 @@ import TextArea from "antd/lib/input/TextArea";
 import MyTable from "../../components/MyTable/MyTable";
 import { useRouter } from "next/router";
 
-
-
 const Edit = () => {
   //For testing
   const confidence = { Normal: 0.0195, Pnuemonia: 0.0482, "COVID-19": 0.9323 };
@@ -18,13 +16,10 @@ const Edit = () => {
     confidence: confidence[key],
   }));
 
-  const router = useRouter()
-
+  const router = useRouter();
   return (
     <ClassificationViewer
-      src={[
-        "https://www.hdwallpaper.nu/wp-content/uploads/2015/02/Funny-Cat-Hidden.jpg",
-      ]}
+      id={router.query.id}
       path="/path/to/image"
       data={confidence_array}
       edit={router.query.edit}

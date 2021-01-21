@@ -1,4 +1,4 @@
-import { Button, Select, Space } from "antd";
+import { Button, Select, Space, Image } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Fragment, useState } from "react";
 import MyTable from "../MyTable/MyTable";
@@ -36,12 +36,24 @@ const ClassificationViewer = (props) => {
 
   const [loading, setLoading] = useState(false);
 
+  const mockImgSrc =
+    "https://www.warrenphotographic.co.uk/photography/bigs/37974-Tabby-cat-portrait-white-background.jpg";
+
+  // TODO load img from props.id
   return (
     <Fragment>
       <div className={styles.Layout}>
         <div className={styles.Preview}>
-          <img src={props.src[0]} />
-
+          <Space>
+            <Image
+              src={mockImgSrc}
+              style={{ maxWidth: "40vw", height: "auto" }}
+            />
+            <Image
+              src={mockImgSrc}
+              style={{ maxWidth: "40vw", height: "auto" }}
+            />
+          </Space>
           <h2>{props.path}</h2>
         </div>
         <div className={styles.Pred}>
