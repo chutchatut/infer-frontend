@@ -26,6 +26,18 @@ function MyApp({ Component, pageProps }) {
     else if (!token) router.replace("/login");
   }, [token]);
 
+  useEffect(() => {
+    if (!store.getState().auth.token) return;
+    const currentProject = store.getState().project.currentProject;
+    if (localStorage.getItem("currentProjectID") && !currentProject) {
+      store.dispatch(actions.restoreCurrentProject());
+    } else if (router.pathname !== "/home" && !currentProject) {
+      // Redirect to home page if a project is not selected
+      message.info("Please select a project!");
+      router.replace("/home");
+    }
+  }, [router.pathname, token]);
+
   if (router.pathname === "/login") {
     // Don't inject menu on login page
     return (
@@ -34,19 +46,6 @@ function MyApp({ Component, pageProps }) {
       </Provider>
     );
   }
-
-  useEffect(() => {
-    if (!store.getState().auth.token) return;
-    const currentProject = store.getState().project.currentProject;
-    if (localStorage.getItem("currentProjectID") && !currentProject) {
-      store.dispatch(actions.restoreCurrentProject());
-    } else if (router.pathname !== "/home" && !currentProject) {
-      // Redirect to home page if a project is not selected
-      // Make sure this code is behind login's return statement to avoid infinite loop
-      message.info("Please select a project!");
-      router.replace("/home");
-    }
-  }, [router.pathname, token]);
 
   // Inject menu
   return (

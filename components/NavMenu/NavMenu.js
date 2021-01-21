@@ -9,42 +9,67 @@ import {
   FolderAddOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import MenuItem from "./MenuItem/MenuItem";
 
 const NavMenu = (props) => {
   const { SubMenu } = Menu;
+  const router = useRouter();
+  const getMenuItem = (path, children) => (
+    <Menu.Item
+      key={path}
+      onClick={() => {
+        router.push(path);
+      }}
+    >
+      {children}
+    </Menu.Item>
+  );
 
   return (
     <Menu
       mode="inline"
-      defaultSelectedKeys={[props.curPath]}
+      selectedKeys={[router.pathname.replace("/", "")]}
       defaultOpenKeys={["diag"]}
       style={{ height: "100%", borderRight: 0 }}
     >
-      <MenuItem path="home">
-        <HomeOutlined />
-        Home
-      </MenuItem>
+      {getMenuItem(
+        "home",
+        <>
+          <HomeOutlined />
+          Home
+        </>
+      )}
       <SubMenu key="diag" icon={<MedicineBoxOutlined />} title="Diagnosis">
-        <MenuItem path="upload-image">
-          <FileImageOutlined />
-          Upload image
-        </MenuItem>
+        {getMenuItem(
+          "upload-image",
+          <>
+            <FileImageOutlined />
+            Upload image
+          </>
+        )}
 
-        <MenuItem path="new-diagnosis">
-          <FolderAddOutlined />
-          New diagnosis
-        </MenuItem>
+        {getMenuItem(
+          "new-diagnosis",
+          <>
+            <FolderAddOutlined />
+            New diagnosis
+          </>
+        )}
 
-        <MenuItem path="history">
-          <HistoryOutlined />
-          View history
-        </MenuItem>
+        {getMenuItem(
+          "history",
+          <>
+            <HistoryOutlined />
+            View history
+          </>
+        )}
       </SubMenu>
-      <MenuItem path="about-us">
-        <UserOutlined />
-        About us
-      </MenuItem>
+      {getMenuItem(
+        "about-us",
+        <>
+          <UserOutlined />
+          About us
+        </>
+      )}
     </Menu>
   );
 };
