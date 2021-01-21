@@ -1,12 +1,10 @@
-import React, { Fragment, useRef, useState } from "react";
-import Highlighter from "react-highlight-words";
-import { Table, Tag, Space, Popconfirm, Input, Button, Popover } from "antd";
+import React, { Fragment } from "react";
+import { Space, Popconfirm, Popover } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
   QuestionCircleOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import MyTable from "../MyTable/MyTable";
@@ -37,6 +35,7 @@ const HistoryTable = (props) => {
       config: {
         filter: (value, record) => record.status === value,
         sorter: (a, b) =>
+          // Custom sort with priority (In progress < AI-AA < Verified)
           statuses.findIndex((el) => el.value === a.status) -
           statuses.findIndex((el) => el.value === b.status),
         sortDirections: ["ascend", "descend"],
@@ -72,6 +71,7 @@ const HistoryTable = (props) => {
             <Link href={`viewer?id=${record.key}`}>
               <Popover
                 placement="left"
+                // TODO add logic to load img later
                 content={
                   <img
                     src="https://www.warrenphotographic.co.uk/photography/bigs/37974-Tabby-cat-portrait-white-background.jpg"
