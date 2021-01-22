@@ -4,6 +4,7 @@ import { Menu, Dropdown, message, Skeleton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
 import { DownOutlined } from "@ant-design/icons";
+import Logo from "../../assets/Logo";
 
 const TopBar = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const TopBar = () => {
 
   const dispatch = useDispatch();
 
-  let projectsMenu= <Menu />;
+  let projectsMenu = <Menu />;
   if (projects) {
     projectsMenu = (
       <Menu>
@@ -44,7 +45,9 @@ const TopBar = () => {
           </a>
         </Dropdown>
       )}
-      <span style={{ color: "white" }}>Logo here</span>
+
+      <Logo width="120px" height="50px" />
+
       <Menu theme="dark" mode="horizontal">
         <Menu.Item
           danger

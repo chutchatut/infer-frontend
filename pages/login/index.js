@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Form, Input, Button, Checkbox, message, Divider } from "antd";
 import systemName from "../../assets/name";
 import Head from "next/head";
+import Logo from "../../assets/Logo";
 
 const layout = {
   labelCol: {
@@ -51,6 +52,7 @@ const Login = () => {
     if (error)
       message.error(
         `Authentication failed with the following error: ${error}`,
+        // Duration
         5
       );
   }, [error]);
@@ -63,8 +65,9 @@ const Login = () => {
       <div className={styles.Layout}>
         <div className={styles.Login}>
           <div className={styles.Head}>
-            <div>logo</div>
-            <h2>{systemName}</h2>
+            {/* <div>logo</div>
+            <h2>{systemName}</h2> */}
+            <Logo width="200px" height="90px"/>
           </div>
           <Form
             {...layout}
@@ -107,7 +110,7 @@ const Login = () => {
 
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit" loading={loading}>
-                Submit
+                Login
               </Button>
             </Form.Item>
           </Form>
