@@ -53,7 +53,7 @@ const Upload = () => {
           <Form.Item
             name="images"
             label="Images"
-            getValueFromEvent={(nextTargetKeys) => nextTargetKeys}
+            getValueFromEvent={(e) => e.fileList}
             rules={[{ required: true, message: "Missing image" }]}
             valuePropName="fileList"
           >

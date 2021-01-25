@@ -6,7 +6,11 @@ import ClassificationViewer from "../../components/ClassificationViewer/Classifi
 import TextArea from "antd/lib/input/TextArea";
 import MyTable from "../../components/MyTable/MyTable";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import SegmentationEditor from "../../components/SegmentationEditor/SegmentationEditor";
 
+// TODO show note and past diag
+// TODO edit task type
 const Edit = () => {
   //For testing
   const confidence = { Normal: 0.0195, Pnuemonia: 0.0482, "COVID-19": 0.9323 };
@@ -16,15 +20,22 @@ const Edit = () => {
     confidence: confidence[key],
   }));
 
+  const project = useSelector((state) => state.project.currentProject);
+
   const router = useRouter();
-  return (
-    <ClassificationViewer
-      id={router.query.id}
-      path="/path/to/image"
-      data={confidence_array}
-      edit={router.query.edit}
-    />
-  );
+ 
+  // DO NOT replace this with switch case
+  if (project.task === "2d classification")
+    return (
+      <ClassificationViewer
+        id={router.query.id}
+        path="/path/to/image"
+        data={confidence_array}
+        edit={router.query.edit}
+      />
+    );
+  if (project.task === "2d segmentation") return <SegmentationEditor />;
+  return <p>Unsupported Task type</p>;
 };
 
 export default Edit;

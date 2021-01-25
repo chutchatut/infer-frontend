@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { Table, Space, Input, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -108,6 +108,16 @@ const MyTable = (props) => {
     setSelectedRowKeys(newSelectedRowKeys);
     if (props.onSelectChange) props.onSelectChange(newSelectedRowKeys);
   };
+  useEffect(() => {
+    if (props.defaultSelection) {
+      console.log();
+      setSelectedRowKeys(
+        props.defaultSelection.map((predClass) =>
+          props.data.findIndex((item) => item.name === predClass)
+        )
+      );
+    }
+  }, []);
 
   return (
     <Table

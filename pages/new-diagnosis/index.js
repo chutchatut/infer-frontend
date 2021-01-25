@@ -2,6 +2,8 @@ import React from "react";
 import Head from "next/head";
 import InferSelector from "../../components/InferSelector/InferSelector";
 
+
+// TODO pipeline as radio box
 const Upload = () => {
   return (
     <>

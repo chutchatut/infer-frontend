@@ -17,22 +17,22 @@ const columns = [
     },
   },
 ];
-
+// TODO get image's project and check if it's equal
 const ClassificationViewer = (props) => {
   const [editable, setEditable] = useState(props.edit);
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const onSelectChange = (selectedRowKeys) => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState([2]);
+  const onSelectChange = (newSelectedRowKeys) => {
     console.log(
-      `SelectedRowKeys changed: ${selectedRowKeys.map(
+      `SelectedRowKeys changed: ${newSelectedRowKeys.map(
         (key) => props.data.find((d) => d.key === key).name
       )}
       `
     );
-    setSelectedRowKeys(selectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
   };
 
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState("Lorem Ipsum");
 
   const [loading, setLoading] = useState(false);
 
@@ -57,7 +57,7 @@ const ClassificationViewer = (props) => {
           <h2>{props.path}</h2>
         </div>
         <Space direction="vertical">
-          <Space direction="vertical" size='large'>
+          <Space direction="vertical" size="large">
             <Select style={{ width: "240px" }} defaultOpen>
               {/* {pipelines.map((pipeline) => (
               <Select.Option>{pipeline.name}</Select.Option>
@@ -67,18 +67,20 @@ const ClassificationViewer = (props) => {
             <MyTable
               columns={columns}
               data={props.data}
+              defaultSelection={['COVID-19']}
               selectionType="checkbox"
               onSelectChange={onSelectChange}
               disableRowSelection={!editable}
             />
           </Space>
-          {editable ? (
-            <Space direction="vertical">
-              <TextArea
-                placeholder="Note"
-                value={note}
-                onChange={(event) => setNote(event.target.value)}
-              />
+          <Space direction="vertical">
+            <TextArea
+              placeholder="Note"
+              value={note}
+              onChange={(event) => setNote(event.target.value)}
+              disabled={!editable}
+            />
+            {editable ? (
               <Button
                 icon={<SaveOutlined />}
                 onClick={() => setLoading(true)}
@@ -88,16 +90,16 @@ const ClassificationViewer = (props) => {
               >
                 Save
               </Button>
-            </Space>
-          ) : (
-            <Button
-              icon={<EditOutlined />}
-              type="primary"
-              onClick={setEditable.bind(this, true)}
-            >
-              Edit
-            </Button>
-          )}
+            ) : (
+              <Button
+                icon={<EditOutlined />}
+                type="primary"
+                onClick={setEditable.bind(this, true)}
+              >
+                Edit
+              </Button>
+            )}
+          </Space>
         </Space>
       </Space>
     </Fragment>
