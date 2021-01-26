@@ -25,7 +25,6 @@ const PipelineSelector = () => {
               width: "200px",
               // height: "200px",
             }}
-            hoverable
             key={i}
             actions={[
               <CheckOutlined onClick={() => {}} />,

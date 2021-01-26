@@ -1,7 +1,6 @@
 import { EyeOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
 import React from "react";
-import HistoryTable from "../../HistoryTable/HistoryTable";
 import MyTable from "../../MyTable/MyTable";
 
 const data = [
