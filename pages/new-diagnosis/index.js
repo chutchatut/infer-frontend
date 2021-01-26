@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import InferSelector from "../../components/InferSelector/InferSelector";
 
-
 // TODO pipeline as radio box
 const Upload = () => {
   return (
@@ -10,9 +9,9 @@ const Upload = () => {
       <Head>
         <title>New diagnosis</title>
       </Head>
-      <div style={{ minHeight: "280px", padding: "20px", background: "#fff" }}>
-        <InferSelector />
-      </div>
+      {/* <div style={{ minHeight: "280px", padding: "20px", background: "#fff" }}> */}
+      <InferSelector />
+      {/* </div> */}
     </>
   );
 };

@@ -19,12 +19,21 @@ const Menu = (props) => {
           <Content
             className="site-layout-background"
             style={{
-              padding: 14,
+              paddingTop: 14,
               margin: 0,
               minHeight: 280,
             }}
           >
-            {props.children}
+            <div
+              style={{
+                background: "#fff",
+                height: `calc(100vh - 100px)`,
+                padding: "24px",
+                overflow: "auto",
+              }}
+            >
+              {props.children}
+            </div>
           </Content>
         </Layout>
       </Layout>

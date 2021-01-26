@@ -13,16 +13,16 @@ const uploadImage = () => {
       <Head>
         <title>Upload Image</title>
       </Head>
-      <div className={styles.Layout}>
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Upload files" key="1">
-            <Upload />
-          </TabPane>
-          <TabPane tab="Select from remote files" key="2">
-            <ImageAddTable />
-          </TabPane>
-        </Tabs>
-      </div>
+      {/* <div className={styles.Layout}> */}
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Upload files" key="1">
+          <Upload />
+        </TabPane>
+        <TabPane tab="Select from remote files" key="2">
+          <ImageAddTable />
+        </TabPane>
+      </Tabs>
+      {/* </div> */}
     </>
   );
 };
