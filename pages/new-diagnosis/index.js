@@ -1,19 +1,16 @@
 import React from "react";
 import Head from "next/head";
-import InferSelector from "../../components/InferSelector/InferSelector";
+import NewDiag from "../../components/NewDiag/NewDiag";
 
-// TODO pipeline as radio box
-const Upload = () => {
+const NewDiagnosis = () => {
   return (
     <>
       <Head>
         <title>New diagnosis</title>
       </Head>
-      {/* <div style={{ minHeight: "280px", padding: "20px", background: "#fff" }}> */}
-      <InferSelector />
-      {/* </div> */}
+      <NewDiag />
     </>
   );
 };
 
-export default Upload;
+export default NewDiagnosis;

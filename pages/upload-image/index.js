@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./uploadImage.module.css";
 import Upload from "../../components/Upload/Upload";
 import Head from "next/head";
-import ImageAddTable from "../../components/ImageAddTable/ImageAgeTable";
+import ImageAddTable from "../../components/ImageAddTable/ImageAddTable";
 
 const { TabPane } = Tabs;
 

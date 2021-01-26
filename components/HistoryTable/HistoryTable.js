@@ -112,7 +112,7 @@ const HistoryTable = (props) => {
     <MyTable
       data={props.data}
       config={{
-        dataSource: props.data,
+        // dataSource: props.data,
         pagination: { pageSize: 50 },
         scroll: { x: 300, y: 300 },
       }}
