@@ -1,4 +1,4 @@
-import { Card, Space } from "antd";
+import { Badge, Card, Space } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,30 +14,41 @@ const SelectProject = (props) => {
     return <div>loading</div>;
   }
 
+  const currentProject = useSelector((state) => state.project.currentProject);
+  
+  const getProjectCard = (project, i) => (
+    <Card
+      style={{
+        width: "300px",
+      }}
+      hoverable
+      onClick={setProjectOnModal.bind(this, project)}
+      key={i}
+      cover={
+        <img
+          alt="Project cover"
+          src="http://www.reportingday.com/wp-content/uploads/2018/06/Cat-HD-Pics.jpg"
+          height="170px"
+          style={{ objectFit: "cover" }}
+        />
+      }
+    >
+      <Card.Meta title={project.name} description={project.task} />
+    </Card>
+  );
+
   return (
     <Fragment>
       <Space wrap size="middle">
-        {projects.map((project, i) => (
-          <Card
-            style={{
-              width: "300px",
-              // height: "250px"
-            }}
-            hoverable
-            onClick={setProjectOnModal.bind(this, project)}
-            key={i}
-            cover={
-              <img
-                alt="Project cover"
-                src="http://www.reportingday.com/wp-content/uploads/2018/06/Cat-HD-Pics.jpg"
-                height="170px"
-                style={{ objectFit: "cover" }}
-              />
-            }
-          >
-            <Card.Meta title={project.name} description={project.task} />
-          </Card>
-        ))}
+        {projects.map((project, i) =>
+          project.id === currentProject.id ? (
+            <Badge.Ribbon text="active" color="green">
+              {getProjectCard(project, i)}
+            </Badge.Ribbon>
+          ) : (
+            getProjectCard(project, i)
+          )
+        )}
       </Space>
       <Modal
         title={projectOnModal && projectOnModal.name}
