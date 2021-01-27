@@ -1,8 +1,8 @@
 import { EyeOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import MyTable from "../../MyTable/MyTable";
-
+// TODO show how many images are selected
 const data = [
   {
     key: "1",
@@ -78,21 +78,28 @@ const SelectImage = () => {
     },
   ];
 
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log(newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
   };
 
   return (
-    <MyTable
-      data={data}
-      config={{
-        pagination: { pageSize: 50 },
-        scroll: { x: 300, y: 300 },
-      }}
-      columns={columns}
-      selectionType="checkbox"
-      onSelectChange={onSelectChange}
-    />
+    <>
+      <MyTable
+        data={data}
+        config={{
+          pagination: { pageSize: 50 },
+          scroll: { x: 300, y: 300 },
+        }}
+        columns={columns}
+        selectionType="checkbox"
+        onSelectChange={onSelectChange}
+      />
+      <p>
+        <strong>{selectedRowKeys.length}</strong> images selected
+      </p>
+    </>
   );
 };
 

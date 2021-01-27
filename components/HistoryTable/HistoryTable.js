@@ -8,7 +8,9 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import MyTable from "../MyTable/MyTable";
-
+// TODO add original image
+// TODO add image's owner and last update datetimestamp
+// TODO copy button
 const statuses = [
   {
     text: "In progress",

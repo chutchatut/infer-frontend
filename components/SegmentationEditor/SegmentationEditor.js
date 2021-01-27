@@ -59,7 +59,7 @@ const SegmentationEditor = (props) => {
         points: [],
         color: randomColorGenerator.next().value,
         selected: true,
-        label: 'New Class',
+        label: "New Class",
         visibility: true,
       },
     ];
@@ -71,12 +71,12 @@ const SegmentationEditor = (props) => {
 
   const select = (i) => {
     console.log(i, selectedIndex);
+    const newPolys = [...polys];
     if (typeof selectedIndex === "number") {
-      const newPolys = [...polys];
       newPolys[selectedIndex] = { ...newPolys[selectedIndex], selected: false };
-      newPolys[i] = { ...newPolys[i], selected: true };
-      setPolys(newPolys);
     }
+    newPolys[i] = { ...newPolys[i], selected: true };
+    setPolys(newPolys);
     setSelectedIndex(i);
   };
 
@@ -87,6 +87,11 @@ const SegmentationEditor = (props) => {
   };
 
   const deletePoly = (i) => {
+    if (i === selectedIndex) {
+      setSelectedIndex(null);
+    } else if (i < selectedIndex) {
+      setSelectedIndex(selectedIndex - 1);
+    }
     setPolys(polys.slice(0, i).concat(polys.slice(i + 1)));
   };
 

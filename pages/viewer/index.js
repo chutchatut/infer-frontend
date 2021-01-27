@@ -11,6 +11,8 @@ import SegmentationEditor from "../../components/SegmentationEditor/Segmentation
 
 // TODO show note and past diag
 // TODO edit task type
+// TODO last update
+
 const Edit = () => {
   //For testing
   const confidence = { Normal: 0.0195, Pnuemonia: 0.0482, "COVID-19": 0.9323 };
