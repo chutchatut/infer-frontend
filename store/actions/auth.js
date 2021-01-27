@@ -19,6 +19,7 @@ export const authFail = (error) => {
 
 export const authLogout = () => {
   localStorage.removeItem("Token");
+  localStorage.removeItem("currentProjectID");
   delete axios.defaults.headers.common["Authorization"];
   return { type: actionTypes.AUTH_LOGOUT };
 };
