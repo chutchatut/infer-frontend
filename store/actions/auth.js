@@ -17,11 +17,12 @@ export const authFail = (error) => {
   };
 };
 
-export const authLogout = () => {
+export const authLogout = () => (dispatch) => {
   localStorage.removeItem("Token");
   localStorage.removeItem("currentProjectID");
   delete axios.defaults.headers.common["Authorization"];
-  return { type: actionTypes.AUTH_LOGOUT };
+  dispatch({ type: actionTypes.AUTH_LOGOUT });
+  dispatch({ type: actionTypes.CLEAR_CURRENT_PROJECT });
 };
 
 export const authInit = (username, password, remember) => async (dispatch) => {

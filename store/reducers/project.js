@@ -26,6 +26,8 @@ const reducer = (state = initialState, action) => {
       };
     case actionTypes.SET_CURRENT_PROJECT:
       return { ...state, currentProject: action.payload };
+    case actionTypes.CLEAR_CURRENT_PROJECT:
+      return { ...state, currentProject: null };
     default:
       return state;
   }
