@@ -9,7 +9,9 @@ import "antd/dist/antd.css";
 import Menu from "../hoc/Menu/Menu";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://127.0.0.1:8000";
+axios.defaults.baseURL = process.env.BACKEND_URL
+  ? process.env.BACKEND_URL
+  : "http://127.0.0.1:8000";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
