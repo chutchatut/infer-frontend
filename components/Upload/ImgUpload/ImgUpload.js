@@ -23,6 +23,7 @@ const ImgUpload = (props) => {
 
   return (
     <Upload
+      multiple={props.filetype === "dcm"}
       accept={`.${props.filetype}`}
       listType="picture-card"
       fileList={props.fileList}

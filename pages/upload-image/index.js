@@ -7,8 +7,6 @@ import ImageAddTable from "../../components/ImageAddTable/ImageAddTable";
 
 const { TabPane } = Tabs;
 
-// TODO multiple select
-
 const uploadImage = () => {
   return (
     <>
