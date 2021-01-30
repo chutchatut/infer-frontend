@@ -1,23 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { get_color } from "../../assets/color";
 import Canvas from "./Canvas/Canvas";
-import {
-  Button,
-  Card,
-  Col,
-  Input,
-  Row,
-  Space,
-  Form,
-  Statistic,
-  Typography,
-  Popconfirm,
-} from "antd";
+import { Card, Space, Typography, Popconfirm } from "antd";
 import DraggablePoints from "./DraggablePoints/DraggablePoints";
 import {
-  CheckCircleFilled,
   CheckCircleOutlined,
-  CheckOutlined,
   DeleteOutlined,
   EditOutlined,
   EyeInvisibleOutlined,

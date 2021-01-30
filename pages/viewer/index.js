@@ -9,9 +9,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import SegmentationEditor from "../../components/SegmentationEditor/SegmentationEditor";
 
-// TODO show note and past diag
-// TODO edit task type
-// TODO last update
+// TODO add more task type
 
 const Edit = () => {
   //For testing

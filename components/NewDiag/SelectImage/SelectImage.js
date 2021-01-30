@@ -2,7 +2,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
 import React, { useState } from "react";
 import MyTable from "../../MyTable/MyTable";
-// TODO show how many images are selected
+
 const data = [
   {
     key: "1",

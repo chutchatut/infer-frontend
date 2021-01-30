@@ -9,17 +9,16 @@ const Upload = () => {
 
   const onFinish = async (values) => {
     console.log("Received values of form:", values);
-
+    // TODO implement this later
     if (filetype === "dcm") {
       for (let image of values.images) {
-        const formData = new FormData();
-        formData.append("data", image.originFileObj);
-        axios.post("/api/image/", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        // const formData = new FormData();
+        // formData.append("data", image.originFileObj);
+        // axios.post("/api/image/", formData, {
+        //   headers: { "Content-Type": "multipart/form-data" },
+        // });
       }
     } else if (filetype === "png") {
-      // TODO implement this later
     }
   };
 
