@@ -17,8 +17,12 @@ const columns = [
     },
   },
 ];
-// TODO get image's project and check if it's equal
+// TODO get image's project and check if it's equal. If not change the project
 const ClassificationViewer = (props) => {
+  // TODO edit this to use props later
+  const lastUpdated = "12 Jan 2020";
+  const updatedBy = "Dr. Somchai";
+
   const [editable, setEditable] = useState(props.edit);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([2]);
@@ -42,7 +46,7 @@ const ClassificationViewer = (props) => {
   // TODO load img from props.id
   return (
     <Fragment>
-      <Space style={{ background: "#fff", padding: "10px" }}>
+      <Space style={{ padding: "10px" }}>
         <div className={styles.Preview}>
           <Space>
             <Image
@@ -67,7 +71,7 @@ const ClassificationViewer = (props) => {
             <MyTable
               columns={columns}
               data={props.data}
-              defaultSelection={['COVID-19']}
+              defaultSelection={["COVID-19"]}
               selectionType="checkbox"
               onSelectChange={onSelectChange}
               disableRowSelection={!editable}
@@ -80,6 +84,9 @@ const ClassificationViewer = (props) => {
               onChange={(event) => setNote(event.target.value)}
               disabled={!editable}
             />
+            <span>
+              last editted {lastUpdated} by {updatedBy}
+            </span>
             {editable ? (
               <Button
                 icon={<SaveOutlined />}
