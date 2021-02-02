@@ -14,8 +14,8 @@ const { publicRuntimeConfig } = getConfig();
 
 
 
-axios.defaults.baseURL = process.env.BACKEND_URL
-  ? process.env.BACKEND_URL
+axios.defaults.baseURL = publicRuntimeConfig.BACKEND_URL
+  ? publicRuntimeConfig.BACKEND_URL
   : "http://127.0.0.1:8000";
 
 console.log(publicRuntimeConfig.BACKEND_URL);
