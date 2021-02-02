@@ -10,12 +10,12 @@ const SelectProject = (props) => {
   const [projectOnModal, setProjectOnModal] = useState(null);
   const dispatch = useDispatch();
 
+  const currentProject = useSelector((state) => state.project.currentProject);
+
   if (!projects) {
     return <div>loading</div>;
   }
 
-  const currentProject = useSelector((state) => state.project.currentProject);
-  
   const getProjectCard = (project, i) => (
     <Card
       style={{
@@ -41,7 +41,7 @@ const SelectProject = (props) => {
     <Fragment>
       <Space wrap size="middle">
         {projects.map((project, i) =>
-          project.id === currentProject.id ? (
+          currentProject && project.id === currentProject.id ? (
             <Badge.Ribbon text="active" color="green">
               {getProjectCard(project, i)}
             </Badge.Ribbon>
