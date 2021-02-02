@@ -41,7 +41,7 @@ const ClassificationViewer = (props) => {
   const [loading, setLoading] = useState(false);
 
   const mockImgSrc =
-    "https://www.warrenphotographic.co.uk/photography/bigs/37974-Tabby-cat-portrait-white-background.jpg";
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg/1200px-Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg";
 
   // TODO load img from props.id
   return (

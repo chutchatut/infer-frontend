@@ -27,7 +27,7 @@ const SelectProject = (props) => {
       cover={
         <img
           alt="Project cover"
-          src="http://www.reportingday.com/wp-content/uploads/2018/06/Cat-HD-Pics.jpg"
+          src="https://www.pilotcareernews.com/wp-content/uploads/2015/09/medical.jpg"
           height="170px"
           style={{ objectFit: "cover" }}
         />
