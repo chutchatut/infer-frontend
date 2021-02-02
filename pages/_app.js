@@ -13,7 +13,7 @@ axios.defaults.baseURL = process.env.BACKEND_URL
   ? process.env.BACKEND_URL
   : "http://127.0.0.1:8000";
 
-console.log(process.env.BACKEND_URL);
+console.log(process.env);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
