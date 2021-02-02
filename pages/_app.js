@@ -9,11 +9,16 @@ import "antd/dist/antd.css";
 import Menu from "../hoc/Menu/Menu";
 import axios from "axios";
 
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+
+
+
 axios.defaults.baseURL = process.env.BACKEND_URL
   ? process.env.BACKEND_URL
   : "http://127.0.0.1:8000";
 
-console.log(process.env);
+console.log(publicRuntimeConfig.BACKEND_URL);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
