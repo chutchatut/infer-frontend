@@ -18,8 +18,6 @@ axios.defaults.baseURL = publicRuntimeConfig.BACKEND_URL
   ? publicRuntimeConfig.BACKEND_URL
   : "http://127.0.0.1:8000";
 
-console.log(publicRuntimeConfig.BACKEND_URL);
-
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   // useSelector doesn't work because this is outside of Redux Provider

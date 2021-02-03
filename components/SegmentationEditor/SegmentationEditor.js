@@ -93,7 +93,7 @@ const SegmentationEditor = (props) => {
             onMouseDown: onMouseDown,
           }}
           polys={polys}
-          background="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg"
+          background="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg/1200px-Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg"
         />
       </div>
       <Space
