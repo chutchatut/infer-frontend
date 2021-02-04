@@ -38,7 +38,8 @@ export const authInit = (username, password, remember) => async (dispatch) => {
     ] = `token ${response.data.token}`;
     dispatch(authSuccess(response.data.token));
   } catch (error) {
-    if (error.response.status === 400) dispatch(authFail("Invalid credential"));
+    if (error.response && error.response.status === 400)
+      dispatch(authFail("Invalid credential"));
     else dispatch(authFail(error.message));
   }
 };
