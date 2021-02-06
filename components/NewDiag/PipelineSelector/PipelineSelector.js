@@ -12,9 +12,10 @@ const pipelines = [
 ];
 
 const { Paragraph } = Typography;
-
+// TODO use selectedPipeline, setSelectedPipeline from props
 const PipelineSelector = () => {
   const [pipelineOnModal, setPipelineOnModal] = useState(null);
+
   return (
     <>
       <Space wrap size="middle">

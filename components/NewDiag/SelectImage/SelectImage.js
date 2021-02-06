@@ -3,6 +3,7 @@ import { Popover } from "antd";
 import React, { useState } from "react";
 import MyTable from "../../MyTable/MyTable";
 
+// TODO use selectedImages, setSelectedImages, selectedPipeline
 const data = [
   {
     key: "1",
@@ -63,7 +64,7 @@ const SelectImage = () => {
             placement="left"
             content={
               <img
-                src="https://www.warrenphotographic.co.uk/photography/bigs/37974-Tabby-cat-portrait-white-background.jpg"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg/1200px-Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg"
                 width="200"
               />
             }

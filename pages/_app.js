@@ -16,7 +16,7 @@ const { publicRuntimeConfig } = getConfig();
 
 axios.defaults.baseURL = publicRuntimeConfig.BACKEND_URL
   ? publicRuntimeConfig.BACKEND_URL
-  : "http://127.0.0.1:8000";
+  : "http://35.72.157.253:8008";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();

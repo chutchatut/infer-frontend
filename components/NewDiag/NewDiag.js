@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Steps, Button, message, Result } from "antd";
 import PipelineSelector from "./PipelineSelector/PipelineSelector";
 import SelectImage from "./SelectImage/SelectImage";
@@ -9,15 +9,29 @@ import { useRouter } from "next/router";
 const { Step } = Steps;
 
 const NewDiag = () => {
+  const [selectedPipeline, setSelectedPipeline] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+
   const router = useRouter();
   const steps = [
     {
       title: "Select pipeline",
-      content: <PipelineSelector />,
+      content: (
+        <PipelineSelector
+          selectedPipeline={selectedPipeline}
+          setSelectedPipeline={setSelectedPipeline}
+        />
+      ),
     },
     {
       title: "Select image",
-      content: <SelectImage />,
+      content: (
+        <SelectImage
+          selectedImages={selectedImages}
+          setSelectedImages={setSelectedImages}
+          selectedPipeline={selectedPipeline}
+        />
+      ),
     },
     {
       title: "Done",

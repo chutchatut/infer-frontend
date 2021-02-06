@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Button, Checkbox, Space, Table } from "antd";
+import { Button, Checkbox, Skeleton, Space, Table } from "antd";
 // import styles from "./edit.module.css";
 import { SaveOutlined } from "@ant-design/icons";
 import ClassificationViewer from "../../components/ClassificationViewer/ClassificationViewer";
@@ -24,9 +24,11 @@ const Edit = () => {
 
   const router = useRouter();
 
+  console.log(project);
   // DO NOT replace this with switch case
-  try {
-    if (project.task === "2d classification")
+  if (!project || !project.task) return <Skeleton />;
+  switch (project.task.toLowerCase()) {
+    case "2d classification":
       return (
         <ClassificationViewer
           id={router.query.id}
@@ -35,11 +37,11 @@ const Edit = () => {
           edit={router.query.edit}
         />
       );
-    if (project.task === "2d segmentation") return <SegmentationEditor />;
-  } catch (error) {
-    console.log(error);
+    case "2d segmentation":
+      return <SegmentationEditor />;
+    default:
+      return <p>Unsupported task type</p>;
   }
-  return <p>Unsupported Task type</p>;
 };
 
 export default Edit;
