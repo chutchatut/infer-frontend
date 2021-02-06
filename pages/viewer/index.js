@@ -23,18 +23,22 @@ const Edit = () => {
   const project = useSelector((state) => state.project.currentProject);
 
   const router = useRouter();
- 
+
   // DO NOT replace this with switch case
-  if (project.task === "2d classification")
-    return (
-      <ClassificationViewer
-        id={router.query.id}
-        path="/path/to/image"
-        data={confidence_array}
-        edit={router.query.edit}
-      />
-    );
-  if (project.task === "2d segmentation") return <SegmentationEditor />;
+  try {
+    if (project.task === "2d classification")
+      return (
+        <ClassificationViewer
+          id={router.query.id}
+          path="/path/to/image"
+          data={confidence_array}
+          edit={router.query.edit}
+        />
+      );
+    if (project.task === "2d segmentation") return <SegmentationEditor />;
+  } catch (error) {
+    console.log(error);
+  }
   return <p>Unsupported Task type</p>;
 };
 
