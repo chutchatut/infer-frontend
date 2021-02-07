@@ -82,7 +82,7 @@ const ClassificationViewer = (props) => {
       };
     }
     setLogits(Object.values(newLogits));
-    // TODO: setGradcam()
+    setGradcam(results[i].gradcam);
   };
 
   const statuses = [
@@ -103,7 +103,7 @@ const ClassificationViewer = (props) => {
       color: "green",
     },
   ];
-  
+
   return (
     <Fragment>
       {img ? (
