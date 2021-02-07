@@ -45,9 +45,9 @@ const ClassificationViewer = (props) => {
     setDefaultLogits(newLogits);
     setLogits(newLogits);
   }, [img]);
-  
+
   const router = useRouter();
-  
+
   const verify = () => {
     setLoading(true);
     axios.post(`/api/images/${img.id}/verify_image/`, {
@@ -57,6 +57,17 @@ const ClassificationViewer = (props) => {
     message.success("Succesfully verify image");
     router.push("/history");
   };
+  const selectPipeline = (i) => {
+    const newData = JSON.parse(results[i].predicted_class);
+    for (let key of Object.keys(newData)) {
+      newData[key] = {
+        key: key,
+        name: key,
+        confidence: Number.parseFloat(newData[key]),
+      };
+    }
+    setLogits([...defaultLogits, ...Object.values(newData)]);
+  };
 
   return (
     <Fragment>
@@ -65,10 +76,12 @@ const ClassificationViewer = (props) => {
           <div className={styles.Preview}>
             <Space>
               <Image
+                key="img"
                 src={`${axios.defaults.baseURL}${img.data16}`}
                 style={{ width: "20vw", height: "auto" }}
               />
               <Image
+                key="gradcam"
                 src={`${axios.defaults.baseURL}${img.data16}`}
                 style={{ width: "20vw", height: "auto" }}
               />
@@ -80,20 +93,10 @@ const ClassificationViewer = (props) => {
               <Select
                 style={{ width: "240px" }}
                 defaultOpen
-                onChange={(value) => {
-                  const newData = JSON.parse(results[value].predicted_class);
-                  for (let key of Object.keys(newData)) {
-                    newData[key] = {
-                      key: key,
-                      name: key,
-                      confidence: Number.parseFloat(newData[key]),
-                    };
-                  }
-                  setLogits([...defaultLogits, ...Object.values(newData)]);
-                }}
+                onChange={(value) => selectPipeline(value)}
               >
                 {results.map((result, i) => (
-                  <Select.Option value={i}>
+                  <Select.Option value={i} key={i}>
                     {result.pipeline_name}
                   </Select.Option>
                 ))}
