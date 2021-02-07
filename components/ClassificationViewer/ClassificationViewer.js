@@ -1,10 +1,11 @@
-import { Button, Select, Space, Image, Skeleton } from "antd";
+import { Button, Select, Space, Image, Skeleton, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Fragment, useEffect, useState } from "react";
 import MyTable from "../MyTable/MyTable";
 import styles from "./ClassificationViewer.module.css";
 import { EditOutlined, SaveOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const columns = [
   { title: "Name", dataIndex: "name" },
@@ -14,30 +15,49 @@ const columns = [
     sortable: true,
     config: {
       defaultSortOrder: "descend",
+      render: (text) => (text ? text : "-"),
     },
   },
 ];
 // TODO get image's project and check if it's equal. If not change the project
 
 const ClassificationViewer = (props) => {
-  console.log(props.data);
   const img = props.data && props.data.image;
+  const results = props.data && props.data.result;
 
   const [editable, setEditable] = useState(props.edit);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
   const [loading, setLoading] = useState(false);
 
-  const [note, setNode] = useState("");
+  const [note, setNote] = useState("");
 
+  // defaultLogits is used to generate new logits
+  const [defaultLogits, setDefaultLogits] = useState([]);
   const [logits, setLogits] = useState([]);
+
   useEffect(() => {
-    if (img)
-      setLogits(
-        img.project_predclasses.map((pred) => ({ name: pred, confidence: "-" }))
-      );
+    if (!img) return;
+    const newLogits = img.project_predclasses.map((pred) => ({
+      key: pred,
+      name: pred,
+      confidence: 0.0,
+    }));
+    setDefaultLogits(newLogits);
+    setLogits(newLogits);
   }, [img]);
+  console.log(logits);
+  const router = useRouter();
+
+  const verify = () => {
+    setLoading(true);
+    axios.post(`/api/images/${img.id}/verify_image/`, {
+      actual_class: selectedRowKeys,
+      note: note,
+    });
+    message.success("Succesfully verify image");
+    router.push("/history");
+  };
 
   return (
     <Fragment>
@@ -58,13 +78,34 @@ const ClassificationViewer = (props) => {
           </div>
           <Space direction="vertical">
             <Space direction="vertical" size="large">
-              <Select style={{ width: "240px" }} defaultOpen>
-                <Select.Option>COVID-19 + Pnuemonia V1</Select.Option>
+              <Select
+                style={{ width: "240px" }}
+                defaultOpen
+                onChange={(value) => {
+                  const newData = JSON.parse(results[value].predicted_class);
+                  for (let key of Object.keys(newData)) {
+                    newData[key] = {
+                      key: key,
+                      name: key,
+                      confidence: Number.parseFloat(newData[key]),
+                    };
+                  }
+                  setLogits([...defaultLogits, ...Object.values(newData)]);
+                }}
+              >
+                {results.map((result, i) => (
+                  <Select.Option value={i}>
+                    {result.pipeline_name}
+                  </Select.Option>
+                ))}
               </Select>
               <MyTable
                 columns={columns}
                 data={logits}
-                // defaultSelection={["COVID-19"]}
+                config={{
+                  pagination: { pageSize: 3 },
+                }}
+                defaultSelection={img.actualClass}
                 selectionType="checkbox"
                 onSelectChange={setSelectedRowKeys}
                 disableRowSelection={!editable}
@@ -85,7 +126,7 @@ const ClassificationViewer = (props) => {
               {editable ? (
                 <Button
                   icon={<SaveOutlined />}
-                  onClick={() => setLoading(true)}
+                  onClick={verify.bind(this)}
                   type="primary"
                   loading={loading}
                   disabled={selectedRowKeys.length === 0}

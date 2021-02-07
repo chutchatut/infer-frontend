@@ -98,7 +98,7 @@ const MyTable = (props) => {
           highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
           searchWords={[searchTexts[fieldName]]}
           autoEscape
-          textToHighlight={text}
+          textToHighlight={text ? text : ""}
         />
       ),
     };
@@ -108,10 +108,12 @@ const MyTable = (props) => {
     // Init selection for id
     props.initSelection ? props.initSelection : []
   );
+
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
     if (props.onSelectChange) props.onSelectChange(newSelectedRowKeys);
   };
+
   useEffect(() => {
     // Default selection for classname
     if (props.defaultSelection) {

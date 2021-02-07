@@ -9,13 +9,14 @@ import axios from "axios";
 
 // TODO add more task type
 
-const Edit = () => {
+const Viewer = () => {
   // const project = useSelector((state) => state.project.currentProject);
 
   const router = useRouter();
 
   const [img, setImg] = useState(null);
   useEffect(async () => {
+    if (!router.query.id) return;
     const img = (await axios.get(`/api/image/${router.query.id}`)).data;
     setImg({
       ...img,
@@ -35,4 +36,4 @@ const Edit = () => {
   }
 };
 
-export default Edit;
+export default Viewer;
