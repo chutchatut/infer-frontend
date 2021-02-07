@@ -42,6 +42,8 @@ const ClassificationViewer = (props) => {
   const [defaultLogits, setDefaultLogits] = useState({});
   const [logits, setLogits] = useState([]);
 
+  const [gradcam, setGradcam] = useState(img.data16);
+
   useEffect(() => {
     if (!img) return;
     const newDefaultLogits = {};
@@ -50,7 +52,7 @@ const ClassificationViewer = (props) => {
         key: pred,
         name: pred,
         confidence: 0.0,
-        selected: img.actual_class.indexOf(pred) > -1,
+        selected: img.actual_class && img.actual_class.indexOf(pred) > -1,
       };
     }
     setDefaultLogits(newDefaultLogits);
@@ -80,6 +82,7 @@ const ClassificationViewer = (props) => {
       };
     }
     setLogits(Object.values(newLogits));
+    // TODO: setGradcam()
   };
 
   const statuses = [
@@ -100,7 +103,7 @@ const ClassificationViewer = (props) => {
       color: "green",
     },
   ];
-  console.log(img);
+  
   return (
     <Fragment>
       {img ? (
@@ -114,7 +117,7 @@ const ClassificationViewer = (props) => {
               />
               <Image
                 key="gradcam"
-                src={`${axios.defaults.baseURL}${img.data16}`}
+                src={`${axios.defaults.baseURL}${gradcam}`}
                 style={{ width: "20vw", height: "auto" }}
               />
             </Space>
