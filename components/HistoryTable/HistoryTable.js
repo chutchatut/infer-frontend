@@ -121,7 +121,13 @@ const HistoryTable = (props) => {
               placement="top"
               icon={<QuestionCircleOutlined style={{ color: "red" }} />}
               title={"Are you sure to delete this image?"}
-              onConfirm={props.onDeleteImage.bind(this, record.id)}
+              onConfirm={async () => {
+                await axios.delete(
+                  `/api/image/${record.id}/`
+                );
+                message.success("Image has been successfully deleted");
+                // router.reload();
+              }}
               okText="Yes"
               cancelText="No"
               key="delete"
@@ -141,7 +147,7 @@ const HistoryTable = (props) => {
     <MyTable
       data={props.data}
       config={{
-        pagination: { pageSize: 50 },
+        pagination: { pageSize: 10 },
         scroll: { x: 1000, y: 300 },
       }}
       columns={columns}

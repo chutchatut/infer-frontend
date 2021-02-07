@@ -31,11 +31,6 @@ const History = () => {
       </Head>
       <HistoryTable
         data={images}
-        onDeleteImage={(key) => {
-          axios.delete(`/api/project/${project.id}/remove_image?id=${key}`);
-          message.success("Image has been successfully deleted");
-          router.reload();
-        }}
       />
     </>
   );

@@ -108,8 +108,6 @@ const MyTable = (props) => {
     props.initSelection ? props.initSelection : []
   );
 
-  console.log(selectedRowKeys, props.initSelection);
-
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
     if (props.onSelectChange) props.onSelectChange(newSelectedRowKeys);
