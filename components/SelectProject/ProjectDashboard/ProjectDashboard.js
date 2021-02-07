@@ -51,7 +51,7 @@ const ProjectDashboard = (props) => {
               {props.project.name}
             </Descriptions.Item>
             <Descriptions.Item label="Task" span="3">
-              {props.project.task}
+              <Tag color="green">{props.project.task}</Tag>
             </Descriptions.Item>
             <Descriptions.Item
               label="Description"
