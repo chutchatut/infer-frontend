@@ -23,50 +23,55 @@ const columns = [
 const ClassificationViewer = (props) => {
   const img = props.data && props.data.image;
   const results = props.data && props.data.result;
-
   const [editable, setEditable] = useState(props.edit);
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState(img.actual_class);
   const [loading, setLoading] = useState(false);
 
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState(img.note);
 
-  // defaultLogits is used to generate new logits
-  const [defaultLogits, setDefaultLogits] = useState([]);
+  // defaultLogits is a dict used to generate new logits
+  const [defaultLogits, setDefaultLogits] = useState({});
   const [logits, setLogits] = useState([]);
 
   useEffect(() => {
     if (!img) return;
-    const newLogits = img.project_predclasses.map((pred) => ({
-      key: pred,
-      name: pred,
-      confidence: 0.0,
-    }));
-    setDefaultLogits(newLogits);
-    setLogits(newLogits);
+    const newDefaultLogits = {};
+    for (let pred of img.project_predclasses) {
+      newDefaultLogits[pred] = {
+        key: pred,
+        name: pred,
+        confidence: 0.0,
+      };
+    }
+    setDefaultLogits(newDefaultLogits);
+    setLogits(Object.values(newDefaultLogits));
   }, [img]);
 
   const router = useRouter();
 
-  const verify = () => {
+  const verify = async () => {
     setLoading(true);
-    axios.post(`/api/images/${img.id}/verify_image/`, {
+    await axios.put(`/api/image/${img.id}/verify_image/`, {
       actual_class: selectedRowKeys,
       note: note,
     });
+    setLoading(false);
     message.success("Succesfully verify image");
     router.push("/history");
   };
+
   const selectPipeline = (i) => {
     const newData = JSON.parse(results[i].predicted_class);
-    for (let key of Object.keys(newData)) {
-      newData[key] = {
-        key: key,
-        name: key,
-        confidence: Number.parseFloat(newData[key]),
+    const newLogits = { ...defaultLogits };
+    for (let pred of Object.keys(newData)) {
+      newLogits[pred] = {
+        key: pred,
+        name: pred,
+        confidence: Number.parseFloat(newData[pred]),
       };
     }
-    setLogits([...defaultLogits, ...Object.values(newData)]);
+    setLogits(Object.values(newLogits));
   };
 
   return (
@@ -107,8 +112,8 @@ const ClassificationViewer = (props) => {
                 config={{
                   pagination: { pageSize: 3 },
                 }}
-                defaultSelection={img.actualClass}
                 selectionType="checkbox"
+                initSelection={img.actual_class}
                 onSelectChange={setSelectedRowKeys}
                 disableRowSelection={!editable}
               />

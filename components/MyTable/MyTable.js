@@ -105,26 +105,15 @@ const MyTable = (props) => {
   };
 
   const [selectedRowKeys, setSelectedRowKeys] = useState(
-    // Init selection for id
     props.initSelection ? props.initSelection : []
   );
+
+  console.log(selectedRowKeys, props.initSelection);
 
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
     if (props.onSelectChange) props.onSelectChange(newSelectedRowKeys);
   };
-
-  useEffect(() => {
-    // Default selection for classname
-    if (props.defaultSelection) {
-      console.log();
-      setSelectedRowKeys(
-        props.defaultSelection.map((predClass) =>
-          props.data.findIndex((item) => item.name === predClass)
-        )
-      );
-    }
-  }, []);
 
   return (
     <Table
