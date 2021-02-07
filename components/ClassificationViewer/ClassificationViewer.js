@@ -19,7 +19,6 @@ const columns = [
     },
   },
 ];
-// TODO get image's project and check if it's equal. If not change the project
 
 const ClassificationViewer = (props) => {
   const img = props.data && props.data.image;
