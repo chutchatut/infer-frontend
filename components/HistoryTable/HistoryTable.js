@@ -9,9 +9,8 @@ import {
 import Link from "next/link";
 import MyTable from "../MyTable/MyTable";
 import axios from "axios";
-// TODO add original image
-// TODO add image's owner and last update datetimestamp
-// TODO copy button
+import { useRouter } from "next/router";
+// TODO add owner, copy, timestamp
 const statuses = [
   {
     text: "Uploaded",
@@ -36,6 +35,8 @@ const statuses = [
 ];
 
 const HistoryTable = (props) => {
+  const router = useRouter();
+
   const columns = [
     {
       title: "Status",
@@ -122,9 +123,7 @@ const HistoryTable = (props) => {
               icon={<QuestionCircleOutlined style={{ color: "red" }} />}
               title={"Are you sure to delete this image?"}
               onConfirm={async () => {
-                await axios.delete(
-                  `/api/image/${record.id}/`
-                );
+                await axios.delete(`/api/image/${record.id}/`);
                 message.success("Image has been successfully deleted");
                 router.reload();
               }}
