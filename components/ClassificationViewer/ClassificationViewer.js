@@ -45,9 +45,9 @@ const ClassificationViewer = (props) => {
     setDefaultLogits(newLogits);
     setLogits(newLogits);
   }, [img]);
-  console.log(logits);
+  
   const router = useRouter();
-
+  
   const verify = () => {
     setLoading(true);
     axios.post(`/api/images/${img.id}/verify_image/`, {
