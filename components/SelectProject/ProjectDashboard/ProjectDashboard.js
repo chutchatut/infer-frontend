@@ -5,6 +5,7 @@ import {
   message,
   Descriptions,
   Typography,
+  Tag,
 } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -64,15 +65,22 @@ const ProjectDashboard = (props) => {
               </Paragraph>
             </Descriptions.Item>
             <Descriptions.Item label="Pipelines" span="3">
-              {pipelines && pipelines.length ? (
-                <ul style={{ listStyleType: "disc", paddingLeft: "15px" }}>
-                  {pipelines.map((pipeline) => (
-                    <li key={pipeline.pipeline_id}>{pipeline.name}</li>
-                  ))}
-                </ul>
-              ) : (
-                "Empty"
-              )}
+              <Space wrap>
+                {pipelines && pipelines.length
+                  ? pipelines.map((pipeline) => (
+                      <Tag color="volcano">{pipeline.name}</Tag>
+                    ))
+                  : "Empty"}
+              </Space>
+            </Descriptions.Item>
+            <Descriptions.Item label="Classes" span="3">
+              <Space wrap>
+                {project && project.predclasses
+                  ? project.predclasses.map((predclass) => (
+                      <Tag color="blue">{predclass}</Tag>
+                    ))
+                  : "empty"}
+              </Space>
             </Descriptions.Item>
           </Descriptions>
         </Space>

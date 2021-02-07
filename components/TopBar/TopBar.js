@@ -3,8 +3,9 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Menu, Dropdown, message, Skeleton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import Logo from "../../assets/Logo";
+import styles from './TopBar.module.css'
 
 const TopBar = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const TopBar = () => {
       </Menu>
     );
   }
-
+//TODO change theme
   return (
     <Fragment>
       {loading ? (
@@ -51,6 +52,10 @@ const TopBar = () => {
       <Menu theme="dark" mode="horizontal">
         <Menu.Item
           danger
+          // style={{color:'white'}}
+          // style={{ background: "red" }}
+          icon={<LogoutOutlined />}
+          className={styles.Logout}
           key="logout"
           onClick={() => {
             router.push("logout");

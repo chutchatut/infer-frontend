@@ -10,6 +10,7 @@ const sortableConfig = (fieldName, { enable }) => {
       if (typeof a[fieldName] === "string")
         return a[fieldName].localeCompare(b[fieldName]);
       if (typeof a[fieldName] === "number") return a[fieldName] - b[fieldName];
+      if (typeof a[fieldName] === "boolean") return a[fieldName] - b[fieldName];
       if (a[fieldName] instanceof Date) return a[fieldName] - b[fieldName];
     },
     sortDirections: ["descend", "ascend"],

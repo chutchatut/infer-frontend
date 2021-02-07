@@ -8,7 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 const columns = [
-  { title: "Name", dataIndex: "name" },
+  { title: "Name", dataIndex: "name", searchable: true, sortable: true },
   {
     title: "Confidence",
     dataIndex: "confidence",
@@ -18,6 +18,12 @@ const columns = [
       render: (text) => (text ? text : "-"),
     },
   },
+  {
+    title: "Previously selected",
+    dataIndex: "selected",
+    sortable: true,
+    config: { render: (text) => (text ? "Yes" : "No") },
+  },
 ];
 
 const ClassificationViewer = (props) => {
@@ -25,7 +31,9 @@ const ClassificationViewer = (props) => {
   const results = props.data && props.data.result;
   const [editable, setEditable] = useState(props.edit);
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState(img.actual_class);
+  const [selectedRowKeys, setSelectedRowKeys] = useState(
+    img.actual_class ? img.actual_class : []
+  );
   const [loading, setLoading] = useState(false);
 
   const [note, setNote] = useState(img.note);
@@ -42,6 +50,7 @@ const ClassificationViewer = (props) => {
         key: pred,
         name: pred,
         confidence: 0.0,
+        selected: img.actual_class.indexOf(pred) > -1,
       };
     }
     setDefaultLogits(newDefaultLogits);
@@ -66,14 +75,32 @@ const ClassificationViewer = (props) => {
     const newLogits = { ...defaultLogits };
     for (let pred of Object.keys(newData)) {
       newLogits[pred] = {
-        key: pred,
-        name: pred,
+        ...newLogits[pred],
         confidence: Number.parseFloat(newData[pred]),
       };
     }
     setLogits(Object.values(newLogits));
   };
 
+  const statuses = [
+    {
+      text: "Uploaded",
+      color: "black",
+    },
+    {
+      text: "In progress",
+      color: "red",
+    },
+    {
+      text: "AI-Annotated",
+      color: "yellow",
+    },
+    {
+      text: "Verified",
+      color: "green",
+    },
+  ];
+  console.log(img);
   return (
     <Fragment>
       {img ? (
@@ -92,7 +119,12 @@ const ClassificationViewer = (props) => {
               />
             </Space>
             <h2>{img.name}</h2>
+            <Fragment>
+              <span style={{ color: statuses[img.status].color }}>● </span>
+              {statuses[img.status].text}
+            </Fragment>
           </div>
+
           <Space direction="vertical">
             <Space direction="vertical" size="large">
               <Select
@@ -110,21 +142,23 @@ const ClassificationViewer = (props) => {
                 columns={columns}
                 data={logits}
                 config={{
-                  pagination: { pageSize: 3 },
+                  pagination: false,
+                  scroll: { y: "300px" },
+                  style: { width: "400px" },
                 }}
                 selectionType="checkbox"
                 initSelection={img.actual_class}
                 onSelectChange={setSelectedRowKeys}
                 disableRowSelection={!editable}
               />
-            </Space>
-            <Space direction="vertical">
               <TextArea
                 placeholder="Note"
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
                 disabled={!editable}
               />
+            </Space>
+            <Space direction="vertical">
               <span>
                 Last edited {img.timestamp.toUTCString().replace("GMT", "")}{" "}
                 <br />
