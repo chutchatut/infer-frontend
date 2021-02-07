@@ -126,7 +126,7 @@ const HistoryTable = (props) => {
                   `/api/image/${record.id}/`
                 );
                 message.success("Image has been successfully deleted");
-                // router.reload();
+                router.reload();
               }}
               okText="Yes"
               cancelText="No"
