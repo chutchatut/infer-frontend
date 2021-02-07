@@ -48,12 +48,16 @@ const NewDiag = () => {
   }, [project, selectedPipeline]);
 
   const confirmInfer = () => {
+    setLoading(true);
     axios.post(`/api/project/${project.id}/infer_image/`, {
       image_ids: selectedImages,
       pipeline: selectedPipeline.id,
     });
+    setLoading(false);
     router.push("/history");
   };
+
+  const [loading, setLoading] = useState(false);
 
   const steps = [
     {
@@ -84,7 +88,11 @@ const NewDiag = () => {
           icon={<CheckOutlined />}
           title="The selected images will be add to inference queue"
           extra={
-            <Button type="primary" onClick={confirmInfer.bind(this)}>
+            <Button
+              type="primary"
+              onClick={confirmInfer.bind(this)}
+              loading={loading}
+            >
               Confirm and redirect
             </Button>
           }

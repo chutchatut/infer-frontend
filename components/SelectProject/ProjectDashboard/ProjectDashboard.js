@@ -28,7 +28,14 @@ const ProjectDashboard = (props) => {
     }
   }, [props.project]);
 
-  console.log(project);
+  const [pipelines, setPipelines] = useState(null);
+  useEffect(async () => {
+    if (props.project)
+      setPipelines(
+        (await axios.get(`/api/project/${props.project.id}/list_pipeline/`))
+          .data.result
+      );
+  }, [props.project]);
 
   return (
     <Space wrap>
@@ -57,9 +64,9 @@ const ProjectDashboard = (props) => {
               </Paragraph>
             </Descriptions.Item>
             <Descriptions.Item label="Pipelines" span="3">
-              {project && project.pipelines && project.pipelines.length ? (
+              {pipelines && pipelines.length ? (
                 <ul style={{ listStyleType: "disc", paddingLeft: "15px" }}>
-                  {project.pipelines.map((pipeline) => (
+                  {pipelines.map((pipeline) => (
                     <li key={pipeline.pipeline_id}>{pipeline.name}</li>
                   ))}
                 </ul>

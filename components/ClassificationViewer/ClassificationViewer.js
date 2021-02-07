@@ -29,6 +29,8 @@ const ClassificationViewer = (props) => {
 
   const [loading, setLoading] = useState(false);
 
+  const [note, setNode] = useState("");
+
   const [logits, setLogits] = useState([]);
   useEffect(() => {
     if (img)
@@ -36,23 +38,23 @@ const ClassificationViewer = (props) => {
         img.project_predclasses.map((pred) => ({ name: pred, confidence: "-" }))
       );
   }, [img]);
-  console.log(img.project_predclasses)
+
   return (
     <Fragment>
       {img ? (
-        <Space style={{ padding: "10px" }}>
+        <Space style={{ padding: "10px" }} size="large">
           <div className={styles.Preview}>
             <Space>
               <Image
                 src={`${axios.defaults.baseURL}${img.data16}`}
-                style={{ maxWidth: "40vw", height: "auto" }}
+                style={{ width: "20vw", height: "auto" }}
               />
               <Image
                 src={`${axios.defaults.baseURL}${img.data16}`}
-                style={{ maxWidth: "40vw", height: "auto" }}
+                style={{ width: "20vw", height: "auto" }}
               />
             </Space>
-            {/* <h2>{props.path}</h2> */}
+            <h2>{img.name}</h2>
           </div>
           <Space direction="vertical">
             <Space direction="vertical" size="large">
@@ -71,7 +73,7 @@ const ClassificationViewer = (props) => {
             <Space direction="vertical">
               <TextArea
                 placeholder="Note"
-                // value={note}
+                value={note}
                 onChange={(event) => setNote(event.target.value)}
                 disabled={!editable}
               />

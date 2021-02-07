@@ -55,6 +55,12 @@ const HistoryTable = (props) => {
       },
     },
     {
+      title: "Predicted Class",
+      dataIndex: "predclass",
+      searchable: true,
+      sortable: true,
+    },
+    {
       title: "Patient's HN",
       dataIndex: "patient_id",
       searchable: true,
