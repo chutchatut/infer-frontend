@@ -1,13 +1,13 @@
 import { CheckOutlined, MoreOutlined } from "@ant-design/icons";
-import { Card, Space, Typography } from "antd";
+import { Card, Descriptions, Skeleton, Space, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import React, { useState } from "react";
 
 const { Paragraph } = Typography;
-// TODO use selectedPipeline, setSelectedPipeline from props
+
 const PipelineSelector = (props) => {
   const [pipelineOnModal, setPipelineOnModal] = useState(null);
-
+  console.log(pipelineOnModal);
   return (
     <>
       <Space wrap size="middle">
@@ -15,7 +15,6 @@ const PipelineSelector = (props) => {
           <Card
             style={{
               width: "200px",
-              // height: "200px",
             }}
             key={i}
             actions={[
@@ -32,31 +31,50 @@ const PipelineSelector = (props) => {
                   />
                 )}
               </>,
-              <MoreOutlined onClick={setPipelineOnModal.bind(this, "test")} />,
+              <MoreOutlined
+                onClick={setPipelineOnModal.bind(this, pipeline)}
+              />,
             ]}
           >
             <Card.Meta
               title={pipeline.name}
-              // description={<Paragraph ellipsis={3}>{pipeline.desc}</Paragraph>}
+              description={pipeline.model_name}
             />
           </Card>
         ))}
       </Space>
       <Modal
-        title={pipelineOnModal && pipelineOnModal.name}
         visible={pipelineOnModal}
         onCancel={setPipelineOnModal.bind(this, null)}
-        // onOk={() => {
-        //   dispatch(actions.setCurrentProject(projectOnModal));
-        //   setProjectOnModal(null);
-        // }}
-        // okText="Select this project"
         width="850px"
         footer=""
-        // height="800px"
       >
-        <div style={{ width: "800px", height: "500px", overflow: "auto" }}>
-          <p>test</p>
+        <div style={{ width: "600px", height: "300px", overflow: "auto" }}>
+          {pipelineOnModal ? (
+            <Descriptions title="Project Info">
+              <Descriptions.Item label="Name" span="3">
+                {pipelineOnModal.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Model name" span="3">
+                {pipelineOnModal.model_name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Pipeline's ID" span="3">
+                {pipelineOnModal.pipeline_id}
+              </Descriptions.Item>
+              <Descriptions.Item label="Operator" span="3">
+                {pipelineOnModal.operator}
+              </Descriptions.Item>
+              <Descriptions.Item label="Description" span="3">
+                <Paragraph
+                  ellipsis={{ rows: 3, expandable: true, symbol: "more" }}
+                >
+                  {pipelineOnModal.description}
+                </Paragraph>
+              </Descriptions.Item>
+            </Descriptions>
+          ) : (
+            <Skeleton />
+          )}
         </div>
       </Modal>
     </>
