@@ -60,7 +60,6 @@ const SelectProject = (props) => {
         }}
         okText="Select this project"
         width="850px"
-        // height="800px"
       >
         <div style={{ width: "800px", height: "500px", overflow: "auto" }}>
           <ProjectDashboard project={projectOnModal} />

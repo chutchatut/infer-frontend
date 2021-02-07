@@ -28,11 +28,12 @@ const ProjectDashboard = (props) => {
     }
   }, [props.project]);
 
+  console.log(project);
+
   return (
     <Space wrap>
       <Card
         style={{
-          // height: "300px",
           width: "600px",
         }}
       >

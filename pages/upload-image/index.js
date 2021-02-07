@@ -13,7 +13,6 @@ const uploadImage = () => {
       <Head>
         <title>Upload Image</title>
       </Head>
-      {/* <div className={styles.Layout}> */}
       <Tabs defaultActiveKey="1">
         <TabPane tab="Upload files" key="1">
           <Upload />
@@ -22,7 +21,6 @@ const uploadImage = () => {
           <ImageAddTable />
         </TabPane>
       </Tabs>
-      {/* </div> */}
     </>
   );
 };

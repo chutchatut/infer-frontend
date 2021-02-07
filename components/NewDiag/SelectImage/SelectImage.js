@@ -1,58 +1,50 @@
 import { EyeOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
+import axios from "axios";
+import image from "next/image";
 import React, { useState } from "react";
 import MyTable from "../../MyTable/MyTable";
 
 // TODO use selectedImages, setSelectedImages, selectedPipeline
-const data = [
-  {
-    key: "1",
-    HN: "3289563",
-    patient_name: "Griselda Luczki",
-    age: 123,
-    predicted_class: "",
-  },
-  {
-    key: "2",
-    HN: "1234563",
-    patient_name: "Santos Marrone",
-    age: 456,
-    predicted_class: "normal",
-  },
-  {
-    key: "3",
-    HN: "4321363",
-    patient_name: "Earle Hiller",
-    age: 12,
-    predicted_class: "COVID-19",
-  },
-  {
-    key: "4",
-    HN: "5321363",
-    age: 24,
-    patient_name: "Enoch Salameh",
-    predicted_class: "pnuemonia",
-  },
-  {
-    key: "5",
-    HN: "1324563",
-    age: 80,
-    patient_name: "Asia Defaber",
-    predicted_class: "normal",
-  },
-];
 
-const SelectImage = () => {
+const SelectImage = (props) => {
+  const data = props.images.map((image) => ({
+    ...image,
+    key: image.id,
+    timestamp: new Date(image.timestamp),
+  }));
+  console.log(data);
   const columns = [
     {
       title: "Patient's HN",
-      dataIndex: "HN",
+      dataIndex: "patient_id",
+      searchable: true,
+      sortable: true,
+    },
+    {
+      title: "Patient's name",
+      dataIndex: "patient_name",
       searchable: true,
       sortable: true,
     },
     {
       title: "Patient's age",
-      dataIndex: "age",
+      dataIndex: "patient_age",
+      sortable: true,
+    },
+    {
+      title: "Clinician's name",
+      dataIndex: "physician_name",
+      searchable: true,
+      sortable: true,
+    },
+    {
+      title: "Scan date",
+      dataIndex: "timestamp",
+      // searchable: true,
+      config: {
+        render: (text) => text.toUTCString(),
+      },
       sortable: true,
     },
     {
@@ -63,26 +55,24 @@ const SelectImage = () => {
           <Popover
             placement="left"
             content={
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg/1200px-Normal_posteroanterior_(PA)_chest_radiograph_(X-ray).jpg"
-                width="200"
-              />
+              <img src={`${axios.defaults.baseURL}${record.data16}`} width="200" />
             }
           >
-            <a>
-              <EyeOutlined />
-            </a>
+            <div style={{ marginLeft: "20px" }}>
+              <a>
+                <EyeOutlined />
+              </a>
+            </div>
           </Popover>
         ),
+        width: "90px",
         fixed: "right",
       },
     },
   ];
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
   const onSelectChange = (newSelectedRowKeys) => {
-    setSelectedRowKeys(newSelectedRowKeys);
+    props.setSelectedImages(newSelectedRowKeys);
   };
 
   return (
@@ -91,14 +81,15 @@ const SelectImage = () => {
         data={data}
         config={{
           pagination: { pageSize: 50 },
-          scroll: { x: 300, y: 300 },
+          scroll: { x: 1000, y: 300 },
         }}
         columns={columns}
         selectionType="checkbox"
+        initSelection={props.selectedImages}
         onSelectChange={onSelectChange}
       />
       <p>
-        <strong>{selectedRowKeys.length}</strong> images selected
+        <strong>{props.selectedImages.length}</strong> images selected
       </p>
     </>
   );

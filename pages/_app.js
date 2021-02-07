@@ -12,8 +12,6 @@ import axios from "axios";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
-
-
 axios.defaults.baseURL = publicRuntimeConfig.BACKEND_URL
   ? publicRuntimeConfig.BACKEND_URL
   : "http://35.72.157.253:8008";
@@ -44,6 +42,8 @@ function MyApp({ Component, pageProps }) {
       router.replace("/home");
     }
   }, [router.pathname, token]);
+
+  if (router.asPath === "/" && token) router.push("/home");
 
   if (router.pathname === "/login") {
     // Don't inject menu on login page

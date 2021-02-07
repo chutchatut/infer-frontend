@@ -1,23 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Steps, Button, message, Result } from "antd";
 import PipelineSelector from "./PipelineSelector/PipelineSelector";
 import SelectImage from "./SelectImage/SelectImage";
-import { SmileOutlined } from "@ant-design/icons";
-import Link from "next/link";
+import { CheckOutlined, SmileOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const { Step } = Steps;
 
 const NewDiag = () => {
-  const [selectedPipeline, setSelectedPipeline] = useState(null);
+  const [selectedPipeline, setSPipeline] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
 
+  const setSelectedPipeline = (pipelines) => {
+    setSPipeline(pipelines);
+    setSelectedImages([]);
+  };
+
   const router = useRouter();
+
+  const project = useSelector((state) => state.project.currentProject);
+
+  const [pipelines, setPipelines] = useState([]);
+  const [images, setImages] = useState([]);
+
+  useEffect(async () => {
+    if (project)
+      setPipelines(
+        (await axios.get(`/api/project/${project.id}/list_pipeline/`)).data
+          .result
+      );
+  }, [project]);
+
+  useEffect(async () => {
+    if (project && selectedPipeline)
+      setImages(
+        (
+          await axios.get(
+            `/api/project/${project.id}/list_uninfer_image/?pipeline=${selectedPipeline.id}`,
+            {
+              pipeline: selectedPipeline.id,
+            }
+          )
+        ).data.result
+      );
+  }, [project, selectedPipeline]);
+
+  const confirmInfer = () => {
+    axios.post(`/api/project/${project.id}/infer_image/`, {
+      image_ids: selectedImages,
+      pipeline: selectedPipeline.id,
+    });
+    router.push("/history");
+  };
+
   const steps = [
     {
       title: "Select pipeline",
       content: (
         <PipelineSelector
+          pipelines={pipelines}
           selectedPipeline={selectedPipeline}
           setSelectedPipeline={setSelectedPipeline}
         />
@@ -27,6 +70,7 @@ const NewDiag = () => {
       title: "Select image",
       content: (
         <SelectImage
+          images={images}
           selectedImages={selectedImages}
           setSelectedImages={setSelectedImages}
           selectedPipeline={selectedPipeline}
@@ -37,11 +81,11 @@ const NewDiag = () => {
       title: "Done",
       content: (
         <Result
-          icon={<SmileOutlined />}
-          title="The selected image(s) will be processed"
+          icon={<CheckOutlined />}
+          title="The selected images will be add to inference queue"
           extra={
-            <Button type="primary" onClick={router.push.bind(this, "history")}>
-              Redirect to history
+            <Button type="primary" onClick={confirmInfer.bind(this)}>
+              Confirm and redirect
             </Button>
           }
         />
@@ -72,8 +116,6 @@ const NewDiag = () => {
           borderRadius: "2px",
           backgroundColor: "#fafafa",
           minHeight: "200px",
-          //   textAlign: "center",
-          //   paddingTop: "80px",
           padding: "12px",
         }}
       >
@@ -81,18 +123,17 @@ const NewDiag = () => {
       </div>
       <div style={{ marginTop: "24px" }}>
         {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
+          <Button
+            type="primary"
+            onClick={() => next()}
+            disabled={
+              !(current === 0 && selectedPipeline !== null) &&
+              !(current === 1 && selectedImages.length !== 0)
+            }
+          >
             Next
           </Button>
         )}
-        {/* {current === steps.length - 1 && (
-          <Button
-            type="primary"
-            onClick={() => message.success("Processing complete!")}
-          >
-            Done
-          </Button>
-        )} */}
         {current > 0 && (
           <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
             Previous

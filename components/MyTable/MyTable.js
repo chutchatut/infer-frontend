@@ -10,6 +10,7 @@ const sortableConfig = (fieldName, { enable }) => {
       if (typeof a[fieldName] === "string")
         return a[fieldName].localeCompare(b[fieldName]);
       if (typeof a[fieldName] === "number") return a[fieldName] - b[fieldName];
+      if (a[fieldName] instanceof Date) return a[fieldName] - b[fieldName];
     },
     sortDirections: ["descend", "ascend"],
   };
@@ -103,12 +104,16 @@ const MyTable = (props) => {
     };
   };
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState(
+    // Init selection for id
+    props.initSelection ? props.initSelection : []
+  );
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
     if (props.onSelectChange) props.onSelectChange(newSelectedRowKeys);
   };
   useEffect(() => {
+    // Default selection for classname
     if (props.defaultSelection) {
       console.log();
       setSelectedRowKeys(

@@ -1,3 +1,4 @@
+import { message } from "antd";
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 
@@ -34,11 +35,15 @@ export const setCurrentProject = (project) => {
 };
 
 export const restoreCurrentProject = () => async (dispatch) => {
-  const response = await axios.get(
-    `/api/project/${localStorage.getItem("currentProjectID")}/`
-  )
-  dispatch({
-    type: actionTypes.SET_CURRENT_PROJECT,
-    payload: response.data.project,
-  });
+  try {
+    const response = await axios.get(
+      `/api/project/${localStorage.getItem("currentProjectID")}/`
+    );
+    dispatch({
+      type: actionTypes.SET_CURRENT_PROJECT,
+      payload: response.data.project,
+    });
+  } catch (error) {
+    message.info("An error occurred when trying to connect to server");
+  }
 };

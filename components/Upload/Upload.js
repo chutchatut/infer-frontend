@@ -1,24 +1,63 @@
-import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  message,
+  Select,
+} from "antd";
 import axios from "axios";
 import React, { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
 import ImgUpload from "./ImgUpload/ImgUpload";
 
 const Upload = () => {
   const [form] = Form.useForm();
   const [filetype, setFiletype] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+  const project = useSelector((state) => state.project.currentProject);
+
   const onFinish = async (values) => {
+    setLoading(true);
     console.log("Received values of form:", values);
-    // TODO implement this later
+    let response;
     if (filetype === "dcm") {
       for (let image of values.images) {
-        // const formData = new FormData();
-        // formData.append("data", image.originFileObj);
-        // axios.post("/api/image/", formData, {
-        //   headers: { "Content-Type": "multipart/form-data" },
-        // });
+        const formData = new FormData();
+        formData.append("dicom", image.originFileObj);
+        response = await axios.post(
+          `/api/project/${project.id}/upload_dicom/`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
       }
     } else if (filetype === "png") {
+      const formData = new FormData();
+      formData.append("image", values.images[0].originFileObj);
+      formData.append("patient_name", values.patient_name);
+      formData.append("patient_id", values.patient_HN);
+      formData.append("physician_name", values.clinician_name);
+      formData.append("patient_age", values.patient_age);
+      formData.append(
+        "content_date",
+        values.scan_date.toISOString().slice(0, 10).replace(/-/g, "")
+      );
+      response = await axios.post(
+        `/api/project/${project.id}/upload_image/`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+    }
+    if (response && response.status === 200) {
+      message.success("Upload successful");
+      setLoading(false);
+      form.resetFields();
     }
   };
 
@@ -30,7 +69,6 @@ const Upload = () => {
   };
 
   return (
-    // <div style={{ width: "500px", paddingTop: "20px" }}>
     <Form
       style={{ width: "500px", padding: "0px" }}
       form={form}
@@ -74,7 +112,7 @@ const Upload = () => {
             name="patient_HN"
             rules={[{ required: true, message: "Please input patient's HN" }]}
           >
-            <InputNumber />
+            <Input />
           </Form.Item>
           <Form.Item
             label="Patient's age"
@@ -102,12 +140,15 @@ const Upload = () => {
         </Fragment>
       )}
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={loading}
+        >
           Submit
         </Button>
       </Form.Item>
     </Form>
-    // </div>
   );
 };
 
