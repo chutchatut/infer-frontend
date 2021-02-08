@@ -52,8 +52,7 @@ const Login = () => {
     if (error)
       message.error(
         `Authentication failed with the following error: ${error}`,
-        // Duration
-        5
+        5 // Duration
       );
   }, [error]);
 
@@ -65,9 +64,7 @@ const Login = () => {
       <div className={styles.Layout}>
         <div className={styles.Login}>
           <div className={styles.Head}>
-            {/* <div>logo</div>
-            <h2>{systemName}</h2> */}
-            <Logo width="200px" height="90px"/>
+            <Logo width="200px" height="90px" />
           </div>
           <Form
             {...layout}
