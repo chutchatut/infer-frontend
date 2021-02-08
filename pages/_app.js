@@ -43,7 +43,9 @@ function MyApp({ Component, pageProps }) {
     }
   }, [router.pathname, token]);
 
-  if (router.asPath === "/" && token) router.push("/home");
+  useEffect(() => {
+    if (router.asPath === "/") router.replace("/login");
+  }, []);
 
   if (router.pathname === "/login") {
     // Don't inject menu on login page

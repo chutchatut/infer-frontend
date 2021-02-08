@@ -44,9 +44,10 @@ const PipelineSelector = (props) => {
         ))}
       </Space>
       <Modal
+        title={pipelineOnModal && pipelineOnModal.name}
         visible={pipelineOnModal}
         onCancel={setPipelineOnModal.bind(this, null)}
-        width="850px"
+        width="650px"
         footer=""
       >
         <div style={{ width: "600px", height: "300px", overflow: "auto" }}>
