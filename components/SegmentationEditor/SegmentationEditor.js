@@ -12,6 +12,8 @@ import {
   PlusOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
+import { v4 as uuidv4 } from "uuid";
+
 // import styles from "./canvas.module.css";
 
 // TODO use labelme as resource
@@ -36,7 +38,7 @@ const SegmentationEditor = (props) => {
     const newPolys = [...polys];
     newPolys[selectedIndex].points = [
       ...newPolys[selectedIndex].points.slice(0, lastSelectedPoint + 1),
-      [x, y],
+      [x, y, uuidv4()],
       ...newPolys[selectedIndex].points.slice(lastSelectedPoint + 1),
     ];
     setPolys(newPolys);

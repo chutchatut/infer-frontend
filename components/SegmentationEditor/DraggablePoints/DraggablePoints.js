@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Draggable from "react-draggable";
 
 const DraggablePoints = (props) => {
   return (
-    <div height="600px" width="500px">
+    <div height="600px" width="500px" >
       {props.polys.map(
         (poly, i) =>
           poly.selected &&
@@ -20,7 +20,8 @@ const DraggablePoints = (props) => {
                     newPolys[i].points[j][1] += deltaY;
                     props.setPolys(newPolys);
                   }}
-                  key={j}
+                  // bounds="parent"
+                  key={props.polys[i].points[j][2]}
                 >
                   <div
                     onDoubleClick={() => {
@@ -31,7 +32,9 @@ const DraggablePoints = (props) => {
                       newPolys[i].points = newPoints;
                       props.setPolys(newPolys);
                       props.setLastSelectedPoint(
-                        lastSelectedPoint > 0 ? lastSelectedPoint - 1 : null
+                        props.lastSelectedPoint > 0
+                          ? props.lastSelectedPoint - 1
+                          : null
                       );
                     }}
                     style={{
