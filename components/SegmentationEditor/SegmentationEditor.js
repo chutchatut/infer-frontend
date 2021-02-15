@@ -21,16 +21,30 @@ const { Paragraph } = Typography;
 const SegmentationEditor = (props) => {
   const [polys, setPolys] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [lastSelectedPoint, setLastSelectedPoint] = useState(null);
   const randomColorGenerator = get_color();
 
   const addPoint = (x, y) => {
-    if (!polys.length || typeof selectedIndex !== "number") return;
+    // return if polys is empty, selectedIndex is null,
+    // or selected poly is not visible
+    if (
+      !polys.length ||
+      typeof selectedIndex !== "number" ||
+      !polys[selectedIndex].visibility
+    )
+      return;
     const newPolys = [...polys];
     newPolys[selectedIndex].points = [
-      ...newPolys[selectedIndex].points,
+      ...newPolys[selectedIndex].points.slice(0, lastSelectedPoint + 1),
       [x, y],
+      ...newPolys[selectedIndex].points.slice(lastSelectedPoint + 1),
     ];
     setPolys(newPolys);
+    if (typeof lastSelectedPoint === "number") {
+      setLastSelectedPoint(lastSelectedPoint + 1);
+    } else {
+      setLastSelectedPoint(0);
+    }
   };
 
   const onMouseDown = ({ nativeEvent }) => {
@@ -39,6 +53,7 @@ const SegmentationEditor = (props) => {
   };
 
   const addPolygon = () => {
+    // If last polys is empty, skip
     if (polys.length && polys[polys.length - 1].points.length < 1) return;
     const newPolys = [
       ...polys,
@@ -53,17 +68,18 @@ const SegmentationEditor = (props) => {
     if (typeof selectedIndex === "number")
       newPolys[selectedIndex] = { ...newPolys[selectedIndex], selected: false };
     setSelectedIndex(newPolys.length - 1);
+    setLastSelectedPoint(null);
     setPolys(newPolys);
   };
 
   const select = (i) => {
-    console.log(i, selectedIndex);
     const newPolys = [...polys];
     if (typeof selectedIndex === "number") {
       newPolys[selectedIndex] = { ...newPolys[selectedIndex], selected: false };
     }
     newPolys[i] = { ...newPolys[i], selected: true };
     setPolys(newPolys);
+    setLastSelectedPoint(newPolys.points && newPolys[i].points.length - 1);
     setSelectedIndex(i);
   };
 
@@ -86,8 +102,13 @@ const SegmentationEditor = (props) => {
 
   return (
     <Space align="start">
-      <div>
-        <DraggablePoints polys={polys} setPolys={setPolys} />
+      <div style={{ position: "relative" }}>
+        <DraggablePoints
+          polys={polys}
+          setPolys={setPolys}
+          lastSelectedPoint={lastSelectedPoint}
+          setLastSelectedPoint={setLastSelectedPoint}
+        />
         <Canvas
           config={{
             onMouseDown: onMouseDown,
