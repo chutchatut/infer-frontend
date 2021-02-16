@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
 import * as action from "../../store/actions";
 import { useRouter } from "next/router";
-import { Form, Input, Button, Checkbox, message, Divider } from "antd";
+import { Form, Input, Button, Checkbox, message, Divider, Space } from "antd";
 import systemName from "../../assets/name";
 import Head from "next/head";
 import Logo from "../../assets/Logo";
@@ -15,13 +15,13 @@ const layout = {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 24,
   },
 };
 
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 1,
     span: 16,
   },
 };
@@ -64,63 +64,68 @@ const Login = () => {
       </Head>
       <div className={styles.Layout}>
         <div className={styles.Login}>
-          <div className={styles.Head}>
+          <Space size="large">
             <Logo width="200px" height="90px" />
-          </div>
-          <Form
-            {...layout}
-            name="basic"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-          >
-            <Form.Item
-              // label="Username"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your username!",
-                },
-              ]}
+            <Divider type="vertical" style={{ height: "220px" }} />
+            <Form
+              {...layout}
+              name="basic"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
             >
-              {/* <Input /> */}
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Username"
-              />
-            </Form.Item>
+              <Form.Item
+                // label="Username"
+                name="username"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your username!",
+                  },
+                ]}
+              >
+                {/* <Input /> */}
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  placeholder="Username"
+                />
+              </Form.Item>
 
-            <Form.Item
-              // label="Password"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
-            >
-              {/* <Input.Password /> */}
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Item>
+              <Form.Item
+                // label="Password"
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+              >
+                {/* <Input.Password /> */}
+                <Input
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  type="password"
+                  placeholder="Password"
+                />
+              </Form.Item>
 
-            <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+              <Form.Item
+                {...tailLayout}
+                name="remember"
+                valuePropName="checked"
+              >
+                <Checkbox>Remember me</Checkbox>
+              </Form.Item>
 
-            <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit" loading={loading}>
-                Login
-              </Button>
-            </Form.Item>
-          </Form>
+              <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit" loading={loading}>
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
+          </Space>
         </div>
       </div>
     </>
