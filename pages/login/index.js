@@ -76,7 +76,7 @@ const Login = () => {
             onFinishFailed={onFinishFailed}
           >
             <Form.Item
-              label="Username"
+              // label="Username"
               name="username"
               rules={[
                 {
@@ -85,11 +85,15 @@ const Login = () => {
                 },
               ]}
             >
-              <Input />
+              {/* <Input /> */}
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="Username"
+              />
             </Form.Item>
 
             <Form.Item
-              label="Password"
+              // label="Password"
               name="password"
               rules={[
                 {
@@ -98,7 +102,12 @@ const Login = () => {
                 },
               ]}
             >
-              <Input.Password />
+              {/* <Input.Password /> */}
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder="Password"
+              />
             </Form.Item>
 
             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
