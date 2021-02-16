@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { get_color } from "../../assets/color";
 import Canvas from "./Canvas/Canvas";
-import { Card, Space, Typography, Popconfirm, Form, Modal } from "antd";
+import { Card, Space, Typography, Popconfirm, Form, Modal, Button } from "antd";
 import DraggablePoints from "./DraggablePoints/DraggablePoints";
 import {
   CheckCircleOutlined,
@@ -11,9 +11,11 @@ import {
   EyeOutlined,
   PlusOutlined,
   QuestionCircleOutlined,
+  SaveOutlined,
 } from "@ant-design/icons";
 import { v4 as uuidv4 } from "uuid";
 import MaskDashboard from "./MaskDashboard/MaskDashboard";
+import TextArea from "antd/lib/input/TextArea";
 
 // import styles from "./canvas.module.css";
 
@@ -207,6 +209,20 @@ const SegmentationEditor = (props) => {
             <PlusOutlined /> <h3>Add new polygon</h3>
           </Space>
         </Card>
+        <TextArea
+          placeholder="Note"
+          // value={note}
+          // onChange={(event) => setNote(event.target.value)}
+          // disabled={!editable}
+        />
+        <Button
+          icon={<SaveOutlined />}
+          // onClick={verify.bind(this)}
+          type="primary"
+          // loading={loading}
+        >
+          Save
+        </Button>
       </Space>
     </Space>
   );
