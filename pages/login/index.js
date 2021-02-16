@@ -65,7 +65,7 @@ const Login = () => {
       <div className={styles.Layout}>
         <div className={styles.Login}>
           <Space size="large">
-            <Logo width="200px" height="90px" />
+            <Logo width="180px" height="90px" />
             <Divider type="vertical" style={{ height: "220px" }} />
             <Form
               {...layout}
@@ -73,11 +73,11 @@ const Login = () => {
               initialValues={{
                 remember: true,
               }}
+              style={{marginTop:'3vh'}}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
             >
               <Form.Item
-                // label="Username"
                 name="username"
                 rules={[
                   {
@@ -86,7 +86,6 @@ const Login = () => {
                   },
                 ]}
               >
-                {/* <Input /> */}
                 <Input
                   prefix={<UserOutlined className="site-form-item-icon" />}
                   placeholder="Username"
@@ -94,7 +93,6 @@ const Login = () => {
               </Form.Item>
 
               <Form.Item
-                // label="Password"
                 name="password"
                 rules={[
                   {
@@ -103,7 +101,6 @@ const Login = () => {
                   },
                 ]}
               >
-                {/* <Input.Password /> */}
                 <Input
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
