@@ -38,6 +38,7 @@ const DraggablePoints = (props) => {
                       );
                     }}
                     style={{
+                      cursor: 'pointer',
                       position: "absolute",
                       backgroundColor: `rgba(${poly.color}, ${
                         poly.selected ? 1 : 0

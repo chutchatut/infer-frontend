@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { get_color } from "../../assets/color";
 import Canvas from "./Canvas/Canvas";
-import { Card, Space, Typography, Popconfirm } from "antd";
+import { Card, Space, Typography, Popconfirm, Form, Modal } from "antd";
 import DraggablePoints from "./DraggablePoints/DraggablePoints";
 import {
   CheckCircleOutlined,
@@ -13,6 +13,7 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import { v4 as uuidv4 } from "uuid";
+import MaskDashboard from "./MaskDashboard/MaskDashboard";
 
 // import styles from "./canvas.module.css";
 
@@ -100,7 +101,18 @@ const SegmentationEditor = (props) => {
     setPolys(polys.slice(0, i).concat(polys.slice(i + 1)));
   };
 
-  // TODO implment logic to edit
+  const [maskOnModal, setMaskOnModal] = useState(null);
+  const [form] = Form.useForm();
+  const formSubmit = (i, formData) => {
+    console.log(i, formData);
+    const newPolys = [...polys];
+    newPolys[i] = {
+      ...newPolys[i],
+      label: formData.label,
+      color: formData.color,
+    };
+    setPolys(newPolys);
+  };
 
   return (
     <Space align="start">
@@ -133,9 +145,36 @@ const SegmentationEditor = (props) => {
                 onClick={select.bind(this, i)}
                 style={poly.selected ? { color: "#1890ff" } : null}
               />,
-              <EditOutlined
-              // TODO implement onClick
-              />,
+              <>
+                <Modal
+                  visible={maskOnModal !== null}
+                  onCancel={setMaskOnModal.bind(this, null)}
+                  onOk={() => {
+                    formSubmit(i, form.getFieldsValue(true));
+                    setMaskOnModal(null);
+                  }}
+                  okText="Update"
+                  width="650px"
+                  key={maskOnModal}
+                >
+                  <div
+                    style={{
+                      width: "600px",
+                      height: "400px",
+                      overflow: "auto",
+                    }}
+                  >
+                    <MaskDashboard
+                      form={form}
+                      setMaskOnModal={setMaskOnModal}
+                      maskOnModal={maskOnModal}
+                      polys={polys}
+                      setPolys={setPolys}
+                    />
+                  </div>
+                </Modal>
+                <EditOutlined onClick={setMaskOnModal.bind(this, i)} />
+              </>,
               poly.visibility ? (
                 <EyeOutlined onClick={toggleVisibility.bind(this, i)} />
               ) : (
