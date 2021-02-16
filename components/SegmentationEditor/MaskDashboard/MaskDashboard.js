@@ -12,7 +12,12 @@ const MaskDashboard = (props) => {
   console.log(poly);
   return (
     <Form preserve={false} {...formItemLayout} form={props.form}>
-      <Form.Item label="Label" name="label" initialValue={poly.label}>
+      <Form.Item
+        label="Label"
+        name="label"
+        initialValue={poly.label}
+        rules={[{ required: true, message: "Please input label!" }]}
+      >
         <Input />
       </Form.Item>
       <Form.Item label="Color" name="color" initialValue={poly.color}>
