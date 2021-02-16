@@ -8,6 +8,7 @@ import { Form, Input, Button, Checkbox, message, Divider } from "antd";
 import systemName from "../../assets/name";
 import Head from "next/head";
 import Logo from "../../assets/Logo";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
 const layout = {
   labelCol: {
