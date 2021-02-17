@@ -5,12 +5,10 @@ import { Bar as AntBar } from "@ant-design/charts";
 
 const Bar = (props) => {
   console.log(props);
-  const data = Object.keys(props.data).map((key) => ({
-    label: key,
-    value: props.data[key],
-  }));
 
-  return <AntBar data={data} xField="value" yField="label" {...props.config} />;
+  return (
+    <AntBar data={props.data} xField="value" yField="label" {...props.config} />
+  );
 };
 
 // const Bar = (props) => {

@@ -4,11 +4,6 @@ import styles from "./Pie.module.css";
 import { Pie as AntPie } from "@ant-design/charts";
 
 const Pie = (props) => {
-  const data = Object.keys(props.data).map((key) => ({
-    label: key,
-    value: props.data[key],
-  }));
-
   const total_count = Object.values(props.data).reduce((a, b) => a + b);
   return (
     <AntPie
@@ -19,7 +14,7 @@ const Pie = (props) => {
         autoRotate: false,
         content: "{value}",
       }}
-      data={data}
+      data={props.data}
       radius={1}
       innerRadius={0.64}
       colorField="label"

@@ -12,14 +12,20 @@ const Figure = (props) => {
       <Card title="Predicted classes">
         <Pie
           config={{ style: { height: "200px", width: "300px" } }}
-          data={predClasses}
+          data={Object.keys(predClasses).map((key) => ({
+            label: key,
+            value: predClasses[key],
+          }))}
           label="# of images in each predicted classes"
         />
       </Card>
       <Card title="Labelled classes">
         <Bar
           config={{ style: { height: "200px", width: "300px" } }}
-          data={imgClasses}
+          data={Object.keys(imgClasses).map((key) => ({
+            label: key,
+            value: imgClasses[key],
+          }))}
           label="# of images"
         />
       </Card>
