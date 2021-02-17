@@ -1,17 +1,15 @@
-import { EditOutlined } from "@ant-design/icons";
 import { Badge, Card, Skeleton, Space, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
+import { Router, useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
-import ProjectDashboard from "./ProjectDashboard/ProjectDashboard";
 
 // TODO change to be more like ngc
 const { Paragraph } = Typography;
 const SelectProject = (props) => {
   const projects = useSelector((state) => state.project.projects);
-  const [projectOnModal, setProjectOnModal] = useState(null);
-  const dispatch = useDispatch();
+  const router = useRouter();
 
   const currentProject = useSelector((state) => state.project.currentProject);
 
@@ -25,7 +23,7 @@ const SelectProject = (props) => {
         width: "330px",
       }}
       hoverable
-      onClick={setProjectOnModal.bind(this, project)}
+      onClick={router.push.bind(this, `project?id=${project.id}`)}
       key={i}
       cover={
         <img
@@ -54,34 +52,17 @@ const SelectProject = (props) => {
   );
 
   return (
-    <Fragment>
-      <Space wrap size="middle">
-        {projects.map((project, i) =>
-          currentProject && project.id === currentProject.id ? (
-            <Badge.Ribbon text="active" color="green">
-              {getProjectCard(project, i)}
-            </Badge.Ribbon>
-          ) : (
-            getProjectCard(project, i)
-          )
-        )}
-      </Space>
-      <Modal
-        title={projectOnModal && projectOnModal.name}
-        visible={projectOnModal}
-        onCancel={setProjectOnModal.bind(this, null)}
-        onOk={() => {
-          dispatch(actions.setCurrentProject(projectOnModal));
-          setProjectOnModal(null);
-        }}
-        okText="Select this project"
-        width="850px"
-      >
-        <div style={{ width: "800px", height: "500px", overflow: "auto" }}>
-          <ProjectDashboard project={projectOnModal} />
-        </div>
-      </Modal>
-    </Fragment>
+    <Space wrap size="middle">
+      {projects.map((project, i) =>
+        currentProject && project.id === currentProject.id ? (
+          <Badge.Ribbon text="active" color="green">
+            {getProjectCard(project, i)}
+          </Badge.Ribbon>
+        ) : (
+          getProjectCard(project, i)
+        )
+      )}
+    </Space>
   );
 };
 
