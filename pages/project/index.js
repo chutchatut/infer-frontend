@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-const ProjectDashboard = dynamic(() =>
-  import('../../components/ProjectDashboard/ProjectDashboard')
+const ProjectDashboard = dynamic(
+  () => import("../../components/ProjectDashboard/ProjectDashboard"),
+  { ssr: false }
 );
 
 const project = (props) => {
