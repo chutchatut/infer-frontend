@@ -8,7 +8,7 @@ const Figure = (props) => {
   const imgClasses = { Verified: 10, Unverified: 5 };
 
   return (
-    <Space size="medium" wrap>
+    <Space size="middle" wrap>
       <Card title="Predicted classes">
         <Pie
           config={{ style: { height: "200px", width: "300px" } }}
