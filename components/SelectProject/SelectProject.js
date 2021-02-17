@@ -23,7 +23,7 @@ const SelectProject = (props) => {
         width: "330px",
       }}
       hoverable
-      onClick={router.push.bind(this, `project?id=${project.id}`)}
+      onClick={() => router.push(`project?id=${project.id}`)}
       key={i}
       cover={
         <img
