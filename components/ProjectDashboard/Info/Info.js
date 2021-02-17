@@ -5,10 +5,7 @@ const { Paragraph } = Typography;
 
 const Info = (props) => {
   return (
-    <Descriptions title="Project Info">
-      <Descriptions.Item label="Name" span="3">
-        {props.project.name}
-      </Descriptions.Item>
+    <Descriptions title={props.project.name}>
       <Descriptions.Item label="Task" span="3">
         <Tag color="green">{props.project.task}</Tag>
       </Descriptions.Item>

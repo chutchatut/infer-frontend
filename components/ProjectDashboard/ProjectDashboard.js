@@ -8,6 +8,7 @@ import {
   Typography,
   Tag,
   Popover,
+  Tabs,
 } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -35,18 +36,15 @@ const ProjectDashboard = (props) => {
           onClick={() => {}}
         />
       </Space> */}
-      <Space wrap>
-        <div
-          style={{
-            width: "600px",
-          }}
-        >
-          <Space direction="vertical">
-            <Info project={props.project} pipelines={pipelines} />
-          </Space>
-        </div>
-        <Figure project={props.project} />
-      </Space>
+      <Tabs defaultActiveKey="1">
+        <Tabs.TabPane tab="Project Info" key="1">
+          <Info project={props.project} pipelines={pipelines} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Dashboard" key="2">
+          <Figure project={props.project} />
+        </Tabs.TabPane>
+      </Tabs>
+   
     </Space>
   );
 };
