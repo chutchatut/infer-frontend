@@ -2,12 +2,16 @@ import { message, Skeleton } from "antd";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import ProjectDashboard from "../../components/ProjectDashboard/ProjectDashboard";
+import dynamic from "next/dynamic";
+
+const ProjectDashboard = dynamic(() =>
+  import('../../components/ProjectDashboard/ProjectDashboard')
+);
 
 const project = (props) => {
   const router = useRouter();
-  console.log(router.query.id);
   const [project, setProject] = useState(null);
+
   useEffect(async () => {
     if (!router.query.id) return;
     try {
