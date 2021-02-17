@@ -7,6 +7,7 @@ import {
   HistoryOutlined,
   MedicineBoxOutlined,
   FolderAddOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 
@@ -63,6 +64,13 @@ const NavMenu = (props) => {
           </>
         )}
       </SubMenu>
+      {getMenuItem(
+        "/admin",
+        <>
+          <SettingOutlined />
+          admin
+        </>
+      )}
       {getMenuItem(
         "/about-us",
         <>
