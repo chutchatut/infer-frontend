@@ -73,7 +73,7 @@ const Login = () => {
               initialValues={{
                 remember: true,
               }}
-              style={{marginTop:'20px'}}
+              style={{ marginTop: "20px" }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
             >
@@ -87,7 +87,7 @@ const Login = () => {
                 ]}
               >
                 <Input
-                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  prefix={<UserOutlined style={{ color: "#aaa" }} />}
                   placeholder="Username"
                 />
               </Form.Item>
@@ -102,7 +102,7 @@ const Login = () => {
                 ]}
               >
                 <Input
-                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  prefix={<LockOutlined style={{ color: "#aaa" }} />}
                   type="password"
                   placeholder="Password"
                 />
