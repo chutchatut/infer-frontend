@@ -27,12 +27,12 @@ const NavMenu = (props) => {
   return (
     <Menu
       mode="inline"
-      selectedKeys={[router.pathname.replace("/", "")]}
+      selectedKeys={[router.pathname]}
       defaultOpenKeys={["diag"]}
       style={{ height: "100%", borderRight: 0 }}
     >
       {getMenuItem(
-        "home",
+        "/home",
         <>
           <HomeOutlined />
           Home
@@ -40,7 +40,7 @@ const NavMenu = (props) => {
       )}
       <SubMenu key="diag" icon={<MedicineBoxOutlined />} title="Diagnosis">
         {getMenuItem(
-          "upload-image",
+          "/upload-image",
           <>
             <FileImageOutlined />
             Upload image
@@ -48,7 +48,7 @@ const NavMenu = (props) => {
         )}
 
         {getMenuItem(
-          "new-diagnosis",
+          "/new-diagnosis",
           <>
             <FolderAddOutlined />
             New diagnosis
@@ -56,7 +56,7 @@ const NavMenu = (props) => {
         )}
 
         {getMenuItem(
-          "history",
+          "/history",
           <>
             <HistoryOutlined />
             View history
@@ -64,7 +64,7 @@ const NavMenu = (props) => {
         )}
       </SubMenu>
       {getMenuItem(
-        "about-us",
+        "/about-us",
         <>
           <UserOutlined />
           About us

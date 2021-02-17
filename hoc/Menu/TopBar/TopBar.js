@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { Menu, Dropdown, message, Skeleton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../../store/actions";
+import * as actions from "../../../store/actions";
 import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
-import Logo from "../../assets/Logo";
+import Logo from "../../../assets/Logo";
 import styles from './TopBar.module.css'
 
 const TopBar = () => {

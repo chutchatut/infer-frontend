@@ -1,8 +1,7 @@
 import { Layout } from "antd";
-import { useRouter } from "next/router";
 import React from "react";
-import NavMenu from "../../components/NavMenu/NavMenu";
-import TopBar from "../../components/TopBar/TopBar";
+import NavMenu from "./NavMenu/NavMenu";
+import TopBar from "./TopBar/TopBar";
 
 const Menu = (props) => {
   const { Header, Content, Footer, Sider } = Layout;
