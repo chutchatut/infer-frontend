@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
 import ProjectDashboard from "./ProjectDashboard/ProjectDashboard";
 
+// TODO change to be more like ngc
 const { Paragraph } = Typography;
 const SelectProject = (props) => {
   const projects = useSelector((state) => state.project.projects);
