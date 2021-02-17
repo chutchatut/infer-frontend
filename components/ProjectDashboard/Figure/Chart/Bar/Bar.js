@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { get_chart_color } from "../../../../../assets/color";
 import styles from "./Bar.module.css";
-import { Bar as AntBar } from "@ant-design/charts";
+import { Column } from "@ant-design/charts";
 
 const Bar = (props) => {
   console.log(props);
 
   return (
-    <AntBar data={props.data} xField="value" yField="label" {...props.config} />
+    <Column data={props.data} xField="label" yField="value" {...props.config} />
   );
 };
 

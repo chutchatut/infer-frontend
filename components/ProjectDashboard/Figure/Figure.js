@@ -16,17 +16,15 @@ const Figure = (props) => {
             label: key,
             value: predClasses[key],
           }))}
-          label="# of images in each predicted classes"
         />
       </Card>
       <Card title="Labelled classes">
         <Bar
-          config={{ style: { height: "200px", width: "300px" } }}
+          config={{ style: { height: "200px", width: "200px" } }}
           data={Object.keys(imgClasses).map((key) => ({
             label: key,
             value: imgClasses[key],
           }))}
-          label="# of images"
         />
       </Card>
     </Space>
