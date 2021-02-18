@@ -9,11 +9,6 @@ const Info = (props) => {
       <Descriptions.Item label="Task" span="3">
         <Tag color="green">{props.project.task}</Tag>
       </Descriptions.Item>
-      <Descriptions.Item label="Description" span="3" key={props.project.name}>
-        <Paragraph ellipsis={{ rows: 3, expandable: true, symbol: "more" }}>
-          {props.project.description}
-        </Paragraph>
-      </Descriptions.Item>
       <Descriptions.Item label="Pipelines" span="3">
         <Space wrap>
           {props.pipelines && props.pipelines.length
@@ -33,6 +28,11 @@ const Info = (props) => {
               ))
             : "empty"}
         </Space>
+      </Descriptions.Item>
+      <Descriptions.Item label="Description" span="3" key={props.project.name}>
+        <Paragraph ellipsis={{ rows: 3, expandable: true, symbol: "more" }}>
+          {props.project.description}
+        </Paragraph>
       </Descriptions.Item>
     </Descriptions>
   );
