@@ -1,5 +1,3 @@
-import { Skeleton } from "antd";
-import { defaults } from "chart.js";
 import React, { Fragment } from "react";
 
 const Settings = (props) => {
