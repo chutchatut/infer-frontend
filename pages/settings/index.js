@@ -5,7 +5,7 @@ import Settings from "../../components/Settings/Settings";
 
 const { SubMenu } = Menu;
 
-const admin = () => {
+const settings = () => {
   const [page, setPage] = useState(null);
 
   return (
@@ -33,4 +33,4 @@ const admin = () => {
   );
 };
 
-export default admin;
+export default settings;

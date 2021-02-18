@@ -65,10 +65,10 @@ const NavMenu = (props) => {
         )}
       </SubMenu>
       {getMenuItem(
-        "/admin",
+        "/settings",
         <>
           <SettingOutlined />
-          admin
+          Settings
         </>
       )}
       {getMenuItem(
