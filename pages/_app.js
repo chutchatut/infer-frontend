@@ -36,7 +36,10 @@ function MyApp({ Component, pageProps }) {
     const currentProject = store.getState().project.currentProject;
     if (localStorage.getItem("currentProjectID") && !currentProject) {
       store.dispatch(actions.restoreCurrentProject());
-    } else if (router.pathname !== "/home" && !currentProject) {
+    } else if (
+      router.pathname in ["upload-image", "/new-diagnosis", "history"] &&
+      !currentProject
+    ) {
       // Redirect to home page if a project is not selected
       message.info("Please select a project!");
       router.replace("/home");
