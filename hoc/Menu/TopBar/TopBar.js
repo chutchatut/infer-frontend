@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../store/actions";
 import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import Logo from "../../../assets/Logo";
-import styles from "./TopBar.module.css";
 
 const TopBar = () => {
   const router = useRouter();
@@ -56,12 +55,11 @@ const TopBar = () => {
       >
         <Logo width="100px" height="50px" />
       </div>
-      
+
       <Menu theme="dark" mode="horizontal">
         <Menu.Item
           danger
           icon={<LogoutOutlined />}
-          className={styles.Logout}
           key="logout"
           onClick={() => {
             router.push("logout");
