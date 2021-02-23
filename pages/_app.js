@@ -36,7 +36,6 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (!store.getState().auth.token) return;
     const currentProject = store.getState().project.currentProject;
-    console.log(router.pathname);
     if (localStorage.getItem("currentProjectID") && !currentProject) {
       store.dispatch(actions.restoreCurrentProject());
     } else if (guardedPath.indexOf(router.pathname) > -1 && !currentProject) {
