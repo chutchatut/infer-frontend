@@ -46,6 +46,7 @@ const TopBar = () => {
           </a>
         </Dropdown>
       )}
+
       <div
         style={{
           position: "absolute",
@@ -55,6 +56,7 @@ const TopBar = () => {
       >
         <Logo width="100px" height="50px" />
       </div>
+      
       <Menu theme="dark" mode="horizontal">
         <Menu.Item
           danger
