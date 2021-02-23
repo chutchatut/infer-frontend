@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../store/actions";
 import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import Logo from "../../../assets/Logo";
+import styles from "./TopBar.module.css";
 
 const TopBar = () => {
   const router = useRouter();
@@ -39,8 +40,7 @@ const TopBar = () => {
       ) : (
         <Dropdown overlay={projectsMenu} trigger={["click"]}>
           <a
-            style={{ color: "#1890ff" }}
-            className="ant-dropdown-link"
+            className={["ant-dropdown-link", styles.dropdown]}
             onClick={(e) => e.preventDefault()}
           >
             {currentProject ? currentProject.name : "Select a project"}
