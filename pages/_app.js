@@ -16,6 +16,8 @@ axios.defaults.baseURL = publicRuntimeConfig.BACKEND_URL
   ? publicRuntimeConfig.BACKEND_URL
   : "http://35.72.157.253:8008";
 
+const guardedPath = ["/upload-image", "/new-diagnosis", "/history"];
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   // useSelector doesn't work because this is outside of Redux Provider
@@ -34,12 +36,10 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (!store.getState().auth.token) return;
     const currentProject = store.getState().project.currentProject;
+    console.log(router.pathname);
     if (localStorage.getItem("currentProjectID") && !currentProject) {
       store.dispatch(actions.restoreCurrentProject());
-    } else if (
-      router.pathname in ["upload-image", "/new-diagnosis", "history"] &&
-      !currentProject
-    ) {
+    } else if (guardedPath.indexOf(router.pathname) > -1 && !currentProject) {
       // Redirect to home page if a project is not selected
       message.info("Please select a project!");
       router.replace("/home");
