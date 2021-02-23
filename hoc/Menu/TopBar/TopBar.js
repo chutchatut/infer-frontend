@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
-import React, { Fragment, useEffect, useState } from "react";
-import { Menu, Dropdown, message, Skeleton } from "antd";
+import React from "react";
+import { Menu, Dropdown, Skeleton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../store/actions";
 import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import Logo from "../../../assets/Logo";
-import styles from './TopBar.module.css'
+import styles from "./TopBar.module.css";
 
 const TopBar = () => {
   const router = useRouter();
@@ -32,9 +32,9 @@ const TopBar = () => {
       </Menu>
     );
   }
-//TODO change theme
+
   return (
-    <Fragment>
+    <>
       {loading ? (
         <Skeleton.Input style={{ width: 150, marginTop: 15 }} active />
       ) : (
@@ -46,14 +46,18 @@ const TopBar = () => {
           </a>
         </Dropdown>
       )}
-
-      <Logo width="120px" height="50px" />
-
+      <div
+        style={{
+          position: "absolute",
+          marginTop: "10px",
+          left: "calc( 50% - 50px )",
+        }}
+      >
+        <Logo width="100px" height="50px" />
+      </div>
       <Menu theme="dark" mode="horizontal">
         <Menu.Item
           danger
-          // style={{color:'white'}}
-          // style={{ background: "red" }}
           icon={<LogoutOutlined />}
           className={styles.Logout}
           key="logout"
@@ -64,7 +68,7 @@ const TopBar = () => {
           Logout
         </Menu.Item>
       </Menu>
-    </Fragment>
+    </>
   );
 };
 
