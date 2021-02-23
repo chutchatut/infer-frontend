@@ -38,7 +38,11 @@ const TopBar = () => {
         <Skeleton.Input style={{ width: 150, marginTop: 15 }} active />
       ) : (
         <Dropdown overlay={projectsMenu} trigger={["click"]}>
-          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+          <a
+            style={{ color: "#1890ff" }}
+            className="ant-dropdown-link"
+            onClick={(e) => e.preventDefault()}
+          >
             {currentProject ? currentProject.name : "Select a project"}
             &ensp;
             <DownOutlined />
