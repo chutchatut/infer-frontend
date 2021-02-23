@@ -50,7 +50,8 @@ const Editor = (props) => {
     <Space direction="vertical">
       <Space direction="vertical" size="large">
         <Select
-          style={{ width: "240px" }}
+          //   style={{ width: "240px" }}
+          style={{ width: "100%" }}
           defaultOpen
           onChange={(value) => props.selectPipeline(value)}
         >
@@ -65,8 +66,12 @@ const Editor = (props) => {
           data={props.logits}
           config={{
             pagination: false,
-            scroll: { y: "300px" },
+            scroll: {
+              //  x: "400px",
+              y: "300px",
+            },
             style: { width: "400px" },
+            // style: { width: "300px" },
           }}
           selectionType="checkbox"
           initSelection={props.img.actual_class}

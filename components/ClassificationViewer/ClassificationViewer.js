@@ -1,4 +1,13 @@
-import { Button, Select, Space, Image, Skeleton, message } from "antd";
+import {
+  Button,
+  Select,
+  Space,
+  Image,
+  Skeleton,
+  message,
+  Row,
+  Col,
+} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Fragment, useEffect, useState } from "react";
 import MyTable from "../MyTable/MyTable";
@@ -47,23 +56,30 @@ const ClassificationViewer = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       {img ? (
-        <Space style={{ padding: "10px" }} size="large">
-          <Viewer img={img} gradcam={gradcam} />
+        <Row
+          gutter={[8, 8]}
+          // align="middle"
+        >
+          <Col span={16}>
+            <Viewer img={img} gradcam={gradcam} />
+          </Col>
 
-          <Editor
-            results={results}
-            logits={logits}
-            img={img}
-            edit={props.edit} // for default edit value in queryparams
-            selectPipeline={selectPipeline}
-          />
-        </Space>
+          <Col span={8}>
+            <Editor
+              results={results}
+              logits={logits}
+              img={img}
+              edit={props.edit} // for default edit value in queryparams
+              selectPipeline={selectPipeline}
+            />
+          </Col>
+        </Row>
       ) : (
         <Skeleton />
       )}
-    </Fragment>
+    </>
   );
 };
 
