@@ -9,11 +9,12 @@ import HistoryTable from "../../components/HistoryTable/HistoryTable";
 const History = () => {
   const project = useSelector((state) => state.project.currentProject);
   const [images, setImages] = useState([]);
+  const [tick, setTick] = useState(false);
 
   const router = useRouter();
 
   useEffect(async () => {
-    if (project)
+    if (project) {
       setImages(
         (
           await axios.get(`/api/project/${project.id}/list_image/`)
@@ -22,16 +23,18 @@ const History = () => {
           timestamp: new Date(image.timestamp),
         }))
       );
-  }, [project]);
+      setTimeout(() => {
+        setTick((tick) => !tick);
+      }, 5000);
+    }
+  }, [project, tick]);
 
   return (
     <>
       <Head>
         <title>View history</title>
       </Head>
-      <HistoryTable
-        data={images}
-      />
+      <HistoryTable data={images} />
     </>
   );
 };
