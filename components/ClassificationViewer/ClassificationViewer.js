@@ -1,20 +1,5 @@
-import {
-  Button,
-  Select,
-  Space,
-  Image,
-  Skeleton,
-  message,
-  Row,
-  Col,
-} from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import { Fragment, useEffect, useState } from "react";
-import MyTable from "../MyTable/MyTable";
-import styles from "./ClassificationViewer.module.css";
-import { EditOutlined, SaveOutlined } from "@ant-design/icons";
-import axios from "axios";
-import { useRouter } from "next/router";
+import { Skeleton, Row, Col } from "antd";
+import { useEffect, useState } from "react";
 import Viewer from "./Viewer/Viewer";
 import Editor from "./Editor/Editor";
 
@@ -62,11 +47,15 @@ const ClassificationViewer = (props) => {
           gutter={[8, 8]}
           // align="middle"
         >
-          <Col span={16}>
+          <Col lg={24} xxl={16}>
             <Viewer img={img} gradcam={gradcam} />
           </Col>
 
-          <Col span={8}>
+          <Col
+            xxl={8}
+            flex="auto"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             <Editor
               results={results}
               logits={logits}

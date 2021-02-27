@@ -97,7 +97,7 @@ const Editor = (props) => {
             onClick={verify.bind(this)}
             type="primary"
             loading={loading}
-            disabled={selectedRowKeys.length === 0}
+            // disabled={selectedRowKeys.length === 0}
           >
             Save
           </Button>
