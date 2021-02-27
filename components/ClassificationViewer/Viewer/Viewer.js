@@ -44,10 +44,10 @@ const Viewer = (props) => {
           </Image.PreviewGroup>
         </Col>
       </Row>
-      <Row style={{ textAlign: "center" }}>
+      <Row style={{ display: "flex", justifyContent: "center" }}>
         <h2>{props.img.name}</h2>
       </Row>
-      <Row>
+      <Row style={{ display: "flex", justifyContent: "center" }}>
         <>
           <span style={{ color: statuses[props.img.status].color }}>● </span>
           {statuses[props.img.status].text}
