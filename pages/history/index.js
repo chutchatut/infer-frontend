@@ -16,6 +16,7 @@ const History = () => {
           await axios.get(`/api/project/${project.id}/list_image/`)
         ).data.images.map((image) => ({
           ...image,
+          key: image.id,
           timestamp: new Date(image.timestamp),
         }))
       );
