@@ -13,7 +13,7 @@ const Info = (props) => {
         <Space wrap>
           {props.pipelines && props.pipelines.length
             ? props.pipelines.map((pipeline) => (
-                <Popover content={pipeline.description}>
+                <Popover content={pipeline.description} key={pipeline.name}>
                   <Tag color="volcano">{pipeline.name}</Tag>
                 </Popover>
               ))
@@ -24,7 +24,9 @@ const Info = (props) => {
         <Space wrap>
           {props.project && props.project.predclasses
             ? props.project.predclasses.map((predclass) => (
-                <Tag color="blue">{predclass}</Tag>
+                <Tag color="blue" key={predclass}>
+                  {predclass}
+                </Tag>
               ))
             : "empty"}
         </Space>
