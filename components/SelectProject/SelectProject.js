@@ -55,7 +55,7 @@ const SelectProject = (props) => {
     <Space wrap size="middle">
       {projects.map((project, i) =>
         currentProject && project.id === currentProject.id ? (
-          <Badge.Ribbon text="active" color="green">
+          <Badge.Ribbon text="active" color="green" key={i}>
             {getProjectCard(project, i)}
           </Badge.Ribbon>
         ) : (
