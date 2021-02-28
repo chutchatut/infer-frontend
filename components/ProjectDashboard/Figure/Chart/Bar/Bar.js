@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { get_chart_color } from "../../../../../assets/color";
-import styles from "./Bar.module.css";
+import React from "react";
 import { Column } from "@ant-design/charts";
 
 const Bar = (props) => {

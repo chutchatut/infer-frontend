@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { get_chart_color, get_color } from "../../../../../assets/color";
-import styles from "./Pie.module.css";
+import React from "react";
 import { Pie as AntPie } from "@ant-design/charts";
 
 const Pie = (props) => {
