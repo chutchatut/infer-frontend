@@ -146,8 +146,8 @@ const HistoryTable = (props) => {
     <MyTable
       data={props.data}
       config={{
-        pagination: { pageSize: 10 },
-        scroll: { x: 1000, y: 300 },
+        pagination: false,
+        scroll: { x: 1000, y: 'calc(100vh - 240px)' },
       }}
       columns={columns}
     />
