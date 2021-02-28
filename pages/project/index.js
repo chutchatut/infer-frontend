@@ -3,11 +3,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import ProjectDashboard from "../../components/ProjectDashboard/ProjectDashboard";
 
-const ProjectDashboard = dynamic(
-  () => import("../../components/ProjectDashboard/ProjectDashboard"),
-  { ssr: false }
-);
+// const ProjectDashboard = dynamic(
+//   () => import("../../components/ProjectDashboard/ProjectDashboard"),
+//   { ssr: false }
+// );
 
 const project = (props) => {
   const router = useRouter();
