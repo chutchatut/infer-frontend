@@ -123,7 +123,7 @@ const NewDiag = () => {
           border: "1px dashed #e9e9e9",
           borderRadius: "2px",
           backgroundColor: "#fafafa",
-          minHeight: "200px",
+          height: "calc( 100vh - 250px )",
           padding: "12px",
         }}
       >

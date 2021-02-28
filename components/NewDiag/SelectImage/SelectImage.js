@@ -55,7 +55,10 @@ const SelectImage = (props) => {
           <Popover
             placement="left"
             content={
-              <img src={`${axios.defaults.baseURL}${record.data16}`} width="200" />
+              <img
+                src={`${axios.defaults.baseURL}${record.data16}`}
+                width="200"
+              />
             }
           >
             <div style={{ marginLeft: "20px" }}>
@@ -80,8 +83,9 @@ const SelectImage = (props) => {
       <MyTable
         data={data}
         config={{
-          pagination: { pageSize: 50 },
-          scroll: { x: 1000, y: 300 },
+          style: { height: "calc(100vh - 300px)" },
+          pagination: false,
+          scroll: { x: 1000, y: "calc(100vh - 300px)" },
         }}
         columns={columns}
         selectionType="checkbox"
