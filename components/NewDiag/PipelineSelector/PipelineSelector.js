@@ -7,7 +7,7 @@ const { Paragraph } = Typography;
 
 const PipelineSelector = (props) => {
   const [pipelineOnModal, setPipelineOnModal] = useState(null);
-  console.log(pipelineOnModal);
+
   return (
     <>
       <Space wrap size="middle">

@@ -135,10 +135,12 @@ const MyTable = (props) => {
         <Column
           title={column.title}
           dataIndex={column.dataIndex}
-          key={column.key}
+          // key={column.dataIndex}
           {...column.config}
           {...sortableConfig(column.dataIndex, { enable: column.sortable })}
-          {...searchableConfig(column.dataIndex, { enable: column.searchable })}
+          {...searchableConfig(column.dataIndex, {
+            enable: column.searchable,
+          })}
         />
       ))}
     </Table>
