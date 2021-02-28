@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SelectProject from "../../components/SelectProject/SelectProject";
 
 // TODO add short desc
