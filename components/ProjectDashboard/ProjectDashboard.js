@@ -1,21 +1,11 @@
-import { ArrowLeftOutlined, CheckOutlined } from "@ant-design/icons";
-import {
-  Statistic,
-  Card,
-  Space,
-  message,
-  Descriptions,
-  Typography,
-  Tag,
-  Popover,
-  Tabs,
-} from "antd";
+import { Space, Tabs, Button } from "antd";
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import Figure from "./Figure/Figure";
 import Info from "./Info/Info";
-
-const { Paragraph } = Typography;
+import * as actions from "../../store/actions";
 
 const ProjectDashboard = (props) => {
   const [pipelines, setPipelines] = useState(null);
@@ -27,15 +17,11 @@ const ProjectDashboard = (props) => {
       );
   }, [props.project]);
 
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   return (
-    <Space direction="vertical">
-      {/* <Space size="large">
-        <ArrowLeftOutlined style={{ color: "#777", fontSize: "30px" }} />
-        <CheckOutlined
-          style={{ color: "#777", fontSize: "30px" }}
-          onClick={() => {}}
-        />
-      </Space> */}
+    <Space direction="vertical" size="large">
       <Tabs defaultActiveKey="1">
         <Tabs.TabPane tab="Project Info" key="1">
           <Info project={props.project} pipelines={pipelines} />
@@ -44,7 +30,18 @@ const ProjectDashboard = (props) => {
           <Figure project={props.project} />
         </Tabs.TabPane>
       </Tabs>
-   
+      <Space>
+        <Button onClick={router.push.bind(this, "/home")}>Go back</Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            dispatch(actions.setCurrentProject(props.project));
+            router.push("/home");
+          }}
+        >
+          Select
+        </Button>
+      </Space>
     </Space>
   );
 };
