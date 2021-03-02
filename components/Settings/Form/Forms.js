@@ -1,6 +1,7 @@
 import { Button, Form, message, Space, Typography } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
+import FormTemplate from "./FormTemplate/FormTemplate";
 
 const layout = {
   labelCol: { span: 6 },
@@ -14,6 +15,8 @@ const Forms = (props) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
+  const formTemplate = FormTemplate(form)[props.page];
+
   const onFinish = async (values) => {
     console.log(values, props);
     let response;
@@ -21,15 +24,15 @@ const Forms = (props) => {
 
     // -------------------------------------------
 
-    if (props.includeFile) {
-      switch (props.requestType) {
+    if (formTemplate.includeFile) {
+      switch (formTemplate.requestType) {
         case "POST":
           const formData = new FormData();
           for (let key in values) {
             formData.append(key, values[key]);
           }
           console.log(formData);
-          response = await axios.post(props.requestURL, formData, {
+          response = await axios.post(formTemplate.requestURL, formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
       }
@@ -53,10 +56,10 @@ const Forms = (props) => {
       {...layout}
     >
       <Typography.Title level={3} style={{ paddingLeft: "120px" }}>
-        {props.pageTitle}
+        {formTemplate.pageTitle}
       </Typography.Title>
 
-      {props.formConfig.map((form) => (
+      {formTemplate.formConfig.map((form) => (
         <Form.Item {...form.config} key={form.config.name}>
           {form.form}
         </Form.Item>
