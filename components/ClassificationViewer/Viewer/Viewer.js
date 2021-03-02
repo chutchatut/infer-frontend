@@ -25,22 +25,26 @@ const Viewer = (props) => {
   return (
     <>
       <Row>
-        <Col>
+        <Col style={{ width: "100%" }}>
           <Image.PreviewGroup>
-            <Space>
-              <Image
-                key="img"
-                src={`${axios.defaults.baseURL}${props.img.data16}`}
-                // width="100%"
-                style={{ objectFit: "cover" }}
-              />
-              <Image
-                key="gradcam"
-                src={`${axios.defaults.baseURL}${props.gradcam}`}
-                // width="22rem"
-                style={{ objectFit: "cover" }}
-              />
-            </Space>
+            <Row gutter={8}>
+              <Col span={12}>
+                <Image
+                  key="img"
+                  src={`${axios.defaults.baseURL}${props.img.data16}`}
+                  width="100%"
+                  style={{ objectFit: "cover" }}
+                />
+              </Col>
+              <Col span={12}>
+                <Image
+                  key="gradcam"
+                  src={`${axios.defaults.baseURL}${props.gradcam}`}
+                  width="100%"
+                  style={{ objectFit: "cover" }}
+                />
+              </Col>
+            </Row>
           </Image.PreviewGroup>
         </Col>
       </Row>
