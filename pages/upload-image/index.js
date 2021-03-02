@@ -1,10 +1,6 @@
-import { Tabs } from "antd";
-import React, { useEffect, useState } from "react";
-import Upload from "../../components/Upload/Upload";
+import React from "react";
 import Head from "next/head";
-import ImageAddTable from "../../components/ImageAddTable/ImageAddTable";
-
-const { TabPane } = Tabs;
+import AddImage from "../../components/AddImage/AddImage";
 
 const uploadImage = () => {
   return (
@@ -12,14 +8,7 @@ const uploadImage = () => {
       <Head>
         <title>Upload Image</title>
       </Head>
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Upload files" key="1">
-          <Upload />
-        </TabPane>
-        <TabPane tab="Select from remote files" key="2">
-          <ImageAddTable />
-        </TabPane>
-      </Tabs>
+      <AddImage />
     </>
   );
 };

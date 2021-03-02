@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 
-import MyTable from "../MyTable/MyTable";
+import MyTable from "../../MyTable/MyTable";
 
 const ImageAddTable = (props) => {
   const [data, setData] = useState([

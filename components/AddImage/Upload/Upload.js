@@ -12,6 +12,14 @@ import React, { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import ImgUpload from "./ImgUpload/ImgUpload";
 
+const layout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 6, span: 16 },
+};
+
 const Upload = () => {
   const [form] = Form.useForm();
   const [filetype, setFiletype] = useState(null);
@@ -70,9 +78,9 @@ const Upload = () => {
 
   return (
     <Form
-      style={{ width: "500px", padding: "0px" }}
+      {...layout}
+      style={{ width: "500px", padding: "0px", marginTop: "15px" }}
       form={form}
-      name="dynamic_form_nest_item"
       onFinish={onFinish}
       onValuesChange={onValuesChange}
       autoComplete="off"
@@ -117,7 +125,14 @@ const Upload = () => {
           <Form.Item
             label="Patient's age"
             name="patient_age"
-            rules={[{ required: true, message: "Please input patient's age" }]}
+            rules={[
+              {
+                required: true,
+                message: "Please input valid patient's age",
+                min: 0,
+                max: 200,
+              },
+            ]}
           >
             <InputNumber />
           </Form.Item>
@@ -139,12 +154,8 @@ const Upload = () => {
           </Form.Item>
         </Fragment>
       )}
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          loading={loading}
-        >
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit" loading={loading}>
           Submit
         </Button>
       </Form.Item>

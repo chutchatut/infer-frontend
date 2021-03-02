@@ -1,5 +1,6 @@
 import { Badge, Card, Skeleton, Space, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
+import axios from "axios";
 import { Router, useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +29,7 @@ const SelectProject = (props) => {
       cover={
         <img
           alt="Project cover"
-          src="https://www.pilotcareernews.com/wp-content/uploads/2015/09/medical.jpg"
+          src={`${axios.defaults.baseURL}${project.cover}`}
           height="170px"
           style={{ objectFit: "cover" }}
         />
