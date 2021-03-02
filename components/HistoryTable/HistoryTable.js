@@ -125,7 +125,7 @@ const HistoryTable = (props) => {
               onConfirm={async () => {
                 await axios.delete(`/api/image/${record.id}/`);
                 message.success("Image has been successfully deleted");
-                router.reload();
+                props.reload();
               }}
               okText="Yes"
               cancelText="No"
@@ -147,7 +147,7 @@ const HistoryTable = (props) => {
       data={props.data}
       config={{
         pagination: false,
-        scroll: { x: 1000, y: 'calc(100vh - 220px)' },
+        scroll: { x: 1000, y: "calc(100vh - 220px)" },
       }}
       columns={columns}
     />

@@ -9,17 +9,21 @@ const History = () => {
   const [images, setImages] = useState([]);
   const [tick, setTick] = useState(false);
 
+  const reload = async () => {
+    setImages(
+      (
+        await axios.get(`/api/project/${project.id}/list_image/`)
+      ).data.images.map((image) => ({
+        ...image,
+        key: image.id,
+        timestamp: new Date(image.timestamp),
+      }))
+    );
+  };
+
   useEffect(async () => {
     if (project) {
-      setImages(
-        (
-          await axios.get(`/api/project/${project.id}/list_image/`)
-        ).data.images.map((image) => ({
-          ...image,
-          key: image.id,
-          timestamp: new Date(image.timestamp),
-        }))
-      );
+      reload();
       setTimeout(() => {
         setTick((tick) => !tick);
       }, 5000);
@@ -31,7 +35,7 @@ const History = () => {
       <Head>
         <title>View history</title>
       </Head>
-      <HistoryTable data={images} />
+      <HistoryTable data={images} reload={reload} />
     </>
   );
 };
