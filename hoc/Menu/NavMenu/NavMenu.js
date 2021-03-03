@@ -8,6 +8,7 @@ import {
   MedicineBoxOutlined,
   FolderAddOutlined,
   SettingOutlined,
+  ToolOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 
@@ -65,10 +66,10 @@ const NavMenu = (props) => {
         )}
       </SubMenu>
       {getMenuItem(
-        "/settings",
+        "/admin",
         <>
-          <SettingOutlined />
-          Settings
+          <ToolOutlined />
+          admin
         </>
       )}
       {getMenuItem(

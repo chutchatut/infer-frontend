@@ -16,11 +16,15 @@ export const fetchProjectsFail = (error) => {
   };
 };
 
-export const fetchProjects = () => async (dispatch) => {
+export const fetchProjects = () => async (dispatch, getState) => {
   dispatch({ type: actionTypes.FETCH_PROJECTS_INIT });
   try {
     const projects = await axios.get("/api/project");
     dispatch(fetchProjectsSuccess(projects.data));
+    if (getState().project.currentProject) {
+      const project = projects.find((p) => (p.id = project.id));
+      dispatch(setCurrentProject(project));
+    }
   } catch (error) {
     dispatch(fetchProjectsFail(error));
   }

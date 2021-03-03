@@ -1,17 +1,17 @@
-import { ProjectOutlined } from "@ant-design/icons";
+import { ProjectOutlined, SettingOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import React, { useState } from "react";
 import Settings from "../../components/Settings/Settings";
 
 const { SubMenu } = Menu;
 
-const settings = () => {
+const admin = () => {
   const [page, setPage] = useState(null);
 
   return (
     <>
       <Menu onClick={(e) => setPage(e.key)} mode="horizontal">
-        <SubMenu key="project" icon={<ProjectOutlined />} title="Project">
+        <SubMenu key="project" icon={<SettingOutlined />} title="Settings">
           <Menu.ItemGroup title="Project" key="project">
             <Menu.Item key="create-project">Create project</Menu.Item>
             <Menu.Item key="edit-project">Edit Project</Menu.Item>
@@ -33,4 +33,4 @@ const settings = () => {
   );
 };
 
-export default settings;
+export default admin;

@@ -97,6 +97,7 @@ class EditableTagGroup extends React.Component {
                 onChange={this.handleEditInputChange}
                 onBlur={this.handleEditInputConfirm}
                 onPressEnter={this.handleEditInputConfirm}
+                onKeyDown={(e) => (e.keyCode == 13 ? e.preventDefault() : "")}
               />
             );
           }
@@ -145,6 +146,7 @@ class EditableTagGroup extends React.Component {
             onChange={this.handleInputChange}
             onBlur={this.handleInputConfirm}
             onPressEnter={this.handleInputConfirm}
+            onKeyDown={(e) => (e.keyCode == 13 ? e.preventDefault() : "")}
           />
         )}
         {!inputVisible && (
