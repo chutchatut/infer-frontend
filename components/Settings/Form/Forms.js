@@ -1,6 +1,6 @@
 import { Button, Form, message, Space, Typography } from "antd";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormTemplate from "./FormTemplate/FormTemplate";
 import * as actions from "../../../store/actions";
@@ -17,8 +17,19 @@ const Forms = (props) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const currentProject = useSelector((state) => state.project.currentProject);
+  const [pipelines, setPipelines] = useState([]);
 
-  const formTemplate = FormTemplate(currentProject, form)[props.page];
+  useEffect(async () => {
+    if (!currentProject.id) return;
+    setPipelines(
+      (await axios.get(`/api/project/${currentProject.id}/list_pipeline/`)).data
+        .result
+    );
+  }, [currentProject && currentProject.id]);
+
+  const formTemplate = FormTemplate(currentProject, form, pipelines)[
+    props.page
+  ];
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
@@ -28,11 +39,13 @@ const Forms = (props) => {
 
     // -------------------------------------
     // format URL using string
+
     let URL = formTemplate.requestURL;
     for (let key in values) {
       URL = URL.replace(`{${key}}`, values[key]);
     }
     console.log(URL);
+
     // -------------------------------------
 
     try {
