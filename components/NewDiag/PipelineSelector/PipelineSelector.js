@@ -1,84 +1,41 @@
-import { CheckOutlined, MoreOutlined } from "@ant-design/icons";
-import { Card, Descriptions, Skeleton, Space, Typography } from "antd";
-import Modal from "antd/lib/modal/Modal";
-import React, { useState } from "react";
-
-const { Paragraph } = Typography;
+import { Descriptions, Select, Space } from "antd";
+import React from "react";
 
 const PipelineSelector = (props) => {
-  const [pipelineOnModal, setPipelineOnModal] = useState(null);
-
+  console.log(props);
   return (
-    <>
-      <Space wrap size="middle">
-        {props.pipelines.map((pipeline, i) => (
-          <Card
-            style={{
-              width: "200px",
-            }}
-            key={i}
-            actions={[
-              <>
-                {props.selectedPipeline &&
-                props.selectedPipeline.id === pipeline.id ? (
-                  <CheckOutlined
-                    style={{ color: "#1890ff" }}
-                    onClick={props.setSelectedPipeline.bind(this, null)}
-                  />
-                ) : (
-                  <CheckOutlined
-                    onClick={props.setSelectedPipeline.bind(this, pipeline)}
-                  />
-                )}
-              </>,
-              <MoreOutlined
-                onClick={setPipelineOnModal.bind(this, pipeline)}
-              />,
-            ]}
-          >
-            <Card.Meta
-              title={pipeline.name}
-              description={pipeline.model_name}
-            />
-          </Card>
-        ))}
-      </Space>
-      <Modal
-        title={pipelineOnModal && pipelineOnModal.name}
-        visible={pipelineOnModal}
-        onCancel={setPipelineOnModal.bind(this, null)}
-        width="650px"
-        footer=""
+    <Space direction="vertical" size="large">
+      <Select
+        value={props.selectedPipeline && props.selectedPipeline.name}
+        style={{ width: "200px" }}
+        onChange={(e) =>
+          props.setSelectedPipeline(props.pipelines.find((p) => p.id === e))
+        }
       >
-        <div style={{ width: "600px", height: "300px", overflow: "auto" }}>
-          {pipelineOnModal ? (
-            <Descriptions title="Project Info">
-              <Descriptions.Item label="Name" span="3">
-                {pipelineOnModal.name}
-              </Descriptions.Item>
-              <Descriptions.Item label="Model name" span="3">
-                {pipelineOnModal.model_name}
-              </Descriptions.Item>
-              <Descriptions.Item label="Pipeline's ID" span="3">
-                {pipelineOnModal.pipeline_id}
-              </Descriptions.Item>
-              <Descriptions.Item label="Operator" span="3">
-                {pipelineOnModal.operator}
-              </Descriptions.Item>
-              <Descriptions.Item label="Description" span="3">
-                <Paragraph
-                  ellipsis={{ rows: 3, expandable: true, symbol: "more" }}
-                >
-                  {pipelineOnModal.description}
-                </Paragraph>
-              </Descriptions.Item>
-            </Descriptions>
-          ) : (
-            <Skeleton />
-          )}
-        </div>
-      </Modal>
-    </>
+        {props.pipelines.map((pipeline, i) => (
+          <Select.Option key={pipeline.id} value={pipeline.id}>
+            {pipeline.name}
+          </Select.Option>
+        ))}
+      </Select>
+      <Descriptions title="Project Info">
+        <Descriptions.Item label="Name" span="3">
+          {props.selectedPipeline && props.selectedPipeline.name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Model name" span="3">
+          {props.selectedPipeline && props.selectedPipeline.model_name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Pipeline's ID" span="3">
+          {props.selectedPipeline && props.selectedPipeline.pipeline_id}
+        </Descriptions.Item>
+        <Descriptions.Item label="Operator" span="3">
+          {props.selectedPipeline && props.selectedPipeline.operator}
+        </Descriptions.Item>
+        <Descriptions.Item label="Description" span="3">
+          {props.selectedPipeline && props.selectedPipeline.description}
+        </Descriptions.Item>
+      </Descriptions>
+    </Space>
   );
 };
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Viewer from "./Viewer/Viewer";
 import Editor from "./Editor/Editor";
 
-const ClassificationViewer = (props) => {
+const ClassificationEditor = (props) => {
   const img = props.data && props.data.image;
   const results = props.data && props.data.result;
 
@@ -47,9 +47,11 @@ const ClassificationViewer = (props) => {
           gutter={[8, 8]}
           // align="middle"
         >
-          <Col lg={24} xxl={16}>
-            <Viewer img={img} gradcam={gradcam} />
-          </Col>
+          {props.task_type.indexOf("2d") !== -1 && (
+            <Col lg={24} xxl={16}>
+              <Viewer img={img} gradcam={gradcam} />
+            </Col>
+          )}
 
           <Col
             xxl={8}
@@ -72,4 +74,4 @@ const ClassificationViewer = (props) => {
   );
 };
 
-export default ClassificationViewer;
+export default ClassificationEditor;

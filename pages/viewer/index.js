@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "antd";
 // import styles from "./edit.module.css";
-import ClassificationViewer from "../../components/ClassificationViewer/ClassificationViewer";
+import ClassificationEditor from "../../components/ClassificationEditor/ClassificationEditor";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import SegmentationEditor from "../../components/SegmentationEditor/SegmentationEditor";
@@ -24,16 +24,19 @@ const Viewer = () => {
     });
   }, [router.query.id]);
 
-  const task_type = img && img.image.project_task;
+  const task_type =
+    img && img.image.project_task.toLowerCase().replace(" ", "_");
   if (!task_type) return <Skeleton />;
-  switch (task_type.toLowerCase()) {
-    case "2d classification":
-      return <ClassificationViewer data={img} edit={router.query.edit} />;
-    case "2d segmentation":
-      return <SegmentationEditor />;
-    default:
-      return <p>Unsupported task type</p>;
-  }
+  if (task_type.indexOf("2d") !== -1)
+    return (
+      <ClassificationEditor
+        data={img}
+        edit={router.query.edit}
+        task_type={task_type}
+      />
+    );
+
+  return <p>Unsupported task type</p>;
 };
 
 export default Viewer;

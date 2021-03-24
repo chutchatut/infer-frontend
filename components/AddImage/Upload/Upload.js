@@ -129,12 +129,10 @@ const Upload = () => {
               {
                 required: true,
                 message: "Please input valid patient's age",
-                min: 0,
-                max: 200,
               },
             ]}
           >
-            <InputNumber />
+            <InputNumber min={0} max={200}/>
           </Form.Item>
           <Form.Item
             label="Scan date"

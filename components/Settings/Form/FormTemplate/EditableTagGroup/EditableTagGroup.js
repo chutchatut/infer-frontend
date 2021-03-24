@@ -12,7 +12,7 @@ const tagInput = {
 
 class EditableTagGroup extends React.Component {
   state = {
-    tags: this.props.initialTags ? this.props.initialTags : [],
+    tags: this.props.value ? this.props.value : [],
     inputVisible: false,
     inputValue: "",
     editInputIndex: -1,

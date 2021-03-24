@@ -50,13 +50,17 @@ const Forms = (props) => {
 
     try {
       if (formTemplate.includeFile) {
+        
+        const formData = new FormData();
+        for (let key in values) {
+          if (values[key]) {
+            formData.append(key, values[key]);
+          }
+        }
+        console.log(formData);
+
         switch (formTemplate.requestType) {
           case "POST":
-            const formData = new FormData();
-            for (let key in values) {
-              formData.append(key, values[key]);
-            }
-            console.log(formData);
             response = await axios.post(URL, formData, {
               headers: { "Content-Type": "multipart/form-data" },
             });
