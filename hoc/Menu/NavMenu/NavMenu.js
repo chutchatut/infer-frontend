@@ -69,7 +69,7 @@ const NavMenu = (props) => {
         "/admin",
         <>
           <ToolOutlined />
-          admin
+          Admin
         </>
       )}
       {getMenuItem(

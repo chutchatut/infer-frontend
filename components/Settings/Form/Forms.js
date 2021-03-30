@@ -19,13 +19,21 @@ const Forms = (props) => {
   const currentProject = useSelector((state) => state.project.currentProject);
   const [pipelines, setPipelines] = useState([]);
 
-  useEffect(async () => {
-    if (!currentProject.id) return;
+  const reloadPipeline = async () => {
     setPipelines(
       (await axios.get(`/api/project/${currentProject.id}/list_pipeline/`)).data
         .result
     );
+  };
+
+  useEffect(async () => {
+    if (!currentProject || !currentProject.id) return;
+    reloadPipeline();
   }, [currentProject && currentProject.id]);
+
+  useEffect(() => {
+    form.resetFields();
+  }, [currentProject && currentProject.id, props.page]);
 
   const formTemplate = FormTemplate(currentProject, form, pipelines)[
     props.page
@@ -37,11 +45,11 @@ const Forms = (props) => {
     let response;
     setLoading(true);
 
-    // -------------------------------------
-    // format URL using string
+    // ----- format URL using string -------
 
     let URL = formTemplate.requestURL;
     for (let key in values) {
+      // Do not replace `{${key}}` with key
       URL = URL.replace(`{${key}}`, values[key]);
     }
     console.log(URL);
@@ -49,33 +57,41 @@ const Forms = (props) => {
     // -------------------------------------
 
     try {
-      if (formTemplate.includeFile) {
-        
-        const formData = new FormData();
-        for (let key in values) {
-          if (values[key]) {
-            formData.append(key, values[key]);
-          }
+      const formData = new FormData();
+      for (let key in values) {
+        if (values[key]) {
+          formData.append(key, values[key]);
         }
-        console.log(formData);
-
-        switch (formTemplate.requestType) {
-          case "POST":
-            response = await axios.post(URL, formData, {
-              headers: { "Content-Type": "multipart/form-data" },
-            });
-        }
-      } else {
       }
+
+      // ---------- handle upload ---------------
+      switch (formTemplate.requestType) {
+        case "POST":
+          response = await axios.post(URL, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          break;
+        case "PUT":
+          response = await axios.put(URL, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          break;
+      }
+      // ----------------------------------------
 
       if (response && response.status === 200) {
         message.success("Upload successful");
         setLoading(false);
         dispatch(actions.fetchProjects());
+        reloadPipeline();
         form.resetFields();
       }
     } catch (error) {
-      message.error(error.response.data.message);
+      message.error(
+        `The following error occured: ${error.response.data.message}`
+      );
       setLoading(false);
     }
   };
@@ -89,6 +105,7 @@ const Forms = (props) => {
         {formTemplate.pageTitle}
       </Typography.Title>
       <Form
+        key={props.page}
         form={form}
         style={{ width: "500px", padding: "0px" }}
         onFinish={onFinish}

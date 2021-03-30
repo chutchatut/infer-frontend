@@ -9,7 +9,6 @@ const taskTypes = [
 ];
 
 const TaskSelect = (props) => {
-  console.log(props);
   return (
     <Select onChange={props.onChange} defaultValue={props.value}>
       {taskTypes.map((taskType) => (

@@ -19,11 +19,11 @@ export const fetchProjectsFail = (error) => {
 export const fetchProjects = () => async (dispatch, getState) => {
   dispatch({ type: actionTypes.FETCH_PROJECTS_INIT });
   try {
-    const projects = await axios.get("/api/project");
-    dispatch(fetchProjectsSuccess(projects.data));
+    const projects = (await axios.get("/api/project")).data;
+    dispatch(fetchProjectsSuccess(projects));
     if (getState().project.currentProject) {
-      const project = projects.find((p) => (p.id = project.id));
-      dispatch(setCurrentProject(project));
+      const currentProjectID = getState().project.currentProject.id;
+      dispatch(reloadCurrentProject(currentProjectID));
     }
   } catch (error) {
     dispatch(fetchProjectsFail(error));
@@ -39,10 +39,12 @@ export const setCurrentProject = (project) => {
 };
 
 export const restoreCurrentProject = () => async (dispatch) => {
+  dispatch(reloadCurrentProject(localStorage.getItem("currentProjectID")));
+};
+
+export const reloadCurrentProject = (currentProjectID) => async (dispatch) => {
   try {
-    const response = await axios.get(
-      `/api/project/${localStorage.getItem("currentProjectID")}/`
-    );
+    const response = await axios.get(`/api/project/${currentProjectID}/`);
     dispatch({
       type: actionTypes.SET_CURRENT_PROJECT,
       payload: response.data.project,

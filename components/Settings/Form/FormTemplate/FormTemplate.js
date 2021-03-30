@@ -53,20 +53,19 @@ const getFormTemplate = (project, form, pipelines) => {
           form: <EditableTagGroup />,
         },
       ],
-      includeFile: true,
       requestType: "POST",
       requestURL: "/api/project/",
     },
 
     "edit-project": {
-      pageTitle: "Create new project",
+      pageTitle: `Edit project ${project && project.name}`,
       formConfig: [
         {
           config: {
             name: "name",
             label: "Name",
             rules: [{ required: true }],
-            initialValue: project.name,
+            initialValue: project && project.name,
           },
           form: <Input />,
         },
@@ -75,7 +74,7 @@ const getFormTemplate = (project, form, pipelines) => {
             name: "description",
             label: "Description",
             rules: [{ required: true }],
-            initialValue: project.description,
+            initialValue: project && project.description,
           },
           form: <Input />,
         },
@@ -84,7 +83,7 @@ const getFormTemplate = (project, form, pipelines) => {
             name: "task",
             label: "Task",
             rules: [{ required: true }],
-            initialValue: project.task,
+            initialValue: project && project.task,
           },
           form: <TaskSelect />,
         },
@@ -92,7 +91,6 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "cover",
             label: "Cover",
-            rules: [{ required: true }],
             getValueFromEvent: (e) =>
               e.fileList[0] && e.fileList[0].originFileObj,
             valuePropName: "~~~", // Put here to stop error message
@@ -109,20 +107,36 @@ const getFormTemplate = (project, form, pipelines) => {
             name: "predclasses",
             label: "Classes",
             rules: [{ required: true }],
-            initialValue: project.predclasses,
+            initialValue: project && project.predclasses,
           },
           form: <EditableTagGroup />,
         },
       ],
-      includeFile: true,
       requestType: "PUT",
+      requestURL: `/api/project/${project && project.id}/`,
+    },
+
+    "manage-user": {
+      pageTitle: `Manage user for project ${project && project.name}`,
+      formConfig: [
+        {
+          config: {
+            name: "users",
+            label: "Users",
+            rules: [{ required: true }],
+            initialValue:
+              project && project.users && project.users.map((u) => u.username),
+          },
+          form: <EditableTagGroup />,
+        },
+      ],
+      requestType: "POST",
       // TODO change this later
-      requestURL: "/api/project/asdasd",
+      requestURL: `/api/project/${project && project.id}/add_user_batch/`,
     },
 
     "create-pipeline": {
-      //TODO fix this
-      pageTitle: `Create new pipeline for project ${project.name}`,
+      pageTitle: `Create new pipeline for project ${project && project.name}`,
       formConfig: [
         {
           config: {
@@ -136,6 +150,14 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "description",
             label: "Description",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "model_name",
+            label: "Model Name",
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -158,27 +180,20 @@ const getFormTemplate = (project, form, pipelines) => {
         },
       ],
       requestType: "POST",
-      requestURL: "/api/project/{name}",
+      requestURL: `/api/project/${project && project.id}/add_pipeline/`,
     },
 
     "edit-pipeline": {
-      //TODO fix this
-      pageTitle: `Edit pipeline for project ${project.name}`,
+      pageTitle: `Edit pipeline for project ${project && project.name}`,
       formConfig: [
         {
           config: {
-            name: "pipeline",
+            name: "id",
             label: "Pipeline",
             rules: [{ required: true }],
             getValueFromEvent: (e) => {
-              // const formData = form.getFieldsValue();
               // Don't use === because e is string but p.id is int
               const pipeline = pipelines.find((p) => p.id == e);
-              // for (let key in formData) {
-              //   if (formData[key]) continue;
-              //   formData[key] = pipeline[key];
-              // }
-              // form.setFieldsValue(formData);
               form.setFieldsValue(pipeline);
               return e;
             },
@@ -212,6 +227,14 @@ const getFormTemplate = (project, form, pipelines) => {
         },
         {
           config: {
+            name: "model_name",
+            label: "Model Name",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
             name: "pipeline_id",
             label: "Pipeline ID",
             rules: [{ required: true }],
@@ -227,8 +250,8 @@ const getFormTemplate = (project, form, pipelines) => {
           form: <Input />,
         },
       ],
-      requestType: "POST",
-      requestURL: "/api/project/{name}",
+      requestType: "PUT",
+      requestURL: "/api/pipeline/{id}/",
     },
   };
 };

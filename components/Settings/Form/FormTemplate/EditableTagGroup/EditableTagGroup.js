@@ -154,7 +154,7 @@ class EditableTagGroup extends React.Component {
             style={{ background: "#fff", borderStyle: "dashed" }}
             onClick={this.showInput}
           >
-            <PlusOutlined /> New Tag
+            <PlusOutlined /> Add more
           </Tag>
         )}
       </>
