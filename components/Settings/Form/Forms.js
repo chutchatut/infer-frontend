@@ -86,7 +86,7 @@ const Forms = (props) => {
         setLoading(false);
         dispatch(actions.fetchProjects());
         reloadPipeline();
-        form.resetFields();
+        // form.resetFields();
       }
     } catch (error) {
       message.error(
@@ -117,7 +117,12 @@ const Forms = (props) => {
           </Form.Item>
         ))}
         <Form.Item {...tailLayout}>
-          <Button loading={loading} type="primary" htmlType="submit">
+          <Button
+            loading={loading}
+            type="primary"
+            htmlType="submit"
+            danger={formTemplate.requestType === "DELETE"}
+          >
             Submit
           </Button>
         </Form.Item>

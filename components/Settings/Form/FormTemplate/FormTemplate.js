@@ -1,9 +1,11 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Input, Select, Upload } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
 import TaskSelect from "./TaskSelect/TaskSelect";
 
 const getFormTemplate = (project, form, pipelines) => {
+  console.log(pipelines);
   return {
     "create-project": {
       pageTitle: "Create new project",
@@ -123,7 +125,6 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "users",
             label: "Users",
-            rules: [{ required: true }],
             initialValue:
               project && project.users && project.users.map((u) => u.username),
           },
@@ -131,7 +132,6 @@ const getFormTemplate = (project, form, pipelines) => {
         },
       ],
       requestType: "POST",
-      // TODO change this later
       requestURL: `/api/project/${project && project.id}/add_user_batch/`,
     },
 
@@ -141,15 +141,7 @@ const getFormTemplate = (project, form, pipelines) => {
         {
           config: {
             name: "name",
-            label: "Name",
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-        {
-          config: {
-            name: "description",
-            label: "Description",
+            label: "Pipeline Name",
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -164,8 +156,17 @@ const getFormTemplate = (project, form, pipelines) => {
         },
         {
           config: {
+            name: "description",
+            label: "Description",
+            rules: [{ required: true }],
+          },
+          form: <TextArea />,
+        },
+        {
+          config: {
             name: "pipeline_id",
             label: "Pipeline ID",
+            tooltip: <img height="300px" src="https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?cs=srgb&dl=pexels-evg-culture-1170986.jpg&fm=jpg"/>,
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -174,6 +175,7 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "operator",
             label: "Operator",
+            tooltip: "Get this from clara Deploy",
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -212,15 +214,7 @@ const getFormTemplate = (project, form, pipelines) => {
         {
           config: {
             name: "name",
-            label: "Name",
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-        {
-          config: {
-            name: "description",
-            label: "Description",
+            label: "Pipeline Name",
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -232,6 +226,14 @@ const getFormTemplate = (project, form, pipelines) => {
             rules: [{ required: true }],
           },
           form: <Input />,
+        },
+        {
+          config: {
+            name: "description",
+            label: "Description",
+            rules: [{ required: true }],
+          },
+          form: <TextArea />,
         },
         {
           config: {
@@ -252,6 +254,90 @@ const getFormTemplate = (project, form, pipelines) => {
       ],
       requestType: "PUT",
       requestURL: "/api/pipeline/{id}/",
+    },
+
+    "delete-project": {
+      pageTitle: (
+        <span style={{ color: "red" }}>{`Delete project ${
+          project && project.name
+        }`}</span>
+      ),
+      formConfig: [
+        {
+          config: {
+            name: "name",
+            label: "Name",
+            rules: [
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  console.log(value);
+                  if (value === project.name) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(`Please enter the name of the project`)
+                  );
+                },
+              }),
+            ],
+          },
+
+          form: <Input />,
+        },
+      ],
+      requestType: "DELETE",
+      // TODO edit this
+      requestURL: `/api/project/${project && project.id}/`,
+    },
+
+    "delete-pipeline": {
+      pageTitle: (
+        <span style={{ color: "red" }}>{`Delete pipeline in project ${
+          project && project.name
+        }`}</span>
+      ),
+      formConfig: [
+        {
+          config: {
+            name: "id",
+            label: "Pipeline",
+            rules: [{ required: true }],
+          },
+          form: (
+            <Select>
+              {pipelines &&
+                pipelines.map((pipeline) => (
+                  <Select.Option key={pipeline.id}>
+                    {pipeline.name}
+                  </Select.Option>
+                ))}
+            </Select>
+          ),
+        },
+        {
+          config: {
+            name: "name",
+            label: "Name",
+            rules: [
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  const p = pipelines.find((p) => p.name === value);
+                  if (p && p.id === Number.parseInt(getFieldValue("id"))) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(`Please enter the name of a pipeline`)
+                  );
+                },
+              }),
+            ],
+          },
+          form: <Input />,
+        },
+      ],
+      requestType: "DELETE",
+      // TODO edit this
+      requestURL: `/api/pipeline/{id}`,
     },
   };
 };
