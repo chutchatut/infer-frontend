@@ -20,12 +20,16 @@ const Forms = (props) => {
   const [pipelines, setPipelines] = useState([]);
 
   const reloadPipeline = async () => {
-    setPipelines(
-      (await axios.get(`/api/project/${currentProject.id}/list_pipeline/`)).data
-        .result
-    );
+    if (!currentProject || !currentProject.id) return;
+    try {
+      setPipelines(
+        (await axios.get(`/api/project/${currentProject.id}/list_pipeline/`))
+          .data.result
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   useEffect(async () => {
     if (!currentProject || !currentProject.id) return;
     reloadPipeline();
@@ -73,6 +77,13 @@ const Forms = (props) => {
           break;
         case "PUT":
           response = await axios.put(URL, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          break;
+        case "DELETE":
+          response = await axios.delete(URL, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

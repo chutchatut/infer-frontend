@@ -31,7 +31,7 @@ export const fetchProjects = () => async (dispatch, getState) => {
 };
 
 export const setCurrentProject = (project) => {
-  localStorage.setItem("currentProjectID", project.id);
+  localStorage.setItem("currentProjectID", project && project.id);
   return {
     type: actionTypes.SET_CURRENT_PROJECT,
     payload: project,
@@ -50,6 +50,8 @@ export const reloadCurrentProject = (currentProjectID) => async (dispatch) => {
       payload: response.data.project,
     });
   } catch (error) {
-    message.info("An error occurred when trying to connect to server");
+    if (error && error.response && error.response.status === 404)
+      dispatch(setCurrentProject(null));
+    else message.info("An error occurred when trying to connect to server");
   }
 };

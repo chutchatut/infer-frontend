@@ -4,6 +4,12 @@ import TextArea from "antd/lib/input/TextArea";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
 import TaskSelect from "./TaskSelect/TaskSelect";
 
+const PIPELINE_ID_TOOLTIP =
+  "Use command 'clara list pipelines' to get pipeline ID";
+
+const OPERATOR_TOOLTIP =
+  "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name";
+
 const getFormTemplate = (project, form, pipelines) => {
   console.log(pipelines);
   return {
@@ -166,7 +172,7 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "pipeline_id",
             label: "Pipeline ID",
-            tooltip: <img height="300px" src="https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?cs=srgb&dl=pexels-evg-culture-1170986.jpg&fm=jpg"/>,
+            tooltip: PIPELINE_ID_TOOLTIP,
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -175,7 +181,7 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "operator",
             label: "Operator",
-            tooltip: "Get this from clara Deploy",
+            tooltip: OPERATOR_TOOLTIP,
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -239,6 +245,7 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "pipeline_id",
             label: "Pipeline ID",
+            tooltip: PIPELINE_ID_TOOLTIP,
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -247,6 +254,7 @@ const getFormTemplate = (project, form, pipelines) => {
           config: {
             name: "operator",
             label: "Operator",
+            tooltip: OPERATOR_TOOLTIP,
             rules: [{ required: true }],
           },
           form: <Input />,
@@ -286,7 +294,6 @@ const getFormTemplate = (project, form, pipelines) => {
         },
       ],
       requestType: "DELETE",
-      // TODO edit this
       requestURL: `/api/project/${project && project.id}/`,
     },
 
@@ -336,7 +343,6 @@ const getFormTemplate = (project, form, pipelines) => {
         },
       ],
       requestType: "DELETE",
-      // TODO edit this
       requestURL: `/api/pipeline/{id}`,
     },
   };

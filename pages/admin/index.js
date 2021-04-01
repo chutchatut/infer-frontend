@@ -36,11 +36,11 @@ const admin = () => {
             </Menu.Item>
           </Menu.ItemGroup>
           <Menu.ItemGroup title="Delete" key="delete">
-            <Menu.Item key="delete-project" disabled={!currentProject}>
-              <span style={{ color: "red" }}>Delete project</span>
+            <Menu.Item key="delete-project" disabled={!currentProject} danger>
+              Delete project
             </Menu.Item>
-            <Menu.Item key="delete-pipeline" disabled={!currentProject}>
-              <span style={{ color: "red" }}>Delete pipeline</span>
+            <Menu.Item key="delete-pipeline" disabled={!currentProject} danger>
+              Delete pipeline
             </Menu.Item>
           </Menu.ItemGroup>
         </SubMenu>
