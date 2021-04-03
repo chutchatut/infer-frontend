@@ -123,6 +123,7 @@ class EditableTagGroup extends React.Component {
                     e.preventDefault();
                   }
                 }}
+                style={{fontSize:'1.2em'}}
               >
                 {isLongTag ? `${tag.slice(0, 20)}...` : tag}
               </span>
