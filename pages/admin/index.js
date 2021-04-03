@@ -14,7 +14,7 @@ const admin = () => {
   return (
     <Space direction="vertical">
       <div>
-        Select the project to edit:
+        Select the project to edit:&nbsp;&nbsp;&nbsp;&nbsp;
         <Select
           style={{ width: "200px" }}
           onChange={(e) => {

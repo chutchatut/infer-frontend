@@ -35,7 +35,9 @@ const TopBar = () => {
 
   return (
     <>
-      {loading ? (
+      {router.asPath.toLowerCase().includes("admin") ? (
+        <div style={{ width: 150 }} />
+      ) : loading ? (
         <Skeleton.Input style={{ width: 150, marginTop: 15 }} active />
       ) : (
         <Dropdown overlay={projectsMenu} trigger={["click"]}>
