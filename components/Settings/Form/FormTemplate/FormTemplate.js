@@ -329,7 +329,7 @@ const getFormTemplate = (project, form, pipelines) => {
             name: "name",
             label: "Confirmation",
             tooltip:
-              "Please type the name of the pipeline to confirm. This action cannot be undone. This will permanently delete the any associated images, labels and pipelines.",
+              "Please type the name of the pipeline to confirm. This action cannot be undone. This will NOT delete associated pipeline in Clara deploy.",
             rules: [
               ({ getFieldValue }) => ({
                 validator(_, value) {
