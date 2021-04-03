@@ -93,7 +93,7 @@ const Forms = (props) => {
       // ----------------------------------------
 
       if (response && response.status === 200) {
-        message.success("Upload successful");
+        message.success("edit successful");
         setLoading(false);
         dispatch(actions.fetchProjects());
         reloadPipeline();
