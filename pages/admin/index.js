@@ -1,21 +1,33 @@
 import { ProjectOutlined, SettingOutlined } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Dropdown, Menu, Select, Space } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Settings from "../../components/Settings/Settings";
 
 const { SubMenu } = Menu;
 
-// Name -> Pipeline name
-// Swap desc and model name
-// Change desc to textarea
-// Delete project, pipeline + Warning
-
 const admin = () => {
   const [page, setPage] = useState(null);
-  const currentProject = useSelector((state) => state.project.currentProject);
+  const [currentProject, setCurrentProject] = useState(null);
+
+  const projects = useSelector((state) => state.project.projects);
   return (
-    <>
+    <Space direction="vertical">
+      <div>
+        Select the pipeline to edit:{"   "}
+        <Select
+          style={{ width: "200px" }}
+          onChange={(e) => {
+            const project = projects.find((p) => p.id === Number.parseInt(e));
+            setCurrentProject(project);
+          }}
+        >
+          {projects &&
+            projects.map((p) => (
+              <Select.Option key={p.id}>{p.name}</Select.Option>
+            ))}
+        </Select>
+      </div>
       <Menu onClick={(e) => setPage(e.key)} mode="horizontal">
         <SubMenu key="project" icon={<SettingOutlined />} title="Settings">
           <Menu.ItemGroup title="Project" key="project">
@@ -50,8 +62,8 @@ const admin = () => {
           </Menu.ItemGroup>
         </SubMenu>
       </Menu>
-      <Settings page={page} />
-    </>
+      <Settings page={page} currentProject={currentProject} />
+    </Space>
   );
 };
 

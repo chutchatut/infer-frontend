@@ -16,7 +16,8 @@ const tailLayout = {
 const Forms = (props) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const currentProject = useSelector((state) => state.project.currentProject);
+  // const currentProject = useSelector((state) => state.project.currentProject);
+  const currentProject = props.currentProject;
   const [pipelines, setPipelines] = useState([]);
 
   const reloadPipeline = async () => {
@@ -118,7 +119,7 @@ const Forms = (props) => {
       <Form
         key={props.page}
         form={form}
-        style={{ width: "500px", padding: "0px" }}
+        style={{ width: "700px", padding: "0px" }}
         onFinish={onFinish}
         {...layout}
       >
