@@ -1,7 +1,6 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Input, Select, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import axios from "axios";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
 import SelectUser from "./SelectUser/SelectUser";
 import TaskSelect from "./TaskSelect/TaskSelect";
