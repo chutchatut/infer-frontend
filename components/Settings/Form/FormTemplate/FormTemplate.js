@@ -1,7 +1,9 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Input, Select, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import axios from "axios";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
+import SelectUser from "./SelectUser/SelectUser";
 import TaskSelect from "./TaskSelect/TaskSelect";
 
 const PIPELINE_ID_TOOLTIP =
@@ -11,7 +13,6 @@ const OPERATOR_TOOLTIP =
   "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name";
 
 const getFormTemplate = (project, form, pipelines) => {
-  console.log(pipelines);
   return {
     "create-project": {
       pageTitle: "Create new project",
@@ -134,7 +135,7 @@ const getFormTemplate = (project, form, pipelines) => {
             initialValue:
               project && project.users && project.users.map((u) => u.username),
           },
-          form: <EditableTagGroup />,
+          form: <SelectUser />,
         },
       ],
       requestType: "POST",
