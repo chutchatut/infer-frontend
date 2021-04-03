@@ -275,7 +275,9 @@ const getFormTemplate = (project, form, pipelines) => {
         {
           config: {
             name: "name",
-            label: "Name",
+            label: "Confirmation",
+            tooltip:
+              "Please type the name of the project to confirm. This action cannot be undone. This will permanently delete the any associated images, labels and pipelines.",
             rules: [
               ({ getFieldValue }) => ({
                 validator(_, value) {
@@ -325,7 +327,9 @@ const getFormTemplate = (project, form, pipelines) => {
         {
           config: {
             name: "name",
-            label: "Name",
+            label: "Confirmation",
+            tooltip:
+              "Please type the name of the pipeline to confirm. This action cannot be undone. This will permanently delete the any associated images, labels and pipelines.",
             rules: [
               ({ getFieldValue }) => ({
                 validator(_, value) {
