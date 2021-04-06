@@ -22,9 +22,9 @@ const PipelineSelector = (props) => {
         <Descriptions.Item label="Name" span="3">
           {props.selectedPipeline && props.selectedPipeline.name}
         </Descriptions.Item>
-        <Descriptions.Item label="Model name" span="3">
+        {/* <Descriptions.Item label="Model name" span="3">
           {props.selectedPipeline && props.selectedPipeline.model_name}
-        </Descriptions.Item>
+        </Descriptions.Item> */}
         <Descriptions.Item label="Pipeline's ID" span="3">
           {props.selectedPipeline && props.selectedPipeline.pipeline_id}
         </Descriptions.Item>

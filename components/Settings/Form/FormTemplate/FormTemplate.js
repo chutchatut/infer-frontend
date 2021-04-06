@@ -152,14 +152,14 @@ const getFormTemplate = (project, form, pipelines) => {
           },
           form: <Input />,
         },
-        {
-          config: {
-            name: "model_name",
-            label: "Model Name",
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
+        // {
+        //   config: {
+        //     name: "model_name",
+        //     label: "Model Name",
+        //     rules: [{ required: true }],
+        //   },
+        //   form: <Input />,
+        // },
         {
           config: {
             name: "description",
@@ -225,14 +225,14 @@ const getFormTemplate = (project, form, pipelines) => {
           },
           form: <Input />,
         },
-        {
-          config: {
-            name: "model_name",
-            label: "Model Name",
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
+        // {
+        //   config: {
+        //     name: "model_name",
+        //     label: "Model Name",
+        //     rules: [{ required: true }],
+        //   },
+        //   form: <Input />,
+        // },
         {
           config: {
             name: "description",
