@@ -1,4 +1,8 @@
-import { ProjectOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  ProjectOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Dropdown, Menu, Select, Space } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
@@ -29,7 +33,18 @@ const admin = () => {
         </Select>
       </div>
       <Menu onClick={(e) => setPage(e.key)} mode="horizontal">
-        <SubMenu key="project" icon={<SettingOutlined />} title="Settings">
+        <SubMenu key="user" icon={<UserOutlined />} title="User Settings">
+          <Menu.Item key="create-user">Create User</Menu.Item>
+          <Menu.Item key="edit-user">Edit User</Menu.Item>
+          <Menu.Item key="change-user-password">Change User Password</Menu.Item>
+          <Menu.Item key="delete-user" danger>Delete User</Menu.Item>
+        </SubMenu>
+
+        <SubMenu
+          key="project"
+          icon={<SettingOutlined />}
+          title="Project Settings"
+        >
           <Menu.ItemGroup title="Project" key="project">
             <Menu.Item key="create-project">Create project</Menu.Item>
           </Menu.ItemGroup>

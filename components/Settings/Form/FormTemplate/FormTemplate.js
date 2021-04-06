@@ -11,8 +11,184 @@ const PIPELINE_ID_TOOLTIP =
 const OPERATOR_TOOLTIP =
   "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name";
 
-const getFormTemplate = (project, form, pipelines) => {
+const getFormTemplate = (project, form, pipelines, users) => {
+  console.log(users);
   return {
+    "create-user": {
+      pageTitle: "Create new user",
+      formConfig: [
+        {
+          config: {
+            name: "username",
+            label: "Username",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "password",
+            label: "Password",
+            rules: [{ required: true }],
+          },
+          form: <Input type="password" />,
+        },
+        {
+          config: {
+            name: "first_name",
+            label: "First name",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "last_name",
+            label: "Last name",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "email",
+            label: "Email",
+            rules: [{ required: true }],
+          },
+          form: <Input type="email" />,
+        },
+      ],
+      requestType: "POST",
+      requestURL: "/api/user/",
+    },
+
+    "edit-user": {
+      pageTitle: "Edit user",
+      formConfig: [
+        {
+          config: {
+            name: "user",
+            label: "User",
+            rules: [{ required: true }],
+            getValueFromEvent: (e) => {
+              // Don't use === because e is string but p.id is int
+              const user = users.find((u) => u.username == e);
+              form.setFieldsValue(user);
+              return e;
+            },
+          },
+          form: (
+            <Select>
+              {users &&
+                users.map((u) => (
+                  <Select.Option key={u.username}>{u.username}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
+        {
+          config: {
+            name: "first_name",
+            label: "First name",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "last_name",
+            label: "Last name",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "email",
+            label: "Email",
+            rules: [{ required: true }],
+          },
+          form: <Input type="email" />,
+        },
+      ],
+      requestType: "PUT",
+      requestURL: "/api/user/{user}/update_batch/",
+    },
+
+    "change-user-password": {
+      pageTitle: "Change password",
+      formConfig: [
+        {
+          config: {
+            name: "user",
+            label: "User",
+            rules: [{ required: true }],
+          },
+          form: (
+            <Select>
+              {users &&
+                users.map((u) => (
+                  <Select.Option key={u.username}>{u.username}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
+        {
+          config: {
+            name: "password",
+            label: "Password",
+            rules: [{ required: true }],
+          },
+          form: <Input type="password" />,
+        },
+      ],
+      requestType: "PUT",
+      requestURL: "/api/user/{user}/change_password/",
+    },
+    "delete-user": {
+      pageTitle: <span style={{ color: "red" }}>{`Delete User`}</span>,
+      formConfig: [
+        {
+          config: {
+            name: "user",
+            label: "User",
+            rules: [{ required: true }],
+          },
+          form: (
+            <Select>
+              {users &&
+                users.map((u) => (
+                  <Select.Option key={u.username}>{u.username}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
+        {
+          config: {
+            name: "comfimation",
+            label: "Confirmation",
+            tooltip:
+              "Please type the username to confirm. This action cannot be undone.",
+            rules: [
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (value === getFieldValue("user")) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(`Please enter the username`)
+                  );
+                },
+              }),
+            ],
+          },
+          form: <Input />,
+        },
+      ],
+      requestType: "DELETE",
+      requestURL: `/api/user/{user}`,
+    },
+
     "create-project": {
       pageTitle: "Create new project",
       formConfig: [
@@ -134,7 +310,7 @@ const getFormTemplate = (project, form, pipelines) => {
             initialValue:
               project && project.users && project.users.map((u) => u.username),
           },
-          form: <SelectUser />,
+          form: <SelectUser users={users} />,
         },
       ],
       requestType: "POST",

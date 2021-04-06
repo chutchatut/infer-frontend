@@ -26,16 +26,9 @@ const columns = [
 ];
 
 const SelectUser = (props) => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(async () => {
-    const response = await axios.get("/api/user/");
-    setUsers(response.data.map((u) => ({ key: u.username, ...u })));
-  }, []);
-
   return (
     <MyTable
-      data={users}
+      data={props.users}
       columns={columns}
       config={{
         pagination: false,
