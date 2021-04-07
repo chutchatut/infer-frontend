@@ -1,6 +1,7 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Input, Select, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { useSelector } from "react-redux";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
 import SelectUser from "./SelectUser/SelectUser";
 import TaskSelect from "./TaskSelect/TaskSelect";
@@ -12,7 +13,8 @@ const OPERATOR_TOOLTIP =
   "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name";
 
 const getFormTemplate = (project, form, pipelines, users) => {
-  console.log(users);
+  // const projects = useSelector((state) => state.project.projects);
+  // console.log(projects);
   return {
     "create-user": {
       pageTitle: "Create new user",
@@ -141,6 +143,26 @@ const getFormTemplate = (project, form, pipelines, users) => {
           },
           form: <Input type="password" />,
         },
+        {
+          config: {
+            name: "comfimation",
+            label: "Confirmation",
+            tooltip: "Please retype new password to confirm.",
+            rules: [
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (value === getFieldValue("password")) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(`Please re-enter the password`)
+                  );
+                },
+              }),
+            ],
+          },
+          form: <Input type="password" />,
+        },
       ],
       requestType: "PUT",
       requestURL: "/api/user/{user}/change_password/",
@@ -175,9 +197,7 @@ const getFormTemplate = (project, form, pipelines, users) => {
                   if (value === getFieldValue("user")) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(
-                    new Error(`Please enter the username`)
-                  );
+                  return Promise.reject(new Error(`Please enter the username`));
                 },
               }),
             ],
