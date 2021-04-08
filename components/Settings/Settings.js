@@ -5,7 +5,7 @@ const Settings = (props) => {
   if (!props.page) {
     return "";
   }
-  return <Forms page={props.page} currentProject={props.currentProject} />;
+  return <Forms page={props.page} />;
 };
 
 export default Settings;

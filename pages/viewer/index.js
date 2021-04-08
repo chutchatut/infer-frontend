@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "antd";
-// import styles from "./edit.module.css";
 import ClassificationEditor from "../../components/ClassificationEditor/ClassificationEditor";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import SegmentationEditor from "../../components/SegmentationEditor/SegmentationEditor";
 import axios from "axios";
 
-// TODO add more task type
-
 const Viewer = () => {
-  // const project = useSelector((state) => state.project.currentProject);
-
   const router = useRouter();
 
   const [img, setImg] = useState(null);

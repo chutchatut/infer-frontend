@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Space, Popconfirm, Popover, message } from "antd";
+import React, { Fragment, useState } from "react";
+import { Space, Popconfirm, Popover, message, Image } from "antd";
 import {
   DeleteOutlined,
   DownloadOutlined,
@@ -46,6 +46,8 @@ const HistoryTable = (props) => {
   const currentProject = useSelector((state) => state.project.currentProject);
   const task_type =
     currentProject && currentProject.task.toLowerCase().replace(" ", "_");
+
+  const [previewImg, setPreviewImg] = useState("");
 
   const columns = [
     {
@@ -109,24 +111,24 @@ const HistoryTable = (props) => {
         render: (text, record) => {
           return (
             <Space size="middle">
-              <Preview
-                url={`${axios.defaults.baseURL}${record.data16}`}
-                enable={task_type.indexOf("2d") !== -1}
-              >
-                {task_type.indexOf("classification") !== -1 ? (
-                  <a>
-                    <EyeOutlined
-                      onClick={router.push.bind(this, `viewer?id=${record.id}`)}
-                    />
-                  </a>
-                ) : (
-                  <a>
-                    <Download>
-                      <DownloadOutlined />
-                    </Download>
-                  </a>
-                )}
-              </Preview>
+              {task_type.indexOf("2d") !== -1 && (
+                <a>
+                  <EyeOutlined
+                    onClick={setPreviewImg.bind(
+                      this,
+                      `${axios.defaults.baseURL}${record.data16}`
+                    )}
+                  />
+                </a>
+              )}
+              {task_type.indexOf("classification") === -1 && (
+                <a>
+                  <Download>
+                    <DownloadOutlined />
+                  </Download>
+                </a>
+              )}
+              {/* </Preview> */}
               {task_type.indexOf("classification") !== -1 ? (
                 <Link href={`viewer?id=${record.id}&edit=true`} key="edit">
                   <a>
@@ -164,14 +166,30 @@ const HistoryTable = (props) => {
   ];
 
   return (
-    <MyTable
-      data={props.data}
-      config={{
-        pagination: false,
-        scroll: { x: 1000, y: "calc(100vh - 220px)" },
-      }}
-      columns={columns}
-    />
+    <>
+      <MyTable
+        data={props.data}
+        config={{
+          pagination: false,
+          scroll: { x: 1000, y: "calc(100vh - 220px)" },
+        }}
+        columns={columns}
+      />
+      {previewImg && (
+        <Image
+          preview={{
+            onVisibleChange: (visible, prevVisible) => {
+              if (!visible) {
+                setPreviewImg("");
+              }
+            },
+            src: previewImg,
+            visible: previewImg,
+            mask: false,
+          }}
+        />
+      )}
+    </>
   );
 };
 

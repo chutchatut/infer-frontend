@@ -114,6 +114,10 @@ const MyTable = (props) => {
     if (props.onSelectChange) props.onSelectChange(newSelectedRowKeys);
   };
 
+  useEffect(() => {
+    onSelectChange(props.value);
+  }, [JSON.stringify(props.value)]);
+
   return (
     <Table
       {...props.config}

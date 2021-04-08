@@ -10,7 +10,7 @@ const taskTypes = [
 
 const TaskSelect = (props) => {
   return (
-    <Select onChange={props.onChange} defaultValue={props.value}>
+    <Select onChange={props.onChange} value={props.value}>
       {taskTypes.map((taskType) => (
         <Select.Option value={taskType} key={taskType}>
           {taskType}

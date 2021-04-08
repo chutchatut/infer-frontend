@@ -1,7 +1,4 @@
-import axios from "axios";
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
 import MyTable from "../../../../MyTable/MyTable";
 
 const columns = [
@@ -28,7 +25,10 @@ const columns = [
 const SelectUser = (props) => {
   return (
     <MyTable
-      data={props.users}
+      data={props.users.map((u) => ({
+        key: u.username,
+        ...u,
+      }))}
       columns={columns}
       config={{
         pagination: false,
@@ -37,7 +37,7 @@ const SelectUser = (props) => {
         },
       }}
       selectionType="checkbox"
-      initSelection={props.value}
+      value={props.value}
       onSelectChange={props.onChange}
     />
   );

@@ -1,7 +1,7 @@
 import { Button, Form, message, Space, Typography } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import getFormTemplate from "./FormTemplate/FormTemplate";
 import * as actions from "../../../store/actions";
 
@@ -16,9 +16,6 @@ const tailLayout = {
 const Forms = (props) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  // const currentProject = useSelector((state) => state.project.currentProject);
-  const currentProject = props.currentProject;
-  const [pipelines, setPipelines] = useState([]);
 
   const [users, setUsers] = useState([]);
 
@@ -28,28 +25,12 @@ const Forms = (props) => {
   };
 
   useEffect(() => reloadUsers(), []);
-  const reloadPipeline = async () => {
-    if (!currentProject || !currentProject.id) return;
-    try {
-      setPipelines(
-        (await axios.get(`/api/project/${currentProject.id}/list_pipeline/`))
-          .data.result
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(async () => {
-    if (!currentProject || !currentProject.id) return;
-    reloadPipeline();
-  }, [currentProject && currentProject.id]);
 
   useEffect(() => {
     form.resetFields();
-  }, [currentProject && currentProject.id, props.page]);
+  }, [props.page]);
 
-  const formTemplate = getFormTemplate(currentProject, form, pipelines, users)[
+  const formTemplate = getFormTemplate(form, users)[
     props.page
   ];
   const dispatch = useDispatch();
@@ -106,7 +87,6 @@ const Forms = (props) => {
         message.success("edit successful");
         setLoading(false);
         dispatch(actions.fetchProjects());
-        reloadPipeline();
         reloadUsers();
         // form.resetFields();
       }

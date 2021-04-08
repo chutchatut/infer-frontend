@@ -3,18 +3,25 @@ import { Button, Input, Select, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useSelector } from "react-redux";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
+import PipelineSelect from "./PipelineSelect/PipelineSelect";
 import SelectUser from "./SelectUser/SelectUser";
 import TaskSelect from "./TaskSelect/TaskSelect";
+
+// TODO add clara pipeline name
+
+const PIPELINE_NAME_TOOLTIP =
+  "Use command 'clara list pipelines' to get pipeline name";
 
 const PIPELINE_ID_TOOLTIP =
   "Use command 'clara list pipelines' to get pipeline ID";
 
 const OPERATOR_TOOLTIP =
-  "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name";
+  "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name. Paste the name of the last operator";
 
-const getFormTemplate = (project, form, pipelines, users) => {
-  // const projects = useSelector((state) => state.project.projects);
-  // console.log(projects);
+const getFormTemplate = (form, users) => {
+  const projects = useSelector((state) => state.project.projects);
+  const pipelines = projects ? projects.flatMap((p) => p.pipeline) : [];
+
   return {
     "create-user": {
       pageTitle: "Create new user",
@@ -167,6 +174,7 @@ const getFormTemplate = (project, form, pipelines, users) => {
       requestType: "PUT",
       requestURL: "/api/user/{user}/change_password/",
     },
+
     "delete-user": {
       pageTitle: <span style={{ color: "red" }}>{`Delete User`}</span>,
       formConfig: [
@@ -253,6 +261,7 @@ const getFormTemplate = (project, form, pipelines, users) => {
             name: "predclasses",
             label: "Classes",
             rules: [{ required: true }],
+            initialValue: [],
           },
           form: <EditableTagGroup />,
         },
@@ -262,14 +271,34 @@ const getFormTemplate = (project, form, pipelines, users) => {
     },
 
     "edit-project": {
-      pageTitle: `Edit project ${project && project.name}`,
+      pageTitle: `Edit project`,
       formConfig: [
+        {
+          config: {
+            name: "project",
+            label: "Project",
+            rules: [{ required: true }],
+            getValueFromEvent: (e) => {
+              // Don't use === because e is string but p.id is int
+              const project = projects.find((p) => p.id == e);
+              form.setFieldsValue(project);
+              return e;
+            },
+          },
+          form: (
+            <Select>
+              {projects &&
+                projects.map((p) => (
+                  <Select.Option key={p.id}>{p.name}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
         {
           config: {
             name: "name",
             label: "Name",
             rules: [{ required: true }],
-            initialValue: project && project.name,
           },
           form: <Input />,
         },
@@ -278,7 +307,6 @@ const getFormTemplate = (project, form, pipelines, users) => {
             name: "description",
             label: "Description",
             rules: [{ required: true }],
-            initialValue: project && project.description,
           },
           form: <Input />,
         },
@@ -287,7 +315,6 @@ const getFormTemplate = (project, form, pipelines, users) => {
             name: "task",
             label: "Task",
             rules: [{ required: true }],
-            initialValue: project && project.task,
           },
           form: <TaskSelect />,
         },
@@ -311,104 +338,68 @@ const getFormTemplate = (project, form, pipelines, users) => {
             name: "predclasses",
             label: "Classes",
             rules: [{ required: true }],
-            initialValue: project && project.predclasses,
+            initialValue: [],
           },
           form: <EditableTagGroup />,
         },
       ],
       requestType: "PUT",
-      requestURL: `/api/project/${project && project.id}/`,
+      requestURL: `/api/project/{project}/`,
     },
 
     "manage-user": {
-      pageTitle: `Manage user for project ${project && project.name}`,
+      pageTitle: `Manage user for project`,
       formConfig: [
         {
           config: {
-            name: "users",
-            label: "Users",
-            initialValue:
-              project && project.users && project.users.map((u) => u.username),
-          },
-          form: <SelectUser users={users} />,
-        },
-      ],
-      requestType: "POST",
-      requestURL: `/api/project/${project && project.id}/add_user_batch/`,
-    },
-
-    "create-pipeline": {
-      pageTitle: `Create new pipeline for project ${project && project.name}`,
-      formConfig: [
-        {
-          config: {
-            name: "name",
-            label: "Pipeline Name",
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-        // {
-        //   config: {
-        //     name: "model_name",
-        //     label: "Model Name",
-        //     rules: [{ required: true }],
-        //   },
-        //   form: <Input />,
-        // },
-        {
-          config: {
-            name: "description",
-            label: "Description",
-            rules: [{ required: true }],
-          },
-          form: <TextArea />,
-        },
-        {
-          config: {
-            name: "pipeline_id",
-            label: "Pipeline ID",
-            tooltip: PIPELINE_ID_TOOLTIP,
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-        {
-          config: {
-            name: "operator",
-            label: "Operator",
-            tooltip: OPERATOR_TOOLTIP,
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-      ],
-      requestType: "POST",
-      requestURL: `/api/project/${project && project.id}/add_pipeline/`,
-    },
-
-    "edit-pipeline": {
-      pageTitle: `Edit pipeline for project ${project && project.name}`,
-      formConfig: [
-        {
-          config: {
-            name: "id",
-            label: "Pipeline",
+            name: "project",
+            label: "Project",
             rules: [{ required: true }],
             getValueFromEvent: (e) => {
               // Don't use === because e is string but p.id is int
-              const pipeline = pipelines.find((p) => p.id == e);
-              form.setFieldsValue(pipeline);
+              const project = projects.find((p) => p.id == e);
+              form.setFieldsValue({
+                users: project.users.map((u) => u.username),
+              });
               return e;
             },
           },
           form: (
             <Select>
-              {pipelines &&
-                pipelines.map((pipeline) => (
-                  <Select.Option key={pipeline.id}>
-                    {pipeline.name}
-                  </Select.Option>
+              {projects &&
+                projects.map((p) => (
+                  <Select.Option key={p.id}>{p.name}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
+        {
+          config: {
+            name: "users",
+            label: "Users",
+            initialValue: [],
+          },
+          form: <SelectUser users={users} />,
+        },
+      ],
+      requestType: "POST",
+      requestURL: `/api/project/{project}/add_user_batch/`,
+    },
+
+    "create-pipeline": {
+      pageTitle: `Create new pipeline`,
+      formConfig: [
+        {
+          config: {
+            name: "project",
+            label: "Project",
+            rules: [{ required: true }],
+          },
+          form: (
+            <Select>
+              {projects &&
+                projects.map((p) => (
+                  <Select.Option key={p.id}>{p.name}</Select.Option>
                 ))}
             </Select>
           ),
@@ -421,14 +412,6 @@ const getFormTemplate = (project, form, pipelines, users) => {
           },
           form: <Input />,
         },
-        // {
-        //   config: {
-        //     name: "model_name",
-        //     label: "Model Name",
-        //     rules: [{ required: true }],
-        //   },
-        //   form: <Input />,
-        // },
         {
           config: {
             name: "description",
@@ -439,8 +422,82 @@ const getFormTemplate = (project, form, pipelines, users) => {
         },
         {
           config: {
+            name: "clara_pipeline_name",
+            label: "Clara Pipeline Name",
+            tooltip: PIPELINE_NAME_TOOLTIP,
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
             name: "pipeline_id",
-            label: "Pipeline ID",
+            label: "Clara Pipeline ID",
+            tooltip: PIPELINE_ID_TOOLTIP,
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "operator",
+            label: "Operator",
+            tooltip: OPERATOR_TOOLTIP,
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+      ],
+      requestType: "POST",
+      requestURL: `/api/project/{project}/add_pipeline/`,
+    },
+
+    "edit-pipeline": {
+      pageTitle: `Edit pipeline`,
+      formConfig: [
+        {
+          config: {
+            name: "pipeline",
+            label: "Pipeline",
+            rules: [{ required: true }],
+            getValueFromEvent: (e) => {
+              // Don't use === because e is string but p.id is int
+              const pipeline = pipelines.find((p) => p.id == e);
+              form.setFieldsValue(pipeline);
+              return e;
+            },
+          },
+          form: <PipelineSelect projects={projects} />,
+        },
+        {
+          config: {
+            name: "name",
+            label: "Pipeline Name",
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "description",
+            label: "Description",
+            rules: [{ required: true }],
+          },
+          form: <TextArea />,
+        },
+        {
+          config: {
+            name: "clara_pipeline_name",
+            label: "Clara Pipeline Name",
+            tooltip: PIPELINE_NAME_TOOLTIP,
+            rules: [{ required: true }],
+          },
+          form: <Input />,
+        },
+        {
+          config: {
+            name: "pipeline_id",
+            label: "Clara Pipeline ID",
             tooltip: PIPELINE_ID_TOOLTIP,
             rules: [{ required: true }],
           },
@@ -457,16 +514,27 @@ const getFormTemplate = (project, form, pipelines, users) => {
         },
       ],
       requestType: "PUT",
-      requestURL: "/api/pipeline/{id}/",
+      requestURL: "/api/pipeline/{pipeline}/",
     },
 
     "delete-project": {
-      pageTitle: (
-        <span style={{ color: "red" }}>{`Delete project ${
-          project && project.name
-        }`}</span>
-      ),
+      pageTitle: <span style={{ color: "red" }}>{`Delete project`}</span>,
       formConfig: [
+        {
+          config: {
+            name: "project",
+            label: "Project",
+            rules: [{ required: true }],
+          },
+          form: (
+            <Select>
+              {projects &&
+                projects.map((p) => (
+                  <Select.Option key={p.id}>{p.name}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
         {
           config: {
             name: "name",
@@ -476,7 +544,8 @@ const getFormTemplate = (project, form, pipelines, users) => {
             rules: [
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  console.log(value);
+                  const project_id = getFieldValue("project");
+                  const project = projects.find(p.id == project_id);
                   if (value === project.name) {
                     return Promise.resolve();
                   }
@@ -492,32 +561,21 @@ const getFormTemplate = (project, form, pipelines, users) => {
         },
       ],
       requestType: "DELETE",
-      requestURL: `/api/project/${project && project.id}/`,
+      requestURL: `/api/project/{project}/`,
     },
 
     "delete-pipeline": {
       pageTitle: (
-        <span style={{ color: "red" }}>{`Delete pipeline in project ${
-          project && project.name
-        }`}</span>
+        <span style={{ color: "red" }}>{`Delete pipeline`}</span>
       ),
       formConfig: [
         {
           config: {
-            name: "id",
+            name: "pipeline",
             label: "Pipeline",
             rules: [{ required: true }],
           },
-          form: (
-            <Select>
-              {pipelines &&
-                pipelines.map((pipeline) => (
-                  <Select.Option key={pipeline.id}>
-                    {pipeline.name}
-                  </Select.Option>
-                ))}
-            </Select>
-          ),
+          form: <PipelineSelect projects={projects} />,
         },
         {
           config: {
@@ -529,7 +587,7 @@ const getFormTemplate = (project, form, pipelines, users) => {
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   const p = pipelines.find((p) => p.name === value);
-                  if (p && p.id === Number.parseInt(getFieldValue("id"))) {
+                  if (p && p.id === Number.parseInt(getFieldValue("pipeline"))) {
                     return Promise.resolve();
                   }
                   return Promise.reject(
@@ -543,7 +601,7 @@ const getFormTemplate = (project, form, pipelines, users) => {
         },
       ],
       requestType: "DELETE",
-      requestURL: `/api/pipeline/{id}`,
+      requestURL: `/api/pipeline/{pipeline}`,
     },
   };
 };
