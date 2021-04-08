@@ -545,7 +545,7 @@ const getFormTemplate = (form, users) => {
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   const project_id = getFieldValue("project");
-                  const project = projects.find(p.id == project_id);
+                  const project = projects.find((p) => p.id == project_id);
                   if (value === project.name) {
                     return Promise.resolve();
                   }
@@ -565,9 +565,7 @@ const getFormTemplate = (form, users) => {
     },
 
     "delete-pipeline": {
-      pageTitle: (
-        <span style={{ color: "red" }}>{`Delete pipeline`}</span>
-      ),
+      pageTitle: <span style={{ color: "red" }}>{`Delete pipeline`}</span>,
       formConfig: [
         {
           config: {
@@ -587,7 +585,10 @@ const getFormTemplate = (form, users) => {
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   const p = pipelines.find((p) => p.name === value);
-                  if (p && p.id === Number.parseInt(getFieldValue("pipeline"))) {
+                  if (
+                    p &&
+                    p.id === Number.parseInt(getFieldValue("pipeline"))
+                  ) {
                     return Promise.resolve();
                   }
                   return Promise.reject(
