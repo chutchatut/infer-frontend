@@ -29,16 +29,16 @@ const admin = () => {
           icon={<SettingOutlined />}
           title="Project Settings"
         >
-          <Menu.ItemGroup title="Project" key="project">
+          <Menu.ItemGroup title="Create" key="create_project">
             <Menu.Item key="create-project">Create project</Menu.Item>
+            <Menu.Item key="create-pipeline">Create pipeline</Menu.Item>
           </Menu.ItemGroup>
-          <Menu.ItemGroup title="Edit Current Project" key="current_project">
+          <Menu.ItemGroup title="Edit" key="edit_project">
             <Menu.Item key="edit-project">Edit Project</Menu.Item>
             <Menu.Item key="manage-user">Manage User</Menu.Item>
-            <Menu.Item key="create-pipeline">Create pipeline</Menu.Item>
             <Menu.Item key="edit-pipeline">Edit pipeline</Menu.Item>
           </Menu.ItemGroup>
-          <Menu.ItemGroup title="Delete" key="delete">
+          <Menu.ItemGroup title="Delete" key="delete_project">
             <Menu.Item key="delete-project" danger>
               Delete project
             </Menu.Item>
