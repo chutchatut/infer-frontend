@@ -19,20 +19,20 @@ const PipelineSelector = (props) => {
         ))}
       </Select>
       <Descriptions title="Project Info">
-        <Descriptions.Item label="Name" span="3">
+        <Descriptions.Item label="Pipeline Name" span="3">
           {props.selectedPipeline && props.selectedPipeline.name}
         </Descriptions.Item>
-        {/* <Descriptions.Item label="Model name" span="3">
-          {props.selectedPipeline && props.selectedPipeline.model_name}
-        </Descriptions.Item> */}
-        <Descriptions.Item label="Pipeline's ID" span="3">
+        <Descriptions.Item label="Description" span="3">
+          {props.selectedPipeline && props.selectedPipeline.description}
+        </Descriptions.Item>
+        <Descriptions.Item label="Clara Pipeline Name" span="3">
+          {props.selectedPipeline && props.selectedPipeline.clara_pipeline_name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Clara Pipeline ID" span="3">
           {props.selectedPipeline && props.selectedPipeline.pipeline_id}
         </Descriptions.Item>
         <Descriptions.Item label="Operator" span="3">
           {props.selectedPipeline && props.selectedPipeline.operator}
-        </Descriptions.Item>
-        <Descriptions.Item label="Description" span="3">
-          {props.selectedPipeline && props.selectedPipeline.description}
         </Descriptions.Item>
       </Descriptions>
     </Space>
