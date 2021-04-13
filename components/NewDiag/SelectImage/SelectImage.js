@@ -1,11 +1,8 @@
 import { EyeOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
 import axios from "axios";
-import image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import MyTable from "../../MyTable/MyTable";
-
-// TODO use selectedImages, setSelectedImages, selectedPipeline
 
 const SelectImage = (props) => {
   const data = props.images.map((image) => ({
@@ -13,7 +10,7 @@ const SelectImage = (props) => {
     key: image.id,
     timestamp: new Date(image.timestamp),
   }));
-  console.log(data);
+
   const columns = [
     {
       title: "Patient's HN",
@@ -41,7 +38,6 @@ const SelectImage = (props) => {
     {
       title: "Scan date",
       dataIndex: "timestamp",
-      // searchable: true,
       config: {
         render: (text) => text.toUTCString(),
       },

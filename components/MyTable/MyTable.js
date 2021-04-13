@@ -115,7 +115,7 @@ const MyTable = (props) => {
   };
 
   useEffect(() => {
-    onSelectChange(props.value);
+    if (props.value || Array.isArray(props.value)) onSelectChange(props.value);
   }, [JSON.stringify(props.value)]);
 
   return (
