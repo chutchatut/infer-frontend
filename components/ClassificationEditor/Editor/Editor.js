@@ -55,11 +55,12 @@ const Editor = (props) => {
           defaultOpen
           onChange={(value) => props.selectPipeline(value)}
         >
-          {props.results.map((result, i) => (
-            <Select.Option value={i} key={i}>
-              {result.pipeline_name}
-            </Select.Option>
-          ))}
+          {props.results &&
+            props.results.map((result, i) => (
+              <Select.Option value={i} key={i}>
+                {result.pipeline_name}
+              </Select.Option>
+            ))}
         </Select>
         <MyTable
           columns={columns}
