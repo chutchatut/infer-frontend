@@ -65,7 +65,14 @@ const Upload = () => {
     if (response && response.status === 200) {
       message.success("Upload successful");
       setLoading(false);
-      form.resetFields();
+      form.resetFields([
+        "images",
+        "patient_name",
+        "patient_HN",
+        "clinician_name",
+        "patient_age",
+        "scan_date",
+      ]);
     }
   };
 
@@ -132,7 +139,7 @@ const Upload = () => {
               },
             ]}
           >
-            <InputNumber min={0} max={200}/>
+            <InputNumber min={0} max={200} />
           </Form.Item>
           <Form.Item
             label="Scan date"
