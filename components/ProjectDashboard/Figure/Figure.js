@@ -6,6 +6,8 @@ const Figure = (props) => {
   const predClasses = { Normal: 15, "COVID-19": 10, Pnuemonia: 5 };
   const imgClasses = { Verified: 10, Unverified: 5 };
 
+  console.log(props)
+
   return (
     <Space size="middle" wrap>
       <Card title="Predicted classes">

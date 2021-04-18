@@ -9,6 +9,8 @@ const History = () => {
   const [images, setImages] = useState([]);
   const [tick, setTick] = useState(false);
 
+  const [timer, setTimer] = useState(null);
+
   const reload = async () => {
     setImages(
       (
@@ -24,9 +26,11 @@ const History = () => {
   useEffect(async () => {
     if (project) {
       reload();
-      setTimeout(() => {
+      if (timer) clearTimeout(timer);
+      const timer = setTimeout(() => {
         setTick((tick) => !tick);
       }, 5000);
+      setTimer(timer);
     }
   }, [project, tick]);
 

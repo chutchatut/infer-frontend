@@ -8,14 +8,16 @@ import Info from "./Info/Info";
 import * as actions from "../../store/actions";
 
 const ProjectDashboard = (props) => {
+  const project = props.projectData && props.projectData.project;
+
   const [pipelines, setPipelines] = useState(null);
   useEffect(async () => {
-    if (props.project)
+    if (project)
       setPipelines(
-        (await axios.get(`/api/project/${props.project.id}/list_pipeline/`))
-          .data.result
+        (await axios.get(`/api/project/${project.id}/list_pipeline/`)).data
+          .result
       );
-  }, [props.project]);
+  }, [project]);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -24,10 +26,10 @@ const ProjectDashboard = (props) => {
     <Space direction="vertical" size="large">
       <Tabs defaultActiveKey="1">
         <Tabs.TabPane tab="Project Info" key="1">
-          <Info project={props.project} pipelines={pipelines} />
+          <Info project={project} pipelines={pipelines} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Dashboard" key="2">
-          <Figure project={props.project} />
+          <Figure projectData={props.projectData} />
         </Tabs.TabPane>
       </Tabs>
       <Space>
@@ -35,7 +37,7 @@ const ProjectDashboard = (props) => {
         <Button
           type="primary"
           onClick={() => {
-            dispatch(actions.setCurrentProject(props.project));
+            dispatch(actions.setCurrentProject(project));
             router.push("/home");
           }}
         >
