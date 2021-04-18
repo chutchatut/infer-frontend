@@ -3,28 +3,23 @@ import React from "react";
 import Chart from "./Chart/Chart";
 
 const Figure = (props) => {
-  const predClasses = { Normal: 15, "COVID-19": 10, Pnuemonia: 5 };
-  const imgClasses = { Verified: 10, Unverified: 5 };
-
-  console.log(props)
-
   return (
     <Space size="middle" wrap>
       <Card title="Predicted classes">
         <Chart.Pie
           config={{ style: { height: "200px", width: "300px" } }}
-          data={Object.keys(predClasses).map((key) => ({
+          data={Object.keys(props.projectData.predicted).map((key) => ({
             label: key,
-            value: predClasses[key],
+            value: props.projectData.predicted[key],
           }))}
         />
       </Card>
       <Card title="Labelled classes">
         <Chart.Bar
-          config={{ style: { height: "200px", width: "200px" } }}
-          data={Object.keys(imgClasses).map((key) => ({
+          config={{ style: { height: "200px", width: "400px" } }}
+          data={Object.keys(props.projectData.status).map((key) => ({
             label: key,
-            value: imgClasses[key],
+            value: props.projectData.status[key],
           }))}
         />
       </Card>

@@ -2,7 +2,6 @@ import React from "react";
 import { Pie as AntPie } from "@ant-design/charts";
 
 const Pie = (props) => {
-  const total_count = Object.values(props.data).reduce((a, b) => a + b);
   return (
     <AntPie
       label={{
