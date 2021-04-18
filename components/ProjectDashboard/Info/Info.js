@@ -32,9 +32,9 @@ const Info = (props) => {
         </Space>
       </Descriptions.Item>
       <Descriptions.Item label="Description" span="3" key={props.project.name}>
-        <Paragraph ellipsis={{ rows: 3, expandable: true, symbol: "more" }}>
-          {props.project.description}
-        </Paragraph>
+        {/* <Paragraph ellipsis={{ rows: 3, expandable: true, symbol: "more" }}> */}
+        {props.project.description}
+        {/* </Paragraph> */}
       </Descriptions.Item>
     </Descriptions>
   );
