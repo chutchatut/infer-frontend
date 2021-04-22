@@ -9,6 +9,7 @@ import {
 } from "antd";
 import axios from "axios";
 import React, { Fragment, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import ImgUpload from "./ImgUpload/ImgUpload";
 
@@ -94,6 +95,11 @@ const Upload = () => {
       form.resetFields(["images"]);
     }
   };
+
+  useEffect(() => {
+    setFiletype(null);
+    form.resetFields();
+  }, [project.task]);
 
   return (
     <Form
