@@ -43,6 +43,18 @@ const Upload = () => {
           }
         );
       }
+    } else if (filetype === "zip") {
+      for (let image of values.images) {
+        const formData = new FormData();
+        formData.append("zip", image.originFileObj);
+        response = await axios.post(
+          `/api/project/${project.id}/upload_zip/`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+      }
     } else if (filetype === "png") {
       const formData = new FormData();
       formData.append("image", values.images[0].originFileObj);
@@ -97,10 +109,16 @@ const Upload = () => {
         label="Filetype"
         rules={[{ required: true, message: "Missing filetype" }]}
       >
-        <Select>
-          <Select.Option value="dcm">Dicom</Select.Option>
-          <Select.Option value="png">png</Select.Option>{" "}
-        </Select>
+        {project.task.indexOf("2D") != -1 ? (
+          <Select>
+            <Select.Option value="dcm">Dicom</Select.Option>
+            <Select.Option value="png">PNG</Select.Option>
+          </Select>
+        ) : (
+          <Select>
+            <Select.Option value="zip">Zip</Select.Option>
+          </Select>
+        )}
       </Form.Item>
       {filetype && (
         <Form.Item

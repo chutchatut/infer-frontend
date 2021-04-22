@@ -19,7 +19,13 @@ import { Upload } from "antd";
 
 const ImgUpload = (props) => {
   const maxCount =
-    props.filetype === "png" ? 1 : props.filetype === "dcm" ? 20 : 0;
+    props.filetype === "png"
+      ? 1
+      : props.filetype === "dcm"
+      ? 20
+      : props.filetype === "zip"
+      ? 20
+      : 0;
 
   return (
     <Upload
@@ -28,7 +34,6 @@ const ImgUpload = (props) => {
       listType="picture-card"
       fileList={props.fileList}
       onChange={props.onChange}
-      // onPreview={onPreview}
       beforeUpload={() => false}
       showUploadList={{ showPreviewIcon: false }}
       maxCount={maxCount}
