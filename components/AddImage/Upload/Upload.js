@@ -99,7 +99,7 @@ const Upload = () => {
   useEffect(() => {
     setFiletype(null);
     form.resetFields();
-  }, [project.task]);
+  }, [project && project.task]);
 
   return (
     <Form
@@ -115,16 +115,17 @@ const Upload = () => {
         label="Filetype"
         rules={[{ required: true, message: "Missing filetype" }]}
       >
-        {project.task.indexOf("2D") != -1 ? (
-          <Select>
-            <Select.Option value="dcm">Dicom</Select.Option>
-            <Select.Option value="png">PNG</Select.Option>
-          </Select>
-        ) : (
-          <Select>
-            <Select.Option value="zip">Zip</Select.Option>
-          </Select>
-        )}
+        {project &&
+          (project.task.indexOf("2D") != -1 ? (
+            <Select>
+              <Select.Option value="dcm">Dicom</Select.Option>
+              <Select.Option value="png">PNG</Select.Option>
+            </Select>
+          ) : (
+            <Select>
+              <Select.Option value="zip">Zip</Select.Option>
+            </Select>
+          ))}
       </Form.Item>
       {filetype && (
         <Form.Item
