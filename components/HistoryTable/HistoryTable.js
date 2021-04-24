@@ -123,7 +123,7 @@ const HistoryTable = (props) => {
               )}
               {task_type.indexOf("classification") === -1 && (
                 <a>
-                  <Download>
+                  <Download record={record}>
                     <DownloadOutlined />
                   </Download>
                 </a>

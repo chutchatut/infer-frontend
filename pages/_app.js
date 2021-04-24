@@ -20,6 +20,19 @@ const guardedPath = ["/upload-image", "/new-diagnosis", "/history"];
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+
+  axios.interceptors.response.use(
+    (res) => {
+      return res;
+    },
+    (err) => {
+      if (err.response && err.response.statusText === "Unauthorized") {
+        message.error("Invalid credential");
+        router.push("/logout");
+      }
+      return Promise.reject(err);
+    }
+  );
   // useSelector doesn't work because this is outside of Redux Provider
   // const token = useSelector((state) => state.auth.token);
   const token = store.getState().auth.token;
