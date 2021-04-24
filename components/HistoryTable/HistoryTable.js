@@ -116,7 +116,7 @@ const HistoryTable = (props) => {
                   <EyeOutlined
                     onClick={setPreviewImg.bind(
                       this,
-                      `${axios.defaults.baseURL}${record.data16}`
+                      `${axios.defaults.baseURL}${record.data}`
                     )}
                   />
                 </a>

@@ -52,7 +52,7 @@ const SelectImage = (props) => {
             placement="left"
             content={
               <img
-                src={`${axios.defaults.baseURL}${record.data16}`}
+                src={`${axios.defaults.baseURL}${record.data}`}
                 width="200"
               />
             }

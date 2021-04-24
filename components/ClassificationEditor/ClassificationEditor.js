@@ -10,7 +10,7 @@ const ClassificationEditor = (props) => {
   // defaultLogits is a dict used to generate new logits
   const [defaultLogits, setDefaultLogits] = useState({});
   const [logits, setLogits] = useState([]);
-  const [gradcam, setGradcam] = useState(img.data16);
+  const [gradcam, setGradcam] = useState(img.data);
 
   useEffect(() => {
     if (!img) return;

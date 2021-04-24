@@ -31,7 +31,7 @@ const Viewer = (props) => {
               <Col span={12}>
                 <Image
                   key="img"
-                  src={`${axios.defaults.baseURL}${props.img.data16}`}
+                  src={`${axios.defaults.baseURL}${props.img.data}`}
                   width="100%"
                   style={{ objectFit: "cover" }}
                 />
