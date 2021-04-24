@@ -3,8 +3,7 @@ import Highlighter from "react-highlight-words";
 import { Table, Space, Input, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
-const sortableConfig = (fieldName, { enable }) => {
-  if (!enable) return;
+const sortableConfig = (fieldName) => {
   return {
     sorter: (a, b) => {
       if (typeof a[fieldName] === "string")
@@ -31,8 +30,7 @@ const MyTable = (props) => {
     setSearchTexts(newSearchTexts);
   };
 
-  const searchableConfig = (fieldName, { enable }) => {
-    if (!enable) return;
+  const searchableConfig = (fieldName) => {
     return {
       filterDropdown: ({
         setSelectedKeys,
@@ -141,10 +139,8 @@ const MyTable = (props) => {
           dataIndex={column.dataIndex}
           key={column.key ? column.key : column.dataIndex}
           {...column.config}
-          {...sortableConfig(column.dataIndex, { enable: column.sortable })}
-          {...searchableConfig(column.dataIndex, {
-            enable: column.searchable,
-          })}
+          {...(column.sortable && sortableConfig(column.dataIndex))}
+          {...(column.searchable && searchableConfig(column.dataIndex))}
         />
       ))}
     </Table>
