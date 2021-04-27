@@ -35,7 +35,7 @@ const Download = (props) => {
             Image
           </Button>
           {props.record.result.map((res) => (
-            <Button onClick={download.bind(this, res.predicted_mask[0].mask, `${props.record.name.split('.')[0]}.seg.nrrd`)}>
+            <Button onClick={download.bind(this, res.predicted_mask[0].mask, res.predicted_mask[0].mask.split('/').pop())}>
               {res.pipeline_name}
             </Button>
           ))}
