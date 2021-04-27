@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Space, Popconfirm, Popover, message, Image } from "antd";
+import { Space, Popconfirm, Upload, message, Image } from "antd";
 import {
   DeleteOutlined,
   DownloadOutlined,
@@ -11,11 +11,9 @@ import {
 import Link from "next/link";
 import MyTable from "../MyTable/MyTable";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Preview from "./Preview/Preview";
 import Download from "./Download/Download";
-// TODO add owner, copy, timestamp
+
 const statuses = [
   {
     text: "Uploaded",
@@ -39,10 +37,24 @@ const statuses = [
   },
 ];
 
-// add logic to allow file download and upload
+const upload = async (file, record_id) => {
+  const formData = new FormData();
+  formData.append("result", file.originFileObj);
+  try {
+    response = await axios.post(
+      `/api/image/${record_id}/upload_result/`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    message.success("Upload successful");
+  } catch {
+    message.error("Upload failed");
+  }
+};
 
 const HistoryTable = (props) => {
-  const router = useRouter();
   const currentProject = useSelector((state) => state.project.currentProject);
   const task_type =
     currentProject && currentProject.task.toLowerCase().replace(" ", "_");
@@ -136,9 +148,18 @@ const HistoryTable = (props) => {
                   </a>
                 </Link>
               ) : (
-                <a>
-                  <UploadOutlined />
-                </a>
+                <Upload
+                  // accept=".seg.nrrd"
+                  beforeUpload={(file) => {
+                    upload(file, record.id);
+                    return false;
+                  }}
+                  fileList={[]}
+                >
+                  <a>
+                    <UploadOutlined />
+                  </a>
+                </Upload>
               )}
               <Popconfirm
                 placement="top"

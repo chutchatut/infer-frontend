@@ -7,7 +7,7 @@ import Link from "next/link";
 //   window.open(url, "_self");
 // };
 
-const download = async (download_url) => {
+const download = async (download_url, name) => {
   const response = await axios({
     url: download_url,
     method: "GET",
@@ -16,7 +16,7 @@ const download = async (download_url) => {
   const url = window.URL.createObjectURL(new Blob([response.data]));
   const link = document.createElement("a");
   link.href = url;
-  link.setAttribute("download", "image.jpg");
+  link.setAttribute("download", name);
   document.body.appendChild(link);
   link.click();
 };
@@ -30,11 +30,15 @@ const Download = (props) => {
         <Space direction="vertical">
           <Button
             type="primary"
-            onClick={download.bind(this, props.record.data)}
+            onClick={download.bind(this, props.record.data, props.record.name)}
           >
             Image
           </Button>
-          <Button>Segmentation2D</Button>
+          {props.record.result.map((res) => (
+            <Button onClick={download.bind(this, res.predicted_mask[0].mask, `${props.record.name.split('.')[0]}.seg.nrrd`)}>
+              {res.pipeline_name}
+            </Button>
+          ))}
         </Space>
       }
     >
