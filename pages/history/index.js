@@ -23,14 +23,14 @@ const History = () => {
     );
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (project) {
       reload();
       if (timer) clearTimeout(timer);
-      const timer = setTimeout(() => {
+      const newTimer = setTimeout(() => {
         setTick((tick) => !tick);
       }, 5000);
-      setTimer(timer);
+      setTimer(newTimer);
     }
   }, [project, tick]);
 
