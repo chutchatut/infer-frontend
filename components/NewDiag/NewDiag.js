@@ -24,6 +24,7 @@ const NewDiag = () => {
 
   const [pipelines, setPipelines] = useState([]);
   const [images, setImages] = useState([]);
+  const [current, setCurrent] = React.useState(0);
 
   useEffect(async () => {
     if (project)
@@ -31,6 +32,9 @@ const NewDiag = () => {
         (await axios.get(`/api/project/${project.id}/list_pipeline/`)).data
           .result
       );
+    setSPipeline(null);
+    setSelectedImages([]);
+    setCurrent(0);
   }, [project]);
 
   useEffect(async () => {
@@ -100,7 +104,6 @@ const NewDiag = () => {
       ),
     },
   ];
-  const [current, setCurrent] = React.useState(0);
 
   const next = () => {
     setCurrent(current + 1);
