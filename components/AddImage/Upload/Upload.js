@@ -49,7 +49,7 @@ const Upload = () => {
         const formData = new FormData();
         formData.append("zip", image.originFileObj);
         response = await axios.post(
-          `/api/project/${project.id}/upload_zip/`,
+          `/api/project/${project.id}/upload_image3D/`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
