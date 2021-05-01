@@ -19,6 +19,9 @@ const Forms = (props) => {
 
   const [users, setUsers] = useState([]);
 
+  const [refresh, setRefresh] = useState(true);
+  const re_render = () => setRefresh(!refresh);
+
   const reloadUsers = async () => {
     const response = await axios.get("/api/user/");
     setUsers(response.data.map((u) => ({ ...u })));
@@ -30,9 +33,7 @@ const Forms = (props) => {
     form.resetFields();
   }, [props.page]);
 
-  const formTemplate = getFormTemplate(form, users)[
-    props.page
-  ];
+  const formTemplate = getFormTemplate(form, users, re_render)[props.page];
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
@@ -88,7 +89,6 @@ const Forms = (props) => {
         setLoading(false);
         dispatch(actions.fetchProjects());
         reloadUsers();
-        // form.resetFields();
       }
     } catch (error) {
       message.error(

@@ -18,10 +18,10 @@ const PIPELINE_ID_TOOLTIP =
 const OPERATOR_TOOLTIP =
   "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name. Paste the name of the last operator";
 
-const getFormTemplate = (form, users) => {
+const getFormTemplate = (form, users, re_render) => {
   const projects = useSelector((state) => state.project.projects);
   const pipelines = projects ? projects.flatMap((p) => p.pipeline) : [];
-
+  console.log(form.getFieldValue("model_type"));
   return {
     "create-user": {
       pageTitle: "Create new user",
@@ -422,32 +422,55 @@ const getFormTemplate = (form, users) => {
         },
         {
           config: {
-            name: "clara_pipeline_name",
-            label: "Clara Pipeline Name",
-            tooltip: PIPELINE_NAME_TOOLTIP,
+            name: "model_type",
+            label: "Model Type",
             rules: [{ required: true }],
           },
-          form: <Input />,
+          form: (
+            <Select
+              onChange={(e) => {
+                re_render();
+                return e;
+              }}
+            >
+              <Select.Option value="CLARA">CLARA</Select.Option>
+              <Select.Option value="NON CLARA">NON CLARA</Select.Option>
+            </Select>
+          ),
         },
-        {
-          config: {
-            name: "pipeline_id",
-            label: "Clara Pipeline ID",
-            tooltip: PIPELINE_ID_TOOLTIP,
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-        {
-          config: {
-            name: "operator",
-            label: "Operator",
-            tooltip: OPERATOR_TOOLTIP,
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-      ],
+      ].concat(
+        form.getFieldValue("model_type") === "CLARA"
+          ? [
+              {
+                config: {
+                  name: "clara_pipeline_name",
+                  label: "Clara Pipeline Name",
+                  tooltip: PIPELINE_NAME_TOOLTIP,
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "pipeline_id",
+                  label: "Clara Pipeline ID",
+                  tooltip: PIPELINE_ID_TOOLTIP,
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "operator",
+                  label: "Operator",
+                  tooltip: OPERATOR_TOOLTIP,
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+            ]
+          : []
+      ),
       requestType: "POST",
       requestURL: `/api/project/{project}/add_pipeline/`,
     },
@@ -467,7 +490,15 @@ const getFormTemplate = (form, users) => {
               return e;
             },
           },
-          form: <PipelineSelect projects={projects} />,
+          form: (
+            <PipelineSelect
+              projects={projects}
+              onChange={(e) => {
+                re_render();
+                return e;
+              }}
+            />
+          ),
         },
         {
           config: {
@@ -487,32 +518,55 @@ const getFormTemplate = (form, users) => {
         },
         {
           config: {
-            name: "clara_pipeline_name",
-            label: "Clara Pipeline Name",
-            tooltip: PIPELINE_NAME_TOOLTIP,
+            name: "model_type",
+            label: "Model Type",
             rules: [{ required: true }],
           },
-          form: <Input />,
+          form: (
+            <Select
+              onChange={(e) => {
+                re_render();
+                return e;
+              }}
+            >
+              <Select.Option value="CLARA">CLARA</Select.Option>
+              <Select.Option value="NON CLARA">NON CLARA</Select.Option>
+            </Select>
+          ),
         },
-        {
-          config: {
-            name: "pipeline_id",
-            label: "Clara Pipeline ID",
-            tooltip: PIPELINE_ID_TOOLTIP,
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-        {
-          config: {
-            name: "operator",
-            label: "Operator",
-            tooltip: OPERATOR_TOOLTIP,
-            rules: [{ required: true }],
-          },
-          form: <Input />,
-        },
-      ],
+      ].concat(
+        form.getFieldValue("model_type") === "CLARA"
+          ? [
+              {
+                config: {
+                  name: "clara_pipeline_name",
+                  label: "Clara Pipeline Name",
+                  tooltip: PIPELINE_NAME_TOOLTIP,
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "pipeline_id",
+                  label: "Clara Pipeline ID",
+                  tooltip: PIPELINE_ID_TOOLTIP,
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "operator",
+                  label: "Operator",
+                  tooltip: OPERATOR_TOOLTIP,
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+            ]
+          : []
+      ),
       requestType: "PUT",
       requestURL: "/api/pipeline/{pipeline}/",
     },
