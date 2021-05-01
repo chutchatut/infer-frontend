@@ -34,7 +34,7 @@ const Editor = (props) => {
   const [note, setNote] = useState(props.img.note);
 
   const router = useRouter();
-  console.log(props.logits);
+  console.log(props.task_type);
   const verify = async () => {
     setLoading(true);
     await axios.put(`/api/image/${props.img.id}/verify_image/`, {

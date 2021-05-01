@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Space, Popconfirm, Upload, message, Image } from "antd";
+import { Space, Popconfirm, message, Image } from "antd";
 import {
   DeleteOutlined,
   DownloadOutlined,
@@ -13,6 +13,7 @@ import MyTable from "../MyTable/MyTable";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Download from "./Download/Download";
+import MyUpload from "./MyUpload/MyUpload";
 
 const statuses = [
   {
@@ -36,23 +37,6 @@ const statuses = [
     color: "green",
   },
 ];
-
-const upload = async (file, record_id) => {
-  const formData = new FormData();
-  formData.append("result", file.originFileObj);
-  try {
-    response = await axios.post(
-      `/api/image/${record_id}/upload_result/`,
-      formData,
-      {
-        headers: { "Content-Type": "multipart/form-data" },
-      }
-    );
-    message.success("Upload successful");
-  } catch {
-    message.error("Upload failed");
-  }
-};
 
 const HistoryTable = (props) => {
   const currentProject = useSelector((state) => state.project.currentProject);
@@ -148,18 +132,7 @@ const HistoryTable = (props) => {
                   </a>
                 </Link>
               ) : (
-                <Upload
-                  // accept=".seg.nrrd"
-                  beforeUpload={(file) => {
-                    upload(file, record.id);
-                    return false;
-                  }}
-                  fileList={[]}
-                >
-                  <a>
-                    <UploadOutlined />
-                  </a>
-                </Upload>
+                <MyUpload record_id={record.id} task_type={task_type} />
               )}
               <Popconfirm
                 placement="top"

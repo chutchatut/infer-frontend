@@ -59,6 +59,7 @@ const ClassificationEditor = (props) => {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Editor
+              task_type={props.task_type}
               results={results}
               logits={logits}
               img={img}

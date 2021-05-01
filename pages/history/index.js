@@ -12,15 +12,17 @@ const History = () => {
   const [timer, setTimer] = useState(null);
 
   const reload = async () => {
-    setImages(
-      (
-        await axios.get(`/api/project/${project.id}/list_image/`)
-      ).data.images.map((image) => ({
-        ...image,
-        key: image.id,
-        timestamp: new Date(image.timestamp),
-      }))
-    );
+    try {
+      setImages(
+        (
+          await axios.get(`/api/project/${project.id}/list_image/`)
+        ).data.images.map((image) => ({
+          ...image,
+          key: image.id,
+          timestamp: new Date(image.timestamp),
+        }))
+      );
+    } catch (e) {}
   };
 
   useEffect(() => {
