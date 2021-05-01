@@ -34,13 +34,19 @@ const Editor = (props) => {
   const [note, setNote] = useState(props.img.note);
 
   const router = useRouter();
-  console.log(props.task_type);
+
   const verify = async () => {
     setLoading(true);
-    await axios.put(`/api/image/${props.img.id}/verify_image/`, {
-      actual_class: selectedRowKeys,
-      note: note,
-    });
+    if (props.task_type === "2d_classification")
+      await axios.put(`/api/image/${props.img.id}/verify_image/`, {
+        actual_class: selectedRowKeys,
+        note: note,
+      });
+    if (props.task_type === "3d_classification")
+      await axios.put(`/api/image3D/${props.img.id}/verify_image/`, {
+        actual_class: selectedRowKeys,
+        note: note,
+      });
     setLoading(false);
     message.success("Succesfully verify image");
     router.push("/history");
