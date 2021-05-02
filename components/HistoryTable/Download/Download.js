@@ -41,7 +41,8 @@ const Download = (props) => {
           {props.task_type.indexOf("segmentation") !== -1 &&
             props.record.result.map(
               (res) =>
-                res.predicted_mask && (
+                res.predicted_mask &&
+                res.predicted_mask[0] && (
                   <Button
                     onClick={download.bind(
                       this,
