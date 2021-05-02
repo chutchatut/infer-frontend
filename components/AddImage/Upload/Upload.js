@@ -56,13 +56,6 @@ const Upload = () => {
         values.scan_date.toISOString().slice(0, 10).replace(/-/g, "")
       );
       response = await axios.post(
-        `/api/project/${project.id}/upload_image/`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      response = await axios.post(
         `/api/project/${project.id}/upload_image3D/`,
         formData,
         {
