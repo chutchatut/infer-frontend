@@ -24,7 +24,7 @@ const ClassificationEditor = (props) => {
       };
     }
     setDefaultLogits(newDefaultLogits);
-    setLogits(Object.values(newDefaultLogits));
+    setLogits(Object.values(newDefaultLogits).toFixed(4));
   }, [img]);
 
   const selectPipeline = (i) => {
