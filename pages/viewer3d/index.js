@@ -21,7 +21,7 @@ const Viewer = () => {
     img && img.image.project_task.toLowerCase().replace(" ", "_");
 
   if (!task_type) return <Skeleton />;
-  if (task_type.indexOf("2d") !== -1)
+  if (task_type.indexOf("classification") !== -1)
     return (
       <ClassificationEditor
         data={img}
