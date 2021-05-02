@@ -10,7 +10,7 @@ const Viewer = () => {
   const [img, setImg] = useState(null);
   useEffect(async () => {
     if (!router.query.id) return;
-    const img = (await axios.get(`/api/image/${router.query.id}`)).data;
+    const img = (await axios.get(`/api/image3D/${router.query.id}`)).data;
     setImg({
       ...img,
       image: { ...img.image, timestamp: new Date(img.image.timestamp) },

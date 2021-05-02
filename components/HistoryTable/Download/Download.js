@@ -30,15 +30,26 @@ const Download = (props) => {
         <Space direction="vertical">
           <Button
             type="primary"
-            onClick={download.bind(this, props.record.data, props.record.name)}
+            onClick={download.bind(
+              this,
+              props.record.data,
+              props.record.data.split("/").pop()
+            )}
           >
             Image
           </Button>
-          {props.record.result.map((res) => (
-            <Button onClick={download.bind(this, res.predicted_mask[0].mask, res.predicted_mask[0].mask.split('/').pop())}>
-              {res.pipeline_name}
-            </Button>
-          ))}
+          {props.task_type.indexOf("segmentation") !== -1 &&
+            props.record.result.map((res) => (
+              <Button
+                onClick={download.bind(
+                  this,
+                  res.predicted_mask[0].mask,
+                  res.predicted_mask[0].mask.split("/").pop()
+                )}
+              >
+                {res.pipeline_name}
+              </Button>
+            ))}
         </Space>
       }
     >

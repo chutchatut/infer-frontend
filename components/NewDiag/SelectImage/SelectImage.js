@@ -44,10 +44,7 @@ const SelectImage = (props) => {
     },
     {
       title: "Scan date",
-      dataIndex: "timestamp",
-      config: {
-        render: (text) => text.toUTCString(),
-      },
+      dataIndex: "content_date",
       sortable: true,
     },
   ].concat(

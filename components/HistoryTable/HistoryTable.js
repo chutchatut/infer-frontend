@@ -94,10 +94,7 @@ const HistoryTable = (props) => {
     },
     {
       title: "Scan date",
-      dataIndex: "timestamp",
-      config: {
-        render: (text) => text.toUTCString(),
-      },
+      dataIndex: "content_date",
       sortable: true,
     },
     {
@@ -117,20 +114,28 @@ const HistoryTable = (props) => {
                   />
                 </a>
               )}
-              {task_type.indexOf("classification") === -1 && (
-                <a>
-                  <Download record={record}>
-                    <DownloadOutlined />
-                  </Download>
-                </a>
-              )}
+
+              <a>
+                <Download record={record} task_type={task_type}>
+                  <DownloadOutlined />
+                </Download>
+              </a>
+
               {/* </Preview> */}
               {task_type.indexOf("classification") !== -1 ? (
-                <Link href={`viewer?id=${record.id}&edit=true`} key="edit">
-                  <a>
-                    <EditOutlined />
-                  </a>
-                </Link>
+                task_type.indexOf("2d") !== -1 ? (
+                  <Link href={`viewer?id=${record.id}&edit=true`} key="edit">
+                    <a>
+                      <EditOutlined />
+                    </a>
+                  </Link>
+                ) : (
+                  <Link href={`viewer3d?id=${record.id}&edit=true`} key="edit">
+                    <a>
+                      <EditOutlined />
+                    </a>
+                  </Link>
+                )
               ) : (
                 <MyUpload record_id={record.id} task_type={task_type} />
               )}
