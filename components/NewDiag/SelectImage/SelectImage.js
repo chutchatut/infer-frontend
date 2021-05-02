@@ -1,7 +1,8 @@
 import { EyeOutlined } from "@ant-design/icons";
-import { Popover } from "antd";
+import { Image } from "antd";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import MyTable from "../../MyTable/MyTable";
 
 const SelectImage = (props) => {
@@ -10,6 +11,12 @@ const SelectImage = (props) => {
     key: image.id,
     timestamp: new Date(image.timestamp),
   }));
+
+  const task_type = useSelector((state) =>
+    state.project.currentProject.task.toLowerCase()
+  );
+
+  const [previewImg, setPreviewImg] = useState("");
 
   const columns = [
     {
@@ -43,32 +50,44 @@ const SelectImage = (props) => {
       },
       sortable: true,
     },
-    {
-      title: "Preview",
-      key: "preview",
-      config: {
-        render: (text, record) => (
-          <Popover
-            placement="left"
-            content={
-              <img
-                src={`${axios.defaults.baseURL}${record.data}`}
-                width="200"
-              />
-            }
-          >
-            <div style={{ marginLeft: "20px" }}>
-              <a>
-                <EyeOutlined />
-              </a>
-            </div>
-          </Popover>
-        ),
-        width: "90px",
-        fixed: "right",
-      },
-    },
-  ];
+  ].concat(
+    task_type.indexOf("2d") !== -1
+      ? [
+          {
+            title: "Preview",
+            key: "preview",
+            config: {
+              render: (text, record) => (
+                // <Popover
+                //   placement="left"
+                //   content={
+                //     <img
+                //       src={`${axios.defaults.baseURL}${record.data}`}
+                //       width="200"
+                //     />
+                //   }
+                // >
+                <div style={{ marginLeft: "20px" }}>
+                  <a>
+                    <EyeOutlined
+                      onClick={setPreviewImg.bind(
+                        this,
+                        `${axios.defaults.baseURL}${record.data}`
+                      )}
+                    />
+                  </a>
+                </div>
+                // </Popover>
+              ),
+              width: "90px",
+              fixed: "right",
+            },
+          },
+        ]
+      : []
+  );
+
+  console.log(columns);
 
   const onSelectChange = (newSelectedRowKeys) => {
     props.setSelectedImages(newSelectedRowKeys);
@@ -91,6 +110,20 @@ const SelectImage = (props) => {
       <p>
         <strong>{props.selectedImages.length}</strong> images selected
       </p>
+      {previewImg && (
+        <Image
+          preview={{
+            onVisibleChange: (visible, prevVisible) => {
+              if (!visible) {
+                setPreviewImg("");
+              }
+            },
+            src: previewImg,
+            visible: previewImg,
+            mask: false,
+          }}
+        />
+      )}
     </>
   );
 };
