@@ -2,7 +2,6 @@ import { Descriptions, Select, Space } from "antd";
 import React from "react";
 
 const PipelineSelector = (props) => {
-  console.log(props);
   return (
     <Space direction="vertical" size="large">
       <Select
@@ -18,7 +17,7 @@ const PipelineSelector = (props) => {
           </Select.Option>
         ))}
       </Select>
-      <Descriptions title="Project Info">
+      <Descriptions title="Pipeline Info">
         <Descriptions.Item label="Pipeline Name" span="3">
           {props.selectedPipeline && props.selectedPipeline.name}
         </Descriptions.Item>
