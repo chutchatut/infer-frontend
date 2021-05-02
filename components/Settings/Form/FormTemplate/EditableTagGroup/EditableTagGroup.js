@@ -12,21 +12,15 @@ const tagInput = {
 
 class EditableTagGroup extends React.Component {
   state = {
-    // tags: [],
     inputVisible: false,
     inputValue: "",
     editInputIndex: -1,
     editInputValue: "",
   };
 
-  // componentDidUpdate() {
-  //   this.props.onChange(this.state.tags);
-  // }
-
   handleClose = (removedTag) => {
     const tags = this.props.value.filter((tag) => tag !== removedTag);
     this.props.onChange(tags);
-    // this.setState({ tags });
   };
 
   showInput = () => {
@@ -115,7 +109,7 @@ class EditableTagGroup extends React.Component {
             >
               <span
                 onDoubleClick={(e) => {
-                  if (index !== 0) {
+                  if (index !== -1) {
                     this.setState(
                       { editInputIndex: index, editInputValue: tag },
                       () => {
