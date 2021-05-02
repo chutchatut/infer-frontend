@@ -144,7 +144,10 @@ const HistoryTable = (props) => {
                 icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                 title={"Are you sure to delete this image?"}
                 onConfirm={async () => {
-                  await axios.delete(`/api/image/${record.id}/`);
+                  if (task_type.indexOf("2d") !== -1)
+                    await axios.delete(`/api/image/${record.id}/`);
+                  if (task_type.indexOf("3d") !== -1)
+                    await axios.delete(`/api/image3D/${record.id}/`);
                   message.success("Image has been successfully deleted");
                   props.reload();
                 }}
