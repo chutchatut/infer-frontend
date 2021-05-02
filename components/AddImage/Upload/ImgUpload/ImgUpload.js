@@ -24,7 +24,7 @@ const ImgUpload = (props) => {
       : props.filetype === "dcm"
       ? 20
       : props.filetype === "zip"
-      ? 20
+      ? 1
       : 0;
 
   return (

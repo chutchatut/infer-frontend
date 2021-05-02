@@ -45,17 +45,30 @@ const Upload = () => {
         );
       }
     } else if (filetype === "zip") {
-      for (let image of values.images) {
-        const formData = new FormData();
-        formData.append("zip", image.originFileObj);
-        response = await axios.post(
-          `/api/project/${project.id}/upload_image3D/`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
-      }
+      const formData = new FormData();
+      formData.append("zip", values.images[0].originFileObj);
+      formData.append("patient_name", values.patient_name);
+      formData.append("patient_id", values.patient_HN);
+      formData.append("physician_name", values.clinician_name);
+      formData.append("patient_age", values.patient_age);
+      formData.append(
+        "content_date",
+        values.scan_date.toISOString().slice(0, 10).replace(/-/g, "")
+      );
+      response = await axios.post(
+        `/api/project/${project.id}/upload_image/`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      response = await axios.post(
+        `/api/project/${project.id}/upload_image3D/`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
     } else if (filetype === "png") {
       const formData = new FormData();
       formData.append("image", values.images[0].originFileObj);
@@ -138,7 +151,7 @@ const Upload = () => {
           <ImgUpload filetype={filetype} />
         </Form.Item>
       )}
-      {filetype === "png" && (
+      {(filetype === "png" || filetype === "zip") && (
         <Fragment>
           <Form.Item
             label="Patient's name"
