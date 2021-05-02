@@ -46,7 +46,7 @@ const Upload = () => {
       }
     } else if (filetype === "zip") {
       const formData = new FormData();
-      formData.append("zip", values.images[0].originFileObj);
+      formData.append("image", values.images[0].originFileObj);
       formData.append("patient_name", values.patient_name);
       formData.append("patient_id", values.patient_HN);
       formData.append("physician_name", values.clinician_name);
