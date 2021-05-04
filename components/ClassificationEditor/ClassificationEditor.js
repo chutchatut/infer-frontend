@@ -24,7 +24,7 @@ const ClassificationEditor = (props) => {
       };
     }
     setDefaultLogits(newDefaultLogits);
-    setLogits(Object.values(newDefaultLogits).toFixed(4));
+    setLogits(Object.values(newDefaultLogits));
   }, [img]);
 
   const selectPipeline = (i) => {
@@ -33,7 +33,7 @@ const ClassificationEditor = (props) => {
     for (let pred of Object.keys(newData)) {
       newLogits[pred] = {
         ...newLogits[pred],
-        confidence: Number.parseFloat(newData[pred]),
+        confidence: Number.parseFloat(newData[pred]).toFixed(4),
       };
     }
     setLogits(Object.values(newLogits));
