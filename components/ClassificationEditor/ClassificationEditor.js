@@ -48,13 +48,13 @@ const ClassificationEditor = (props) => {
           // align="middle"
         >
           {props.task_type.indexOf("2d") !== -1 && (
-            <Col lg={24} xxl={16}>
+            <Col lg={24} xl={16}>
               <Viewer img={img} gradcam={gradcam} />
             </Col>
           )}
 
           <Col
-            xxl={8}
+            xl={8}
             flex="auto"
             style={{ display: "flex", justifyContent: "center" }}
           >
