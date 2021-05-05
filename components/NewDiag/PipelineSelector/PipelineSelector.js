@@ -24,15 +24,38 @@ const PipelineSelector = (props) => {
         <Descriptions.Item label="Description" span="3">
           {props.selectedPipeline && props.selectedPipeline.description}
         </Descriptions.Item>
-        <Descriptions.Item label="Clara Pipeline Name" span="3">
-          {props.selectedPipeline && props.selectedPipeline.clara_pipeline_name}
+        <Descriptions.Item label="Model Type" span="3">
+          {props.selectedPipeline && props.selectedPipeline.model_type}
         </Descriptions.Item>
-        <Descriptions.Item label="Clara Pipeline ID" span="3">
-          {props.selectedPipeline && props.selectedPipeline.pipeline_id}
-        </Descriptions.Item>
-        <Descriptions.Item label="Operator" span="3">
-          {props.selectedPipeline && props.selectedPipeline.operator}
-        </Descriptions.Item>
+        {props.selectedPipeline &&
+          props.selectedPipeline.model_type === "CLARA" && (
+            <>
+              <Descriptions.Item label="Clara Pipeline Name" span="3">
+                {props.selectedPipeline &&
+                  props.selectedPipeline.clara_pipeline_name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Clara Pipeline ID" span="3">
+                {props.selectedPipeline && props.selectedPipeline.pipeline_id}
+              </Descriptions.Item>
+              <Descriptions.Item label="Operator" span="3">
+                {props.selectedPipeline && props.selectedPipeline.operator}
+              </Descriptions.Item>
+            </>
+          )}
+        {props.selectedPipeline &&
+          props.selectedPipeline.model_type === "NON CLARA" && (
+            <>
+              <Descriptions.Item label="Model Name" span="3">
+                {props.selectedPipeline && props.selectedPipeline.model_name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Net Input Name" span="3">
+                {props.selectedPipeline && props.selectedPipeline.netInputName}
+              </Descriptions.Item>
+              <Descriptions.Item label="Net Output Name" span="3">
+                {props.selectedPipeline && props.selectedPipeline.netOutputName}
+              </Descriptions.Item>
+            </>
+          )}
       </Descriptions>
     </Space>
   );
