@@ -469,6 +469,33 @@ const getFormTemplate = (form, users, re_render) => {
                 form: <Input />,
               },
             ]
+          : form.getFieldValue("model_type") === "NON CLARA"
+          ? [
+              {
+                config: {
+                  name: "model_name",
+                  label: "Model Name",
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "netInputname",
+                  label: "Net Input Name",
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "netOutputname",
+                  label: "Net Output Name",
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+            ]
           : []
       ),
       requestType: "POST",
@@ -560,6 +587,33 @@ const getFormTemplate = (form, users, re_render) => {
                   name: "operator",
                   label: "Operator",
                   tooltip: OPERATOR_TOOLTIP,
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+            ]
+          : form.getFieldValue("model_type") === "NON CLARA"
+          ? [
+              {
+                config: {
+                  name: "model_name",
+                  label: "Model Name",
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "netInputname",
+                  label: "Net Input Name",
+                  rules: [{ required: true }],
+                },
+                form: <Input />,
+              },
+              {
+                config: {
+                  name: "netOutputname",
+                  label: "Net Output Name",
                   rules: [{ required: true }],
                 },
                 form: <Input />,
