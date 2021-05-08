@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { Menu, Dropdown, Skeleton } from "antd";
+import { Menu, Dropdown, Skeleton, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../store/actions";
 import { DownOutlined, LogoutOutlined } from "@ant-design/icons";
 import Logo from "../../../assets/Logo";
 import styles from "./TopBar.module.css";
+import ResourceMonitor from "./ResourceMonitor/ResourceMonitor";
 
 const TopBar = () => {
   const router = useRouter();
@@ -61,19 +62,21 @@ const TopBar = () => {
       >
         <Logo width="100px" height="50px" />
       </div>
-
-      <Menu theme="dark" mode="horizontal">
-        <Menu.Item
-          danger
-          icon={<LogoutOutlined />}
-          key="logout"
-          onClick={() => {
-            router.push("logout");
-          }}
-        >
-          Logout
-        </Menu.Item>
-      </Menu>
+      <Space size="small">
+        <ResourceMonitor />
+        <Menu theme="dark" mode="horizontal">
+          <Menu.Item
+            danger
+            icon={<LogoutOutlined />}
+            key="logout"
+            onClick={() => {
+              router.push("logout");
+            }}
+          >
+            Logout
+          </Menu.Item>
+        </Menu>
+      </Space>
     </>
   );
 };
