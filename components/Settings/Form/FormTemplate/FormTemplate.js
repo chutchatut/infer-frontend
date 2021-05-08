@@ -18,6 +18,9 @@ const PIPELINE_ID_TOOLTIP =
 const OPERATOR_TOOLTIP =
   "Use command 'clara describe pipeline -p <pipeline ID>' to get operator name. Paste the name of the last operator";
 
+const PREDCLASS_TOOLTIP =
+  "The classes should be sorted similar to the order of the model's output";
+
 const getFormTemplate = (form, users, re_render) => {
   const projects = useSelector((state) => state.project.projects);
   const pipelines = projects ? projects.flatMap((p) => p.pipeline) : [];
@@ -260,6 +263,7 @@ const getFormTemplate = (form, users, re_render) => {
           config: {
             name: "predclasses",
             label: "Classes",
+            tooltip: PREDCLASS_TOOLTIP,
             rules: [{ required: true }],
             initialValue: [],
           },
@@ -337,6 +341,7 @@ const getFormTemplate = (form, users, re_render) => {
           config: {
             name: "predclasses",
             label: "Classes",
+            tooltip: PREDCLASS_TOOLTIP,
             rules: [{ required: true }],
             initialValue: [],
           },
