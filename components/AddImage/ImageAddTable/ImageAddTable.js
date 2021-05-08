@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button, Result } from "antd";
 
 import MyTable from "../../MyTable/MyTable";
 
@@ -29,14 +29,15 @@ const ImageAddTable = (props) => {
 
   return (
     <>
-      <MyTable
+      {/* <MyTable
         data={data}
         config={{ pagination: { pageSize: 50 }, scroll: { x: 300, y: 300 } }}
         columns={columns}
         selectionType="checkbox"
         onSelectChange={onSelectChange}
       />
-      <Button type="primary">Submit</Button>
+      <Button type="primary">Submit</Button> */}
+      <Result status="warning" title="This operation is not implemented." />
     </>
   );
 };
