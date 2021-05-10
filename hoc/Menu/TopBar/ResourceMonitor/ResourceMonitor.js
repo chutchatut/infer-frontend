@@ -12,6 +12,7 @@ const ResourceMonitor = () => {
   const [tick, setTick] = useState(true);
 
   const reload = async () => {
+    if (!axios.defaults.headers.common["Authorization"]) return;
     const response = await axios.get("/api/util/check_usage");
     if (response.status === 200) {
       const mem = response.data.MEM;
