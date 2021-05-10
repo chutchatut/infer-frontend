@@ -484,22 +484,22 @@ const getFormTemplate = (form, users, re_render) => {
                 },
                 form: <Input />,
               },
-              {
-                config: {
-                  name: "netInputname",
-                  label: "Net Input Name",
-                  rules: [{ required: true }],
-                },
-                form: <Input />,
-              },
-              {
-                config: {
-                  name: "netOutputname",
-                  label: "Net Output Name",
-                  rules: [{ required: true }],
-                },
-                form: <Input />,
-              },
+              // {
+              //   config: {
+              //     name: "netInputname",
+              //     label: "Net Input Name",
+              //     rules: [{ required: true }],
+              //   },
+              //   form: <Input />,
+              // },
+              // {
+              //   config: {
+              //     name: "netOutputname",
+              //     label: "Net Output Name",
+              //     rules: [{ required: true }],
+              //   },
+              //   form: <Input />,
+              // },
             ]
           : []
       ),
@@ -607,22 +607,22 @@ const getFormTemplate = (form, users, re_render) => {
                 },
                 form: <Input />,
               },
-              {
-                config: {
-                  name: "netInputname",
-                  label: "Net Input Name",
-                  rules: [{ required: true }],
-                },
-                form: <Input />,
-              },
-              {
-                config: {
-                  name: "netOutputname",
-                  label: "Net Output Name",
-                  rules: [{ required: true }],
-                },
-                form: <Input />,
-              },
+              // {
+              //   config: {
+              //     name: "netInputname",
+              //     label: "Net Input Name",
+              //     rules: [{ required: true }],
+              //   },
+              //   form: <Input />,
+              // },
+              // {
+              //   config: {
+              //     name: "netOutputname",
+              //     label: "Net Output Name",
+              //     rules: [{ required: true }],
+              //   },
+              //   form: <Input />,
+              // },
             ]
           : []
       ),

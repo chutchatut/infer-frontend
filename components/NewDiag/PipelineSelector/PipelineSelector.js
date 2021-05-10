@@ -48,12 +48,12 @@ const PipelineSelector = (props) => {
               <Descriptions.Item label="Model Name" span="3">
                 {props.selectedPipeline && props.selectedPipeline.model_name}
               </Descriptions.Item>
-              <Descriptions.Item label="Net Input Name" span="3">
+              {/* <Descriptions.Item label="Net Input Name" span="3">
                 {props.selectedPipeline && props.selectedPipeline.netInputname}
               </Descriptions.Item>
               <Descriptions.Item label="Net Output Name" span="3">
                 {props.selectedPipeline && props.selectedPipeline.netOutputname}
-              </Descriptions.Item>
+              </Descriptions.Item> */}
             </>
           )}
       </Descriptions>
