@@ -1,8 +1,7 @@
 import { IssuesCloseOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { Popconfirm, Progress, Space } from "antd";
 import axios from "axios";
-import React, { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import React, { useState, useEffect } from "react";
 
 const resetTrtis = async () => {};
 
