@@ -22,22 +22,38 @@ const download = async (download_url, name) => {
 };
 
 const Download = (props) => {
+  console.log(props);
+
   return (
     <Popover
       trigger="click"
       placement="right"
       content={
         <Space direction="vertical">
-          <Button
-            type="primary"
-            onClick={download.bind(
-              this,
-              props.record.data,
-              props.record.data.split("/").pop()
-            )}
-          >
-            Image
-          </Button>
+          <Space>
+            <Button
+              type="primary"
+              onClick={download.bind(
+                this,
+                props.record.data,
+                props.record.data.split("/").pop()
+              )}
+            >
+              Image
+            </Button>
+            <Button
+              type="primary"
+              onClick={download.bind(
+                this,
+                props.record.actual_mask,
+                props.record.actual_mask &&
+                  props.record.actual_mask.split("/").pop()
+              )}
+              disabled={!props.record.actual_mask}
+            >
+              Result from user
+            </Button>
+          </Space>
           {props.task_type.indexOf("segmentation") !== -1 &&
             props.record.result.map(
               (res) =>
@@ -50,7 +66,7 @@ const Download = (props) => {
                       res.predicted_mask[0].mask.split("/").pop()
                     )}
                   >
-                    {res.pipeline_name}
+                    Pipeline: {res.pipeline_name}
                   </Button>
                 )
             )}
