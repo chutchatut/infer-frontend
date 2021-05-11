@@ -7,7 +7,8 @@ import { useEffect } from "react/cjs/react.development";
 const resetTrtis = async () => {};
 
 const ResourceMonitor = () => {
-  const [memoryUsage, setMemoryUsage] = useState({ mem: 0, gpu: 0 });
+  const [memUsage, setMemUsage] = useState(0);
+  const [gpuUsage, setGpuUsage] = useState(0);
   const [timer, setTimer] = useState(null);
   const [tick, setTick] = useState(true);
 
@@ -15,9 +16,8 @@ const ResourceMonitor = () => {
     if (!axios.defaults.headers.common["Authorization"]) return;
     const response = await axios.get("/api/util/check_usage");
     if (response.status === 200) {
-      const mem = response.data.MEM;
-      const gpu = response.data.GPU;
-      setMemoryUsage({ mem: mem, gpu: gpu });
+      setMemUsage(response.data.MEM);
+      setGpuUsage(response.data.GPU);
     }
   };
 
@@ -34,7 +34,7 @@ const ResourceMonitor = () => {
     <Space style={{ color: "white", lineHeight: 0, width: 220, height: 50 }}>
       <span>MEM: </span>
       <Progress
-        percent={memoryUsage.mem}
+        percent={memUsage}
         steps={10}
         size="small"
         strokeColor="#52c41a"
@@ -42,7 +42,7 @@ const ResourceMonitor = () => {
       />
       <span>GPU: </span>
       <Progress
-        percent={memoryUsage.gpu}
+        percent={gpuUsage}
         steps={10}
         size="small"
         strokeColor="#52c41a"
