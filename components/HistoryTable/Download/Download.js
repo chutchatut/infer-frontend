@@ -22,8 +22,6 @@ const download = async (download_url, name) => {
 };
 
 const Download = (props) => {
-  console.log(props);
-
   return (
     <Popover
       trigger="click"
