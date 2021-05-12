@@ -1,9 +1,16 @@
 import { IssuesCloseOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import { Popconfirm, Progress, Space } from "antd";
+import { message, Popconfirm, Progress, Space } from "antd";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-const resetTrtis = async () => {};
+const resetTrtis = async () => {
+  try {
+    const response = await axios.post("/api/util/restart/");
+    message.success("Restarting");
+  } catch (e) {
+    message.error("Error restarting network");
+  }
+};
 
 const ResourceMonitor = () => {
   const [memUsage, setMemUsage] = useState(0);

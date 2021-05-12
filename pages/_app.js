@@ -10,6 +10,7 @@ import Menu from "../hoc/Menu/Menu";
 import axios from "axios";
 
 import getConfig from "next/config";
+import LoadingModal from "../components/LoadingModal/LoadingModal";
 const { publicRuntimeConfig } = getConfig();
 
 axios.defaults.baseURL = publicRuntimeConfig.BACKEND_URL
@@ -77,6 +78,7 @@ function MyApp({ Component, pageProps }) {
       <Menu>
         <Component {...pageProps} />
       </Menu>
+      <LoadingModal />
     </Provider>
   );
 }
