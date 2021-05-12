@@ -52,6 +52,5 @@ export const reloadCurrentProject = (currentProjectID) => async (dispatch) => {
   } catch (error) {
     if (error && error.response && error.response.status === 404)
       dispatch(setCurrentProject(null));
-    else message.info("An error occurred when trying to connect to server");
   }
 };

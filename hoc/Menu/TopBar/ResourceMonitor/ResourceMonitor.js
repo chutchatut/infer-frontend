@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 const resetTrtis = async () => {
   try {
     const response = await axios.post("/api/util/restart/");
-    message.success("Restarting");
+    if (response.status === 200) message.success("Restarting");
   } catch (e) {
     message.error("Error restarting network");
   }
