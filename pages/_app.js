@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }) {
       message.info("Please select a project!");
       router.replace("/home");
     }
-  }, []);
+  }, [router.pathname]);
 
   useEffect(() => {
     if (router.asPath === "/") router.replace("/login");
