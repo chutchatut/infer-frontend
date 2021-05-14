@@ -38,7 +38,8 @@ export const setCurrentProject = (project) => {
 };
 
 export const restoreCurrentProject = () => async (dispatch) => {
-  dispatch(reloadCurrentProject(localStorage.getItem("currentProjectID")));
+  if (localStorage.getItem("currentProjectID"))
+    dispatch(reloadCurrentProject(localStorage.getItem("currentProjectID")));
 };
 
 export const reloadCurrentProject = (currentProjectID) => async (dispatch) => {

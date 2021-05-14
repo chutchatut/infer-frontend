@@ -2,6 +2,7 @@ import { IssuesCloseOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { message, Popconfirm, Progress, Space } from "antd";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const resetTrtis = async () => {
   try {
@@ -18,8 +19,10 @@ const ResourceMonitor = () => {
   const [timer, setTimer] = useState(null);
   const [tick, setTick] = useState(true);
 
+  const token = useSelector((state) => state.auth.token);
+
   const reload = async () => {
-    if (!axios.defaults.headers.common["Authorization"]) return;
+    if (!token) return;
     const response = await axios.get("/api/util/check_usage");
     if (response.status === 200) {
       setMemUsage(response.data.MEM);
@@ -34,7 +37,7 @@ const ResourceMonitor = () => {
       setTick((tick) => !tick);
     }, 5000);
     setTimer(newTimer);
-  }, [tick]);
+  }, [tick, token]);
 
   return (
     <Space style={{ color: "white", lineHeight: 0, width: 220, height: 50 }}>

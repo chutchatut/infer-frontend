@@ -48,16 +48,14 @@ function MyApp({ Component, pageProps }) {
   }, [token]);
 
   useEffect(() => {
-    if (!store.getState().auth.token) return;
+    if (!token) return;
     const currentProject = store.getState().project.currentProject;
-    if (localStorage.getItem("currentProjectID") && !currentProject) {
-      store.dispatch(actions.restoreCurrentProject());
-    } else if (guardedPath.indexOf(router.pathname) > -1 && !currentProject) {
+    if (guardedPath.indexOf(router.pathname) > -1 && !currentProject) {
       // Redirect to home page if a project is not selected
       message.info("Please select a project!");
       router.replace("/home");
     }
-  }, [router.pathname, token]);
+  }, []);
 
   useEffect(() => {
     if (router.asPath === "/") router.replace("/login");

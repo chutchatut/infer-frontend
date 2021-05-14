@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useReducer } from "react";
 import {
   UserOutlined,
   HomeOutlined,
@@ -7,10 +7,10 @@ import {
   HistoryOutlined,
   MedicineBoxOutlined,
   FolderAddOutlined,
-  SettingOutlined,
   ToolOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
+import { useSelector } from "react-redux";
 
 const NavMenu = (props) => {
   const { SubMenu } = Menu;
@@ -25,6 +25,8 @@ const NavMenu = (props) => {
       {children}
     </Menu.Item>
   );
+
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   return (
     <Menu
@@ -65,13 +67,14 @@ const NavMenu = (props) => {
           </>
         )}
       </SubMenu>
-      {getMenuItem(
-        "/admin",
-        <>
-          <ToolOutlined />
-          Admin
-        </>
-      )}
+      {isAdmin &&
+        getMenuItem(
+          "/admin",
+          <>
+            <ToolOutlined />
+            Admin
+          </>
+        )}
       {getMenuItem(
         "/about-us",
         <>

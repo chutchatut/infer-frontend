@@ -1,13 +1,28 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import { fetchProjects } from "./project";
+import { fetchProjects, restoreCurrentProject } from "./project";
 
-export const authSuccess = (authData) => (dispatch) => {
-  dispatch({
+export const setToken = (token, username) => async (dispatch) => {
+  try {
+    axios.defaults.headers.common["Authorization"] = `token ${token}`;
+    const response = await axios.get(`/api/user/${username}`); // change this later
+    const isAdmin = response.data.is_staff;
+    dispatch(authSuccess(token, isAdmin));
+    dispatch(restoreCurrentProject());
+    dispatch(fetchProjects());
+  } catch (e) {
+    dispatch(authFail);
+  }
+};
+
+export const authSuccess = (token, isAdmin) => {
+  return {
     type: actionTypes.AUTH_SUCCESS,
-    payload: authData,
-  });
-  dispatch(fetchProjects());
+    payload: {
+      token: token,
+      isAdmin: isAdmin,
+    },
+  };
 };
 
 export const authFail = (error) => {
@@ -32,11 +47,11 @@ export const authInit = (username, password, remember) => async (dispatch) => {
       username: username,
       password: password,
     });
-    if (remember) localStorage.setItem("Token", response.data.token);
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `token ${response.data.token}`;
-    dispatch(authSuccess(response.data.token));
+    if (remember) {
+      localStorage.setItem("Token", response.data.token);
+      localStorage.setItem("Username", username);
+    }
+    dispatch(setToken(response.data.token, username));
   } catch (error) {
     if (error.response && error.response.status === 400)
       dispatch(authFail("Invalid credential"));
@@ -44,11 +59,11 @@ export const authInit = (username, password, remember) => async (dispatch) => {
   }
 };
 
-export const authRestore = () => (dispatch, getState) => {
+export const authRestore = () => async (dispatch, getState) => {
   if (getState().auth.token) return;
   const token = localStorage.getItem("Token");
-  axios.defaults.headers.common["Authorization"] = `token ${token}`;
+  const username = localStorage.getItem("Username");
   if (token) {
-    dispatch(authSuccess(token));
+    dispatch(setToken(token, username));
   }
 };
