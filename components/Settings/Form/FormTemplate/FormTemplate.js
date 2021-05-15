@@ -138,7 +138,7 @@ const getFormTemplate = (form, users, re_render) => {
         },
       ],
       requestType: "PUT",
-      requestURL: "/api/user/{user}/update_batch/",
+      requestURL: "/api/user/{user}/",
     },
 
     "change-user-password": {
