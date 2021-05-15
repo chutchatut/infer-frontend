@@ -32,7 +32,11 @@ const Editor = (props) => {
       dataIndex: "gradcam",
       config: {
         render: (text) =>
-          text && <EyeOutlined onClick={props.setGradcam.bind(this, text)} />,
+          text && (
+            <a>
+              <EyeOutlined onClick={props.setGradcam.bind(this, text)} />
+            </a>
+          ),
       },
     },
   ];

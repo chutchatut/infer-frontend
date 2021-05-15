@@ -36,8 +36,13 @@ const ClassificationEditor = (props) => {
         confidence: Number.parseFloat(newData[pred]).toFixed(4),
       };
     }
+    for (let gradcam of Object.values(results[i].gradcams)) {
+      newLogits[gradcam.predclass] = {
+        ...newLogits[gradcam.predclass],
+        gradcam: gradcam.gradcam,
+      };
+    }
     setLogits(Object.values(newLogits));
-    // setGradcam(results[i].gradcam);
   };
 
   return (
