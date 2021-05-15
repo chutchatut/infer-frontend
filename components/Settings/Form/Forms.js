@@ -55,7 +55,7 @@ const Forms = (props) => {
     try {
       const formData = new FormData();
       for (let key in values) {
-        if (values[key]) {
+        if (typeof values[key] !== "undefined") {
           formData.append(key, values[key]);
         }
       }

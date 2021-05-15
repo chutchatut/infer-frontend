@@ -1,5 +1,5 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Input, Select, Upload } from "antd";
+import { Button, Input, Select, Switch, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useSelector } from "react-redux";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
@@ -63,6 +63,13 @@ const getFormTemplate = (form, users, re_render) => {
         },
         {
           config: {
+            name: "admin",
+            label: "Admin",
+          },
+          form: <Switch />,
+        },
+        {
+          config: {
             name: "email",
             label: "Email",
             rules: [{ required: true }],
@@ -113,6 +120,13 @@ const getFormTemplate = (form, users, re_render) => {
             rules: [{ required: true }],
           },
           form: <Input />,
+        },
+        {
+          config: {
+            name: "admin",
+            label: "Admin",
+          },
+          form: <Switch />,
         },
         {
           config: {
