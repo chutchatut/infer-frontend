@@ -1,8 +1,6 @@
 import { Descriptions, Popover, Space, Tag, Typography } from "antd";
 import React from "react";
 
-const { Paragraph } = Typography;
-
 const Info = (props) => {
   return (
     <Descriptions title={props.project.name}>
@@ -20,21 +18,21 @@ const Info = (props) => {
             : "Empty"}
         </Space>
       </Descriptions.Item>
-      <Descriptions.Item label="Classes" span="3">
-        <Space wrap>
-          {props.project && props.project.predclasses
-            ? props.project.predclasses.map((predclass) => (
-                <Tag color="blue" key={predclass}>
-                  {predclass}
-                </Tag>
-              ))
-            : "empty"}
-        </Space>
-      </Descriptions.Item>
+      {props.project.task.indexOf("Classification") !== -1 && (
+        <Descriptions.Item label="Classes" span="3">
+          <Space wrap>
+            {props.project && props.project.predclasses
+              ? props.project.predclasses.map((predclass) => (
+                  <Tag color="blue" key={predclass}>
+                    {predclass}
+                  </Tag>
+                ))
+              : "empty"}
+          </Space>
+        </Descriptions.Item>
+      )}
       <Descriptions.Item label="Description" span="3" key={props.project.name}>
-        {/* <Paragraph ellipsis={{ rows: 3, expandable: true, symbol: "more" }}> */}
         {props.project.description}
-        {/* </Paragraph> */}
       </Descriptions.Item>
     </Descriptions>
   );
