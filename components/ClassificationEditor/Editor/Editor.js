@@ -92,7 +92,7 @@ const Editor = (props) => {
               //  x: "400px",
               y: "300px",
             },
-            style: { width: "500px" },
+            // style: { width: "500px" },
             // style: { width: "300px" },
           }}
           selectionType="checkbox"
