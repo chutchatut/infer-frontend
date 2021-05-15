@@ -24,7 +24,7 @@ const PREDCLASS_TOOLTIP =
 const getFormTemplate = (form, users, re_render) => {
   const projects = useSelector((state) => state.project.projects);
   const pipelines = projects ? projects.flatMap((p) => p.pipeline) : [];
-  console.log(form.getFieldValue("model_type"));
+
   return {
     "create-user": {
       pageTitle: "Create new user",
@@ -241,8 +241,16 @@ const getFormTemplate = (form, users, re_render) => {
         },
         {
           config: { name: "task", label: "Task", rules: [{ required: true }] },
-          form: <TaskSelect />,
+          form: (
+            <TaskSelect
+              onChange={(e) => {
+                re_render();
+                return e;
+              }}
+            />
+          ),
         },
+
         {
           config: {
             name: "cover",
@@ -259,17 +267,23 @@ const getFormTemplate = (form, users, re_render) => {
             </Upload>
           ),
         },
-        {
-          config: {
-            name: "predclasses",
-            label: "Classes",
-            tooltip: PREDCLASS_TOOLTIP,
-            rules: [{ required: true }],
-            initialValue: [],
-          },
-          form: <EditableTagGroup />,
-        },
-      ],
+      ].concat(
+        form.getFieldValue("task") === "2D Classification" ||
+          form.getFieldValue("task") === "3D Classification"
+          ? [
+              {
+                config: {
+                  name: "predclasses",
+                  label: "Classes",
+                  tooltip: PREDCLASS_TOOLTIP,
+                  rules: [{ required: true }],
+                  initialValue: [],
+                },
+                form: <EditableTagGroup />,
+              },
+            ]
+          : []
+      ),
       requestType: "POST",
       requestURL: "/api/project/",
     },
@@ -285,7 +299,9 @@ const getFormTemplate = (form, users, re_render) => {
             getValueFromEvent: (e) => {
               // Don't use === because e is string but p.id is int
               const project = projects.find((p) => p.id == e);
+              delete project.cover;
               form.setFieldsValue(project);
+              re_render();
               return e;
             },
           },
@@ -320,7 +336,14 @@ const getFormTemplate = (form, users, re_render) => {
             label: "Task",
             rules: [{ required: true }],
           },
-          form: <TaskSelect />,
+          form: (
+            <TaskSelect
+              onChange={(e) => {
+                re_render();
+                return e;
+              }}
+            />
+          ),
         },
         {
           config: {
@@ -337,17 +360,23 @@ const getFormTemplate = (form, users, re_render) => {
             </Upload>
           ),
         },
-        {
-          config: {
-            name: "predclasses",
-            label: "Classes",
-            tooltip: PREDCLASS_TOOLTIP,
-            rules: [{ required: true }],
-            initialValue: [],
-          },
-          form: <EditableTagGroup />,
-        },
-      ],
+      ].concat(
+        form.getFieldValue("task") === "2D Classification" ||
+          form.getFieldValue("task") === "3D Classification"
+          ? [
+              {
+                config: {
+                  name: "predclasses",
+                  label: "Classes",
+                  tooltip: PREDCLASS_TOOLTIP,
+                  rules: [{ required: true }],
+                  initialValue: [],
+                },
+                form: <EditableTagGroup />,
+              },
+            ]
+          : []
+      ),
       requestType: "PUT",
       requestURL: `/api/project/{project}/`,
     },

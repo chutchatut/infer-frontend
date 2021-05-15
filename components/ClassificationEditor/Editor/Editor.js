@@ -1,4 +1,4 @@
-import { EditOutlined, SaveOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, message, Select, Space } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import axios from "axios";
@@ -26,6 +26,17 @@ const columns = [
 ];
 
 const Editor = (props) => {
+  const gradcamColumn = [
+    {
+      title: "Gradcam",
+      dataIndex: "gradcam",
+      config: {
+        render: (text) =>
+          text && <EyeOutlined onClick={props.setGradcam.bind(this, text)} />,
+      },
+    },
+  ];
+
   const [loading, setLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState(
     props.img.actual_class ? props.img.actual_class : []
@@ -69,7 +80,11 @@ const Editor = (props) => {
             ))}
         </Select>
         <MyTable
-          columns={columns}
+          columns={
+            props.task_type === "2d_classification"
+              ? columns.concat(gradcamColumn)
+              : columns
+          }
           data={props.logits}
           config={{
             pagination: false,
@@ -77,7 +92,7 @@ const Editor = (props) => {
               //  x: "400px",
               y: "300px",
             },
-            style: { width: "400px" },
+            style: { width: "500px" },
             // style: { width: "300px" },
           }}
           selectionType="checkbox"

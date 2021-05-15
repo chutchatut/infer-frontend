@@ -37,7 +37,7 @@ const ClassificationEditor = (props) => {
       };
     }
     setLogits(Object.values(newLogits));
-    setGradcam(results[i].gradcam);
+    // setGradcam(results[i].gradcam);
   };
 
   return (
@@ -61,6 +61,7 @@ const ClassificationEditor = (props) => {
             <Editor
               task_type={props.task_type}
               results={results}
+              setGradcam={setGradcam}
               logits={logits}
               img={img}
               edit={props.edit} // for default edit value in queryparams
