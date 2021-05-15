@@ -39,18 +39,20 @@ const Download = (props) => {
             >
               Image
             </Button>
-            <Button
-              type="primary"
-              onClick={download.bind(
-                this,
-                props.record.actual_mask,
-                props.record.actual_mask &&
-                  props.record.actual_mask.split("/").pop()
-              )}
-              disabled={!props.record.actual_mask}
-            >
-              Result from user
-            </Button>
+            {props.task_type.indexOf("segmentation") !== -1 && (
+              <Button
+                type="primary"
+                onClick={download.bind(
+                  this,
+                  props.record.actual_mask,
+                  props.record.actual_mask &&
+                    props.record.actual_mask.split("/").pop()
+                )}
+                disabled={!props.record.actual_mask}
+              >
+                Result from user
+              </Button>
+            )}
           </Space>
           {props.task_type.indexOf("segmentation") !== -1 &&
             props.record.result.map(
