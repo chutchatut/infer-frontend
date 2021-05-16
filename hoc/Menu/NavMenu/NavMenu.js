@@ -75,13 +75,6 @@ const NavMenu = (props) => {
             Admin
           </>
         )}
-      {getMenuItem(
-        "/about-us",
-        <>
-          <UserOutlined />
-          About us
-        </>
-      )}
     </Menu>
   );
 };
