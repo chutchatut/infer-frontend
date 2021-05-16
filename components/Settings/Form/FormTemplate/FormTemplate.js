@@ -65,6 +65,7 @@ const getFormTemplate = (form, users, re_render) => {
           config: {
             name: "admin",
             label: "Admin",
+            initialValue: false,
           },
           form: <Switch />,
         },
@@ -125,6 +126,7 @@ const getFormTemplate = (form, users, re_render) => {
           config: {
             name: "admin",
             label: "Admin",
+            initialValue: false,
           },
           form: <Switch />,
         },
