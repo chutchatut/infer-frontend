@@ -28,7 +28,6 @@ function MyApp({ Component, pageProps }) {
     },
     (err) => {
       if (err.response && err.response.statusText === "Unauthorized") {
-        message.error("Invalid credential");
         router.push("/logout");
       }
       return Promise.reject(err);
