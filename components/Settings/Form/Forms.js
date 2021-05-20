@@ -84,12 +84,10 @@ const Forms = (props) => {
       }
       // ----------------------------------------
 
-      if (response && response.status === 200) {
-        message.success(response.data.message);
-        setLoading(false);
-        dispatch(actions.fetchProjects());
-        reloadUsers();
-      }
+      message.success(response.data.message);
+      setLoading(false);
+      dispatch(actions.fetchProjects());
+      reloadUsers();
     } catch (error) {
       message.error(
         `The following error occured: ${error.response.data.message}`
