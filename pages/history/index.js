@@ -28,7 +28,7 @@ const History = () => {
     reload();
     if (oldInterval) clearInterval(oldInterval);
     setOldInterval(setInterval(reload.bind(this), 5000));
-  }, [token]);
+  }, []);
 
   return (
     <>
