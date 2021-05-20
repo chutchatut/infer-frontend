@@ -13,6 +13,20 @@ const tailLayout = {
   wrapperCol: { offset: 6, span: 16 },
 };
 
+const download = async (download_url, name) => {
+  const response = await axios({
+    url: download_url,
+    method: "GET",
+    responseType: "blob",
+  });
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", name);
+  document.body.appendChild(link);
+  link.click();
+};
+
 const Forms = (props) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
@@ -60,7 +74,7 @@ const Forms = (props) => {
         }
       }
 
-      // ---------- handle upload ---------------
+      // ---------- handle request ---------------
       switch (formTemplate.requestType) {
         case "POST":
           response = await axios.post(URL, formData, {
@@ -81,13 +95,17 @@ const Forms = (props) => {
             },
           });
           break;
+        case "DOWNLOAD":
+          // download(URL, filename)
+          break;
       }
       // ----------------------------------------
-
-      message.success(response.data.message);
-      setLoading(false);
-      dispatch(actions.fetchProjects());
-      reloadUsers();
+      if (response) {
+        message.success(response.data.message);
+        setLoading(false);
+        dispatch(actions.fetchProjects());
+        reloadUsers();
+      }
     } catch (error) {
       message.error(
         `The following error occured: ${error.response.data.message}`

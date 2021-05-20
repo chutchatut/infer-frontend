@@ -50,6 +50,7 @@ const admin = () => {
         <SubMenu key="advance" icon={<ProjectOutlined />} title="Advance">
           <Menu.ItemGroup title="Export" key="export">
             <Menu.Item key="export-dataset">Export dataset</Menu.Item>
+            <Menu.Item key="download-dataset">Download dataset</Menu.Item>
           </Menu.ItemGroup>
         </SubMenu>
       </Menu>

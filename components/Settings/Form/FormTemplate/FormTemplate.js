@@ -764,6 +764,55 @@ const getFormTemplate = (form, users, re_render) => {
       requestType: "DELETE",
       requestURL: `/api/pipeline/{pipeline}`,
     },
+
+    "export-dataset": {
+      pageTitle: "Export dataset",
+      formConfig: [
+        {
+          config: {
+            name: "project",
+            label: "Project",
+            rules: [{ required: true }],
+          },
+          form: (
+            <Select>
+              {projects &&
+                projects.map((p) => (
+                  <Select.Option key={p.id}>{p.name}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
+      ],
+      requestType: "POST",
+      // TODO change this later
+      requestURL: `/api/project/{project}/`,
+    },
+
+    "download-dataset": {
+      pageTitle: "Download dataset",
+      formConfig: [
+        {
+          config: {
+            name: "project",
+            label: "Project",
+            rules: [{ required: true }],
+          },
+          form: (
+            <Select>
+              {projects &&
+                projects.map((p) => (
+                  <Select.Option key={p.id}>{p.name}</Select.Option>
+                ))}
+            </Select>
+          ),
+        },
+      ],
+      requestType: "DOWNLOAD",
+      // TODO change this later
+      requestURL: `/api/project/{project}/`,
+      filename: "{project}",
+    },
   };
 };
 
