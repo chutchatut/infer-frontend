@@ -7,11 +7,9 @@ import HistoryTable from "../../components/HistoryTable/HistoryTable";
 const History = () => {
   const project = useSelector((state) => state.project.currentProject);
   const [images, setImages] = useState([]);
-  const [tick, setTick] = useState(false);
-
-  const [timer, setTimer] = useState(null);
 
   const reload = async () => {
+    if (!project) return;
     try {
       setImages(
         (
@@ -25,16 +23,12 @@ const History = () => {
     } catch (e) {}
   };
 
+  const [oldInterval, setOldInterval] = useState(null);
   useEffect(() => {
-    if (project) {
-      reload();
-      if (timer) clearTimeout(timer);
-      const newTimer = setTimeout(() => {
-        setTick((tick) => !tick);
-      }, 5000);
-      setTimer(newTimer);
-    }
-  }, [project, tick]);
+    reload();
+    if (oldInterval) clearInterval(oldInterval);
+    setOldInterval(setInterval(reload.bind(this), 5000));
+  }, [token]);
 
   return (
     <>

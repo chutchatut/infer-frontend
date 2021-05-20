@@ -16,8 +16,6 @@ const resetTrtis = async () => {
 const ResourceMonitor = () => {
   const [memUsage, setMemUsage] = useState(0);
   const [gpuUsage, setGpuUsage] = useState(0);
-  const [timer, setTimer] = useState(null);
-  const [tick, setTick] = useState(true);
 
   const token = useSelector((state) => state.auth.token);
 
@@ -30,15 +28,13 @@ const ResourceMonitor = () => {
     }
   };
 
+  const [oldInterval, setOldInterval] = useState(null);
   useEffect(() => {
     reload();
-    if (timer) clearTimeout(timer);
-    const newTimer = setTimeout(() => {
-      setTick((tick) => !tick);
-    }, 5000);
-    setTimer(newTimer);
-  }, [tick, token]);
-
+    if (oldInterval) clearInterval(oldInterval);
+    setOldInterval(setInterval(reload.bind(this), 5000));
+  }, [token]);
+  
   return (
     <Space style={{ color: "white", lineHeight: 0, width: 220, height: 50 }}>
       <span>MEM: </span>

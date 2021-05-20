@@ -12,9 +12,7 @@ const STEPS = [
 
 const LoadingModal = (props) => {
   const [status, setStatus] = useState(0);
-  const [timer, setTimer] = useState(null);
-  const [tick, setTick] = useState(true);
-
+  
   const token = useSelector((state) => state.auth.token);
 
   const reload = async () => {
@@ -33,14 +31,12 @@ const LoadingModal = (props) => {
     }
   };
 
+  const [oldInterval, setOldInterval] = useState(null);
   useEffect(() => {
     reload();
-    if (timer) clearTimeout(timer);
-    const newTimer = setTimeout(() => {
-      setTick((tick) => !tick);
-    }, 5000);
-    setTimer(newTimer);
-  }, [tick, token]);
+    if (oldInterval) clearInterval(oldInterval);
+    setOldInterval(setInterval(reload.bind(this), 5000));
+  }, [token]);
 
   return (
     <Modal
