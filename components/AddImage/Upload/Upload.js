@@ -36,58 +36,60 @@ const Upload = () => {
       for (let image of values.images) {
         const formData = new FormData();
         formData.append("dicom", image.originFileObj);
-        response = await axios.post(
-          `/api/project/${project.id}/upload_dicom/`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
-        if (response.status === 400) {
+        try {
+          response = await axios.post(
+            `/api/project/${project.id}/upload_dicom/`,
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+        } catch (e) {
+          console.log(e);
           message.error(`File ${image.name} already exists`);
         }
         setLoading(false);
       }
       return;
     }
-    if (filetype === "zip") {
-      const formData = new FormData();
-      formData.append("image", values.images[0].originFileObj);
-      formData.append("patient_name", values.patient_name);
-      formData.append("patient_id", values.patient_HN);
-      formData.append("physician_name", values.clinician_name);
-      formData.append("patient_age", values.patient_age);
-      formData.append(
-        "content_date",
-        values.scan_date.toISOString().slice(0, 10).replace(/-/g, "")
-      );
-      response = await axios.post(
-        `/api/project/${project.id}/upload_image3D/`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-    } else if (filetype === "png") {
-      const formData = new FormData();
-      formData.append("image", values.images[0].originFileObj);
-      formData.append("patient_name", values.patient_name);
-      formData.append("patient_id", values.patient_HN);
-      formData.append("physician_name", values.clinician_name);
-      formData.append("patient_age", values.patient_age);
-      formData.append(
-        "content_date",
-        values.scan_date.toISOString().slice(0, 10).replace(/-/g, "")
-      );
-      response = await axios.post(
-        `/api/project/${project.id}/upload_image/`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-    }
-    if (response && response.status === 200) {
+    try {
+      if (filetype === "zip") {
+        const formData = new FormData();
+        formData.append("image", values.images[0].originFileObj);
+        formData.append("patient_name", values.patient_name);
+        formData.append("patient_id", values.patient_HN);
+        formData.append("physician_name", values.clinician_name);
+        formData.append("patient_age", values.patient_age);
+        formData.append(
+          "content_date",
+          values.scan_date.toISOString().slice(0, 10).replace(/-/g, "")
+        );
+        response = await axios.post(
+          `/api/project/${project.id}/upload_image3D/`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+      } else if (filetype === "png") {
+        const formData = new FormData();
+        formData.append("image", values.images[0].originFileObj);
+        formData.append("patient_name", values.patient_name);
+        formData.append("patient_id", values.patient_HN);
+        formData.append("physician_name", values.clinician_name);
+        formData.append("patient_age", values.patient_age);
+        formData.append(
+          "content_date",
+          values.scan_date.toISOString().slice(0, 10).replace(/-/g, "")
+        );
+        response = await axios.post(
+          `/api/project/${project.id}/upload_image/`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+      }
       message.success("Upload successful");
 
       form.resetFields([
@@ -98,7 +100,7 @@ const Upload = () => {
         "patient_age",
         "scan_date",
       ]);
-    } else {
+    } catch (e) {
       message.success("Upload failed");
     }
     setLoading(false);
