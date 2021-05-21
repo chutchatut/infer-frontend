@@ -49,7 +49,7 @@ const ImageAddTable = (props) => {
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message)
         message.error(err.response.data.message);
-      message.error("Cannot upload");
+      else message.error("Cannot upload");
     }
     setLoading(false);
   };

@@ -44,10 +44,10 @@ const Upload = () => {
               headers: { "Content-Type": "multipart/form-data" },
             }
           );
-        } catch (e) {
-          if (e.response.status === 400)
-            message.error(`File ${image.name} already exists`);
-          else message.error(`Error uploading file ${image.name}`);
+        } catch (err) {
+          if (err.response && err.response.data && err.response.data.message)
+            message.error(err.response.data.message);
+          else message.error("Cannot upload");
         }
         setLoading(false);
       }
@@ -101,9 +101,12 @@ const Upload = () => {
         "patient_age",
         "scan_date",
       ]);
-    } catch (e) {
-      if (e.response.status === 400) message.error(`File already exists`);
-      else message.error(`Error uploading file`);
+    } catch (err) {
+      // if (e.response.status === 400) message.error(`File already exists`);
+      // else message.error(`Error uploading file`);
+      if (err.response && err.response.data && err.response.data.message)
+        message.error(err.response.data.message);
+      else message.error("Cannot upload");
     }
     setLoading(false);
   };
