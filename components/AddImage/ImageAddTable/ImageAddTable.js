@@ -19,6 +19,7 @@ const ImageAddTable = (props) => {
     reload();
     if (oldInterval) clearInterval(oldInterval);
     setOldInterval(setInterval(reload.bind(this), 5000));
+    return () => clearInterval(oldInterval);
   }, []);
 
   const columns = [

@@ -12,7 +12,7 @@ const STEPS = [
 
 const LoadingModal = (props) => {
   const [status, setStatus] = useState(0);
-  
+
   const token = useSelector((state) => state.auth.token);
 
   const reload = async () => {
@@ -36,6 +36,7 @@ const LoadingModal = (props) => {
     reload();
     if (oldInterval) clearInterval(oldInterval);
     setOldInterval(setInterval(reload.bind(this), 5000));
+    return () => clearInterval(oldInterval);
   }, [token]);
 
   return (
