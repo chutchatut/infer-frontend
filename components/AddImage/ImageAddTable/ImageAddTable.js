@@ -3,6 +3,7 @@ import { Button, message } from "antd";
 
 import MyTable from "../../MyTable/MyTable";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ImageAddTable = (props) => {
   const [data, setData] = useState([]);
