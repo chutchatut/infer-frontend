@@ -21,7 +21,7 @@ const tailLayout = {
   wrapperCol: { offset: 6, span: 16 },
 };
 
-const Upload = () => {
+const Upload = (props) => {
   const [form] = Form.useForm();
   const [filetype, setFiletype] = useState(null);
 
@@ -64,8 +64,9 @@ const Upload = () => {
               status: "Failed",
             });
         }
-        setLoading(false);
       }
+      props.setDataOnModal(uploadStatus);
+      setLoading(false);
       return;
     }
     try {
