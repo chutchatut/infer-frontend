@@ -51,15 +51,16 @@ const ImageAddTable = (props) => {
         }
       );
       message.success(response.data.message);
-      console.log(response.data);
       const uploadStatus = response.data.uploaded
         .map((s) => ({
           filename: s,
+          key: s,
           status: "Success",
         }))
         .concat(
           response.data.duplicated.map((s) => ({
             filename: s,
+            key: s,
             status: "Already exists",
           }))
         );
