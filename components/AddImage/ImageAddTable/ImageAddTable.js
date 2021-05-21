@@ -45,9 +45,10 @@ const ImageAddTable = (props) => {
       const response = axios.post(`/api/project/${project.id}/upload_local/`, {
         files_name: selectedRowKeys,
       });
+      message.success(response.data.message);
     } catch (err) {
-      if (err.response && err.response.status === 400)
-        message.error(err.response.message);
+      if (err.response && err.response.data && err.response.data.message)
+        message.error(err.response.data.message);
       message.error("Cannot upload");
     }
     setLoading(false);
