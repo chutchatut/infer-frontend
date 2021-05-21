@@ -63,9 +63,6 @@ const Upload = () => {
               key: image.name,
               status: "Failed",
             });
-          // if (err.response && err.response.data && err.response.data.message)
-          //   message.error(err.response.data.message);
-          // else message.error("Cannot upload");
         }
         setLoading(false);
       }
