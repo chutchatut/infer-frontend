@@ -43,8 +43,14 @@ const Upload = () => {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
+        if (response.status === 400) {
+          message.error(`File ${image.name} already exists`);
+        }
+        setLoading(false);
       }
-    } else if (filetype === "zip") {
+      return;
+    }
+    if (filetype === "zip") {
       const formData = new FormData();
       formData.append("image", values.images[0].originFileObj);
       formData.append("patient_name", values.patient_name);
@@ -83,7 +89,7 @@ const Upload = () => {
     }
     if (response && response.status === 200) {
       message.success("Upload successful");
-      setLoading(false);
+
       form.resetFields([
         "images",
         "patient_name",
@@ -92,7 +98,10 @@ const Upload = () => {
         "patient_age",
         "scan_date",
       ]);
+    } else {
+      message.success("Upload failed");
     }
+    setLoading(false);
   };
 
   const onValuesChange = (changedValues) => {
