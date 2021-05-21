@@ -4,7 +4,15 @@ import { Button, message } from "antd";
 import MyTable from "../../MyTable/MyTable";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Modal from "antd/lib/modal/Modal";
+
+const columns = [
+  {
+    title: "Filename",
+    dataIndex: "filename",
+    sortable: true,
+    searchable: true,
+  },
+];
 
 const ImageAddTable = (props) => {
   const [data, setData] = useState([]);
@@ -23,15 +31,6 @@ const ImageAddTable = (props) => {
     return () => clearInterval(oldInterval);
   }, []);
 
-  const columns = [
-    {
-      title: "Filename",
-      dataIndex: "filename",
-      sortable: true,
-      searchable: true,
-    },
-  ];
-
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const onSelectChange = (newSelectedRowKeys) => {
@@ -40,7 +39,6 @@ const ImageAddTable = (props) => {
   };
 
   const [loading, setLoading] = useState(false);
-  const [dataOnModal, setDataOnModal] = useState(null);
   const submit = async () => {
     setLoading(true);
     try {
@@ -64,7 +62,7 @@ const ImageAddTable = (props) => {
             status: "Already exists",
           }))
         );
-      setDataOnModal(uploadStatus);
+      props.setDataOnModal(uploadStatus);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message)
         message.error(err.response.data.message);
@@ -93,22 +91,6 @@ const ImageAddTable = (props) => {
       >
         Submit
       </Button>
-      <Modal
-        title="Upload Status"
-        onCancel={setDataOnModal.bind(this, null)}
-        visible={dataOnModal}
-        footer={null}
-      >
-        <MyTable
-          data={dataOnModal}
-          config={{ pagination: { pageSize: 50 }, scroll: { x: 300, y: 300 } }}
-          columns={columns.concat({
-            title: "Status",
-            dataIndex: "status",
-            sortable: true,
-          })}
-        />
-      </Modal>
     </>
   );
 };

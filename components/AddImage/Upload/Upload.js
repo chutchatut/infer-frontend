@@ -33,6 +33,7 @@ const Upload = () => {
     console.log("Received values of form:", values);
     let response;
     if (filetype === "dcm") {
+      const uploadStatus = [];
       for (let image of values.images) {
         const formData = new FormData();
         formData.append("dicom", image.originFileObj);
@@ -44,10 +45,20 @@ const Upload = () => {
               headers: { "Content-Type": "multipart/form-data" },
             }
           );
+          uploadStatus.push({
+            filename: image.name,
+            key: image.name,
+            status: "Success",
+          });
         } catch (err) {
-          if (err.response && err.response.data && err.response.data.message)
-            message.error(err.response.data.message);
-          else message.error("Cannot upload");
+          uploadStatus.push({
+            filename: image.name,
+            key: image.name,
+            status: "Failed",
+          });
+          // if (err.response && err.response.data && err.response.data.message)
+          //   message.error(err.response.data.message);
+          // else message.error("Cannot upload");
         }
         setLoading(false);
       }
