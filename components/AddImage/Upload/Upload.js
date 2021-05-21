@@ -45,8 +45,9 @@ const Upload = () => {
             }
           );
         } catch (e) {
-          console.log(e);
-          message.error(`File ${image.name} already exists`);
+          if (e.response.status === 400)
+            message.error(`File ${image.name} already exists`);
+          else message.error(`Error uploading file ${image.name}`);
         }
         setLoading(false);
       }
@@ -101,7 +102,8 @@ const Upload = () => {
         "scan_date",
       ]);
     } catch (e) {
-      message.success("Upload failed");
+      if (e.response.status === 400) message.error(`File already exists`);
+      else message.error(`Error uploading file`);
     }
     setLoading(false);
   };
