@@ -1,5 +1,5 @@
 import { Tabs } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import Upload from "./Upload/Upload";
 import ImageAddTable from "./ImageAddTable/ImageAddTable";
 import Modal from "antd/lib/modal/Modal";
