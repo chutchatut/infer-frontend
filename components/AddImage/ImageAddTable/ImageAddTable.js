@@ -4,6 +4,7 @@ import { Button, message } from "antd";
 import MyTable from "../../MyTable/MyTable";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Modal from "antd/lib/modal/Modal";
 
 const ImageAddTable = (props) => {
   const [data, setData] = useState([]);
@@ -39,13 +40,30 @@ const ImageAddTable = (props) => {
   };
 
   const [loading, setLoading] = useState(false);
+  const [dataOnModal, setDataOnModal] = useState(null);
   const submit = async () => {
     setLoading(true);
     try {
-      const response = axios.post(`/api/project/${project.id}/upload_local/`, {
-        files_name: selectedRowKeys,
-      });
+      const response = await axios.post(
+        `/api/project/${project.id}/upload_local/`,
+        {
+          files_name: selectedRowKeys,
+        }
+      );
       message.success(response.data.message);
+      console.log(response.data);
+      const uploadStatus = response.data.uploaded
+        .map((s) => ({
+          filename: s,
+          status: "Success",
+        }))
+        .concat(
+          response.data.duplicated.map((s) => ({
+            filename: s,
+            status: "Already exists",
+          }))
+        );
+      setDataOnModal(uploadStatus);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message)
         message.error(err.response.data.message);
@@ -58,14 +76,38 @@ const ImageAddTable = (props) => {
     <>
       <MyTable
         data={data}
-        config={{ pagination: { pageSize: 50 }, scroll: { x: 300, y: 300 } }}
+        config={{
+          pagination: { pageSize: 50 },
+          scroll: { x: 1000, y: "calc(100vh - 360px)" },
+        }}
         columns={columns}
         selectionType="checkbox"
         onSelectChange={onSelectChange}
       />
-      <Button type="primary" onClick={submit.bind(this)} loading={loading}>
+      <Button
+        type="primary"
+        onClick={submit.bind(this)}
+        loading={loading}
+        disabled={selectedRowKeys.length < 1}
+      >
         Submit
       </Button>
+      <Modal
+        title="Upload Status"
+        onCancel={setDataOnModal.bind(this, null)}
+        visible={dataOnModal}
+        footer={null}
+      >
+        <MyTable
+          data={dataOnModal}
+          config={{ pagination: { pageSize: 50 }, scroll: { x: 300, y: 300 } }}
+          columns={columns.concat({
+            title: "Status",
+            dataIndex: "status",
+            sortable: true,
+          })}
+        />
+      </Modal>
     </>
   );
 };
