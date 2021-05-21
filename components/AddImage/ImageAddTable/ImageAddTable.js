@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, message, Result } from "antd";
+import { Button, message } from "antd";
 
 import MyTable from "../../MyTable/MyTable";
 import axios from "axios";
-import { Exception } from "ant-design-pro";
 
 const ImageAddTable = (props) => {
   const [data, setData] = useState([]);
