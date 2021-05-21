@@ -51,11 +51,18 @@ const Upload = () => {
             status: "Success",
           });
         } catch (err) {
-          uploadStatus.push({
-            filename: image.name,
-            key: image.name,
-            status: "Failed",
-          });
+          if (err.response && err.response.status === 400)
+            uploadStatus.push({
+              filename: image.name,
+              key: image.name,
+              status: "Already exists",
+            });
+          else
+            uploadStatus.push({
+              filename: image.name,
+              key: image.name,
+              status: "Failed",
+            });
           // if (err.response && err.response.data && err.response.data.message)
           //   message.error(err.response.data.message);
           // else message.error("Cannot upload");
