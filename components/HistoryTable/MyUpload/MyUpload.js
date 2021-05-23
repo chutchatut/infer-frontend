@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Popover, Space, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
@@ -25,6 +25,19 @@ const upload = async (file, record_id, task_type, note) => {
 
 const MyUpload = (props) => {
   const [note, setNote] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(async () => {
+    setLoading(true);
+    if (!props.record_id) return;
+    let response;
+    if (props.task_type === "2d_segmentation")
+      response = await axios.get(`/api/image/${props.record_id}/`);
+    if (props.task_type === "3d_segmentation")
+      response = await axios.get(`/api/image3D/${props.record_id}/`);
+    setNote(response.data.image.note);
+    setLoading(false);
+  }, [props.record_id]);
 
   return (
     <Popover
@@ -34,6 +47,7 @@ const MyUpload = (props) => {
             placeholder="note"
             value={note}
             onChange={(e) => setNote(e.target.value)}
+            disabled={loading}
           />
           <Upload
             accept=".seg.nrrd"
@@ -53,7 +67,7 @@ const MyUpload = (props) => {
             // }
             fileList={[]}
           >
-            <Button type="primary">
+            <Button type="primary" loading={loading}>
               <UploadOutlined /> Upload
             </Button>
           </Upload>

@@ -166,7 +166,7 @@ const HistoryTable = (props) => {
       fixed: "right",
     },
   ];
-
+  console.log(props.data);
   return (
     <>
       <MyTable
