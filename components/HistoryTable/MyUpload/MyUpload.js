@@ -8,7 +8,6 @@ const upload = async (file, record_id, task_type, note) => {
   const formData = new FormData();
   formData.append("actual_mask", file);
   formData.append("note", note);
-  console.log(file)
   try {
     if (task_type === "2d_segmentation")
       await axios.put(`/api/image/${record_id}/verify_mask/`, formData, {
