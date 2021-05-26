@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, message } from "antd";
+import { Button, message, Select, Space } from "antd";
 
 import MyTable from "../../MyTable/MyTable";
 import axios from "axios";
@@ -17,10 +17,21 @@ const columns = [
 const ImageAddTable = (props) => {
   const [data, setData] = useState([]);
   const project = useSelector((state) => state.project.currentProject);
+  const [folderNames, setFolderNames] = useState([]);
+  const [selectedFolderName, setSelectedFoldername] = useState(null);
 
   const reload = async () => {
-    const response = await axios.get("/api/util/list_local");
-    setData(response.data.files_name.map((s) => ({ filename: s, key: s })));
+    {
+      const response = await axios.get("/api/util/list_local_dir/");
+      setFolderNames(response.data.dir_name);
+    }
+    if (!selectedFolderName) return;
+    {
+      const response = await axios.get(
+        `/api/util/list_local_files?directory=${selectedFolderName}`
+      );
+      setData(response.data.files_name.map((s) => ({ filename: s, key: s })));
+    }
   };
 
   const [oldInterval, setOldInterval] = useState(null);
@@ -29,13 +40,11 @@ const ImageAddTable = (props) => {
     if (oldInterval) clearInterval(oldInterval);
     setOldInterval(setInterval(reload.bind(this), 5000));
     return () => clearInterval(oldInterval);
-  }, []);
+  }, [selectedFolderName]);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
-    console.log(newSelectedRowKeys);
   };
 
   const [loading, setLoading] = useState(false);
@@ -46,6 +55,7 @@ const ImageAddTable = (props) => {
         `/api/project/${project.id}/upload_local/`,
         {
           files_name: selectedRowKeys,
+          directory: selectedFolderName,
         }
       );
       message.success(response.data.message);
@@ -72,12 +82,25 @@ const ImageAddTable = (props) => {
   };
 
   return (
-    <>
+    <Space direction="vertical" size="large">
+      <Select
+        style={{ width: 300 }}
+        onChange={(e) => {
+          setSelectedFoldername(e);
+          setSelectedRowKeys([]);
+          setData([]);
+        }}
+      >
+        {folderNames.map((folderName) => (
+          <Select.Option key={folderName}>{folderName}</Select.Option>
+        ))}
+      </Select>
       <MyTable
+        value={selectedRowKeys}
         data={data}
         config={{
           pagination: { pageSize: 50 },
-          scroll: { x: 1000, y: "calc(100vh - 360px)" },
+          scroll: { y: "calc(100vh - 440px)" },
         }}
         columns={columns}
         selectionType="checkbox"
@@ -91,7 +114,7 @@ const ImageAddTable = (props) => {
       >
         Submit
       </Button>
-    </>
+    </Space>
   );
 };
 
