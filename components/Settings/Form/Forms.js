@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import getFormTemplate from "./FormTemplate/FormTemplate";
 import * as actions from "../../../store/actions";
+import download from "../../../utils/download";
 
 const layout = {
   labelCol: { span: 6 },
@@ -11,20 +12,6 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: { offset: 6, span: 16 },
-};
-
-const download = async (download_url, name) => {
-  const response = await axios({
-    url: download_url,
-    method: "GET",
-    responseType: "blob",
-  });
-  const url = window.URL.createObjectURL(new Blob([response.data]));
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", name);
-  document.body.appendChild(link);
-  link.click();
 };
 
 const Forms = (props) => {
