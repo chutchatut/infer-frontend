@@ -3,6 +3,7 @@ import { Button, Input, Select, Switch, Upload } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useSelector } from "react-redux";
 import EditableTagGroup from "./EditableTagGroup/EditableTagGroup";
+import ExportSelect from "./ExportSelect/ExportSelect";
 import PipelineSelect from "./PipelineSelect/PipelineSelect";
 import SelectUser from "./SelectUser/SelectUser";
 import TaskSelect from "./TaskSelect/TaskSelect";
@@ -785,8 +786,7 @@ const getFormTemplate = (form, users, re_render) => {
         },
       ],
       requestType: "POST",
-      // TODO change this later
-      requestURL: `/api/project/{project}/`,
+      requestURL: `/api/project/{project}/export/`,
     },
 
     "download-dataset": {
@@ -798,20 +798,11 @@ const getFormTemplate = (form, users, re_render) => {
             label: "Project",
             rules: [{ required: true }],
           },
-          form: (
-            <Select>
-              {projects &&
-                projects.map((p) => (
-                  <Select.Option key={p.id}>{p.name}</Select.Option>
-                ))}
-            </Select>
-          ),
+          form: <ExportSelect />,
         },
       ],
       requestType: "DOWNLOAD",
-      // TODO change this later
-      requestURL: `/api/project/{project}/`,
-      filename: "{project}",
+      requestURL: `{project}`,
     },
   };
 };

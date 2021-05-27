@@ -96,7 +96,8 @@ const Forms = (props) => {
           });
           break;
         case "DOWNLOAD":
-          // download(URL, filename)
+          await download(URL, URL.split("/").pop());
+          setLoading(false);
           break;
       }
       // ----------------------------------------
