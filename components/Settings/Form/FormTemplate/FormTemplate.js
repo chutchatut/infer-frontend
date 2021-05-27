@@ -64,7 +64,7 @@ const getFormTemplate = (form, users, re_render) => {
         },
         {
           config: {
-            name: "admin",
+            name: "is_staff",
             label: "Admin",
             initialValue: false,
             valuePropName: "checked",
@@ -95,6 +95,7 @@ const getFormTemplate = (form, users, re_render) => {
             getValueFromEvent: (e) => {
               // Don't use === because e is string but p.id is int
               const user = users.find((u) => u.username == e);
+              console.log(user)
               form.setFieldsValue(user);
               return e;
             },
@@ -126,7 +127,7 @@ const getFormTemplate = (form, users, re_render) => {
         },
         {
           config: {
-            name: "admin",
+            name: "is_staff",
             label: "Admin",
             initialValue: false,
             valuePropName: "checked",
